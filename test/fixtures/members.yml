@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  joining_date: 2019-04-07
+  birthdate: 2019-04-07
+  identity_document: MyString
+  cpf: MyString
+  food_restrictions: MyString
+
+two:
+  name: MyString
+  joining_date: 2019-04-07
+  birthdate: 2019-04-07
+  identity_document: MyString
+  cpf: MyString
+  food_restrictions: MyString
