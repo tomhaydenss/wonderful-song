@@ -1,0 +1,26 @@
+To be used at: https://yuml.me/
+
+[Position| -description:string],   
+[EnsembleLevel| -description:string; -order:integer],
+[Ensemble| -name:string; -description:string],
+[Leader| -appointment_date:date],
+[Member| -name:string; -joining_date:date; -birthdate:date; -identity_document:string; -cpf:string; -food_restrictions:string],
+[Organizational_Information| -associated_code:string; -convertion_date:date; -vertical_structure:not_defined_yet; -position:string; -study_level:string; -conversions_made:integer; -discussion_meeting:boolean; -sustaining_contribution:boolean; -publications_subscription:boolean],
+[EnsembleLevel]-[note: Taiyo Ongakutai BSGI, Coord. Geral, Coordenadoria, Núcleo, Seção, etc {bg:cornsilk}],
+[Ensemble]->level 1[EnsembleLevel],
+[Ensemble]parent 1<->ensembles *[Ensemble],
+[Ensemble]*++->leadership *[Leader],
+[Ensemble]1++->members *[Member],
+[Member]->1[Organizational_Information],
+[Member]1-phones *[Phone],
+[Member]1-emails *[Email],
+[Member]1-addresses *[Address],
+[Leader]->1[Position],
+[Position]-[note: Taityo Geral, Taityo, Shunin, Resp. Técnico, Resp. Estudo, etc. {bg:wheat}],
+[Leader]act_as* <->leaders *[Member],
+[Phone_Type| -description:string],
+[Phone| -phone_number:string; primary:boolean],
+[Email|email_address:string]
+[Address|cep:string;address:string;neighborhood:string;city:string;state:string],
+[Phone]*->1[Phone_Type],
+[Phone_Type]-[note: Celular, Residencial, Whatsapp, etc. {bg:wheat}]
