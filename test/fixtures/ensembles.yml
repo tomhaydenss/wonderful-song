@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  foundation_date: 
+  ensemble_level: one
+  ensemble_parent: one
+
+two:
+  name: MyString
+  foundation_date: 
+  ensemble_level: two
+  ensemble_parent: two

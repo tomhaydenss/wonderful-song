@@ -1,0 +1,2 @@
+class EnsembleLevel < ApplicationRecord
+end
