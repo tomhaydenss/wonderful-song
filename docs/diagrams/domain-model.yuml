@@ -1,5 +1,7 @@
 // To edit and visualize this diagram, please use the following vscode plugin:
 // https://marketplace.visualstudio.com/items?itemName=JaimeOlivares.yuml
+// Or you can also copy the content bellow the comments and paste at the yUML site
+// https://yuml.me/diagram/scruffy/class/draw
 
 // {type:class}
 // {direction:leftToRight}
@@ -7,12 +9,12 @@
 
 [Position| -description:string]
 [Phone_Type| -description:string]
-[Phone| -phone_number:string; primary:boolean]
-[Email| -email_address:string; primary:boolean]
-[Address| -cep:string; -address:string; -neighborhood:string; -city:string; -state:string; primary:boolean]
+[Phone| -phone_number:string; -primary:boolean]
+[Email| -email_address:string; -primary:boolean]
+[Address| -cep:string; -address:string; -neighborhood:string; -city:string; -state:string; -primary:boolean]
 [EnsembleLevel| -description:string; -precedence_order:integer]
-[Ensemble| -name:string; -description:string]
-[Leader| -appointment_date:date; primary:boolean]
+[Ensemble| -name:string; -foundation_date:date; -history:text]
+[Leader| -appointment_date:date; -primary:boolean]
 [Member| -name:string; -joining_date:date; -birthdate:date; -identity_document:string; -cpf:string; -food_restrictions:string]
 [Organizational_Information| -associated_code:string; -convertion_date:date; -vertical_structure:not_defined_yet; -position:string; -study_level:string; -conversions_made:integer; -discussion_meeting:boolean; -sustaining_contribution:boolean; -publications_subscription:boolean]
 [EnsembleLevel]-[note: TONacional Coord.Geral Coordenadoria Núcleo Seção etc.{bg:wheat}]
