@@ -4,6 +4,6 @@ class Member < ApplicationRecord
   has_many :phones
   has_many :emails
   has_many :addresses
-  has_many :leaders
-  has_many :positions, through: :leaders
+  has_many :leaderships
+  has_many :positions, through: :leaderships
 end

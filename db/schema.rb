@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_13_051911) do
+ActiveRecord::Schema.define(version: 2019_04_23_184705) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,19 @@ ActiveRecord::Schema.define(version: 2019_04_13_051911) do
     t.index ["ensemble_id"], name: "index_leaders_on_ensemble_id"
     t.index ["member_id"], name: "index_leaders_on_member_id"
     t.index ["position_id"], name: "index_leaders_on_position_id"
+  end
+
+  create_table "leaderships", force: :cascade do |t|
+    t.date "appointment_date"
+    t.boolean "primary"
+    t.bigint "ensemble_id", null: false
+    t.bigint "member_id", null: false
+    t.bigint "position_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["ensemble_id"], name: "index_leaderships_on_ensemble_id"
+    t.index ["member_id"], name: "index_leaderships_on_member_id"
+    t.index ["position_id"], name: "index_leaderships_on_position_id"
   end
 
   create_table "members", force: :cascade do |t|
@@ -126,6 +139,9 @@ ActiveRecord::Schema.define(version: 2019_04_13_051911) do
   add_foreign_key "leaders", "ensembles"
   add_foreign_key "leaders", "members"
   add_foreign_key "leaders", "positions"
+  add_foreign_key "leaderships", "ensembles"
+  add_foreign_key "leaderships", "members"
+  add_foreign_key "leaderships", "positions"
   add_foreign_key "members", "ensembles"
   add_foreign_key "members", "organizational_informations"
   add_foreign_key "phones", "members"

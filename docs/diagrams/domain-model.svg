@@ -149,7 +149,7 @@
 <g id="node8" class="node">
 <title>A7</title>
 <polygon fill="none" stroke="#000000" points="173,-389 173,-421 301,-421 301,-389 173,-389"/>
-<text text-anchor="start" x="221.438" y="-402" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Leader</text>
+<text text-anchor="start" x="212.2695" y="-402" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">Leadership</text>
 <polygon fill="none" stroke="#000000" points="173,-345 173,-389 301,-389 301,-345 173,-345"/>
 <text text-anchor="start" x="182.8115" y="-370" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> &#45;appointment_date:date</text>
 <text text-anchor="start" x="198.108" y="-358" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000"> &#45;primary:boolean</text>
@@ -160,7 +160,7 @@
 <path fill="none" stroke="#000000" d="M129.7626,-383C140.5618,-383 151.7277,-383 162.5916,-383"/>
 <polygon fill="#000000" stroke="#000000" points="129.4423,-383.0001 123.4422,-387 117.4423,-383 123.4423,-379 129.4423,-383.0001"/>
 <polygon fill="#000000" stroke="#000000" points="172.8933,-383 162.8933,-387.5001 167.8933,-383 162.8933,-383.0001 162.8933,-383.0001 162.8933,-383.0001 167.8933,-383 162.8932,-378.5001 172.8933,-383 172.8933,-383"/>
-<text text-anchor="middle" x="154.7671" y="-388.4524" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">leadership 1..*</text>
+<text text-anchor="middle" x="154.7671" y="-388.4524" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">1..*</text>
 <text text-anchor="middle" x="135.5684" y="-371.5476" font-family="Helvetica,sans-Serif" font-size="10.00" fill="#000000">*</text>
 </g>
 <!-- A8 -->
