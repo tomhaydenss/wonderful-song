@@ -1,0 +1,5 @@
+.nested-fields.form-inline style='display:inline;'
+  = f.input :phone_number, label: 'Número', placeholder: 'ex: (21) 988887777'
+  = f.association :phone_type, label: 'Tipo', label_method: :description, value_method: :id, include_blank: false
+  / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false
+  = link_to_remove_association 'Excluir Telefone', f

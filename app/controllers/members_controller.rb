@@ -41,7 +41,7 @@ class MembersController < ApplicationController
   # PATCH/PUT /members/1.json
   def update
     respond_to do |format|
-      if @member.update(member_params)
+      if @member.update_attributes(member_params)
         format.html { redirect_to @member, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
       else
@@ -69,6 +69,11 @@ class MembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
-      params.require(:member).permit(:name, :joining_date, :birthdate, :identity_document, :cpf, :food_restrictions)
+      params.require(:member).permit(
+        :name, :joining_date, :birthdate, :identity_document, :cpf, :food_restrictions,
+        phones_attributes: [:id, :phone_number, :phone_type_id, :primary, :_destroy],
+        emails_attributes: [:id, :email_address, :primary, :_destroy],
+        addresses_attributes: [:id, :cep, :address, :neighborhood, :city, :state, :primary, :_destroy]
+      )
     end
 end

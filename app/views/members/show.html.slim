@@ -1,0 +1,67 @@
+
+h3 Dados do Membro
+
+table.table
+  tr
+    td Nome
+    td
+      =@member.name
+  tr
+    td Data de ingresso
+    td
+      =@member.joining_date
+  tr
+    td Data de nascimento
+    td
+      =@member.birthdate
+  tr
+    td Documento
+    td
+      =@member.identity_document
+  tr
+    td CPF
+    td
+      =@member.cpf
+  tr
+    td Restrição alimentar
+    td
+      =@member.food_restrictions
+
+
+h3 Telefones
+
+table.table
+  -@member.phones.each do |phone|
+    tr
+      td= phone.phone_number
+      td= phone.phone_type.description
+
+
+h3 E-Mails
+
+table.table
+  -@member.emails.each do |email|
+    tr
+      td= email.email_address
+
+h3 Endereços
+
+table.table
+  tr
+    td Endereço
+    td Bairro
+    td Cidade
+    td Estado
+    td CEP
+  -@member.addresses.each do |address|
+    tr
+      td= address.address
+      td= address.neighborhood
+      td= address.city
+      td= address.state
+      td= address.cep
+
+
+= link_to 'Editar', edit_member_path(@member)
+= '|'
+= link_to 'Voltar', members_path

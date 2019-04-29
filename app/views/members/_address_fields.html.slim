@@ -1,0 +1,9 @@
+.nested-fields.form-inline style='display:inline;'
+  = f.input :address, label: 'Endereço'
+  = f.input :neighborhood, label: 'Bairro'
+  = f.input :city, label: 'Cidade'
+  = f.input :state, label: 'Estado'
+  = f.input :cep, label: 'CEP'
+  / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false
+  = link_to_remove_association 'Excluir Endereço', f
+

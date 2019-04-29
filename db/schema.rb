@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_23_184705) do
+ActiveRecord::Schema.define(version: 2019_04_24_022632) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,19 +54,6 @@ ActiveRecord::Schema.define(version: 2019_04_23_184705) do
     t.datetime "updated_at", null: false
     t.index ["ensemble_level_id"], name: "index_ensembles_on_ensemble_level_id"
     t.index ["ensemble_parent_id"], name: "index_ensembles_on_ensemble_parent_id"
-  end
-
-  create_table "leaders", force: :cascade do |t|
-    t.date "appointment_date"
-    t.boolean "primary"
-    t.bigint "ensemble_id", null: false
-    t.bigint "member_id", null: false
-    t.bigint "position_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["ensemble_id"], name: "index_leaders_on_ensemble_id"
-    t.index ["member_id"], name: "index_leaders_on_member_id"
-    t.index ["position_id"], name: "index_leaders_on_position_id"
   end
 
   create_table "leaderships", force: :cascade do |t|
@@ -122,6 +109,7 @@ ActiveRecord::Schema.define(version: 2019_04_23_184705) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "member_id", null: false
+    t.boolean "primary"
     t.index ["member_id"], name: "index_phones_on_member_id"
     t.index ["phone_type_id"], name: "index_phones_on_phone_type_id"
   end
@@ -136,9 +124,6 @@ ActiveRecord::Schema.define(version: 2019_04_23_184705) do
   add_foreign_key "emails", "members"
   add_foreign_key "ensembles", "ensemble_levels"
   add_foreign_key "ensembles", "ensembles", column: "ensemble_parent_id"
-  add_foreign_key "leaders", "ensembles"
-  add_foreign_key "leaders", "members"
-  add_foreign_key "leaders", "positions"
   add_foreign_key "leaderships", "ensembles"
   add_foreign_key "leaderships", "members"
   add_foreign_key "leaderships", "positions"

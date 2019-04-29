@@ -1,0 +1,27 @@
+h1 Membros
+
+table.table
+  thead
+    tr
+      th Nome
+      th Data de ingresso
+      th Data de aniversário
+      th Documento de Identificação (RG/Certidão)
+      th Cpf
+      th Restrição Alimentar
+      th Ações
+  tbody
+    - @members.each do |member|
+      tr
+        td= member.name
+        td= member.joining_date
+        td= member.birthdate
+        td= member.identity_document
+        td= member.cpf
+        td= member.food_restrictions
+        td
+          = link_to 'Exibir', member, class: 'btn btn-default btn-xs'
+          = link_to 'Editar', edit_member_path(member), class: 'btn btn-default btn-xs'
+          = link_to 'Excluir', member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+
+= link_to 'Novo Membro', new_member_path
