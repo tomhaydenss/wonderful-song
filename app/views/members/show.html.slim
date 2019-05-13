@@ -15,18 +15,9 @@ table.table
     td
       =@member.birthdate
   tr
-    td Documento
-    td
-      =@member.identity_document
-  tr
-    td CPF
-    td
-      =@member.cpf
-  tr
     td Restrição alimentar
     td
       =@member.food_restrictions
-
 
 h3 Telefones
 
@@ -35,7 +26,6 @@ table.table
     tr
       td= phone.phone_number
       td= phone.phone_type.description
-
 
 h3 E-Mails
 
@@ -48,19 +38,31 @@ h3 Endereços
 
 table.table
   tr
-    td Endereço
+    td Logradouro
+    td Número
+    td Complemento
     td Bairro
     td Cidade
     td Estado
     td CEP
   -@member.addresses.each do |address|
     tr
-      td= address.address
+      td= address.street
+      td= address.number
+      td= address.complement
       td= address.neighborhood
       td= address.city
       td= address.state
-      td= address.cep
+      td= address.postal_code
 
+h3 Documentos
+
+table.table
+  -@member.identity_documents.each do |identity_document|
+    tr
+      td= identity_document.number
+      td= identity_document.complement
+      td= identity_document.identity_document_type.description
 
 = link_to 'Editar', edit_member_path(@member)
 = '|'

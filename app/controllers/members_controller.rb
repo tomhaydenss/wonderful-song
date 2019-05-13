@@ -70,10 +70,11 @@ class MembersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.require(:member).permit(
-        :name, :joining_date, :birthdate, :identity_document, :cpf, :food_restrictions,
+        :name, :joining_date, :birthdate, :food_restrictions,
         phones_attributes: [:id, :phone_number, :phone_type_id, :primary, :_destroy],
         emails_attributes: [:id, :email_address, :primary, :_destroy],
-        addresses_attributes: [:id, :cep, :address, :neighborhood, :city, :state, :primary, :_destroy]
+        addresses_attributes: [:id, :postal_code, :street, :number, :complement, :neighborhood, :city, :state, :primary, :_destroy],
+        identity_documents_attributes: [:id, :number, :complement, :_destroy]
       )
     end
 end

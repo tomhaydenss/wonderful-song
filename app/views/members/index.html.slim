@@ -6,8 +6,6 @@ table.table
       th Nome
       th Data de ingresso
       th Data de aniversário
-      th Documento de Identificação (RG/Certidão)
-      th Cpf
       th Restrição Alimentar
       th Ações
   tbody
@@ -16,8 +14,6 @@ table.table
         td= member.name
         td= member.joining_date
         td= member.birthdate
-        td= member.identity_document
-        td= member.cpf
         td= member.food_restrictions
         td
           = link_to 'Exibir', member, class: 'btn btn-default btn-xs'

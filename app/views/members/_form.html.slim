@@ -2,8 +2,6 @@
   = f.input :name, label: 'Nome', hint: 'O nome do membro'
   = f.input :joining_date, label: 'Data de ingresso', hint: 'A data em que o membro ingressou ao grupo'
   = f.input :birthdate, label: 'Data de nascimento', hint: 'A data de nascimento do membro'
-  = f.input :identity_document, label: 'Documento', hint: 'Documento de identificação do membro (ex. RG, Certidão de Nascimento)'
-  = f.input :cpf, label: 'CPF', hint: 'CPF do membro'
   = f.input :food_restrictions, label: 'Restrição alimentar', hint: 'Restrições alimentares, caso possua'
 
   ul.nav.nav-tabs role='tablist'
@@ -13,6 +11,8 @@
       = link_to 'E-Mails', '#emails', data: {toggle: 'tab'}
     li
       = link_to 'Endereços', '#addresses', data: {toggle: 'tab'}
+    li
+      = link_to 'Documentos', '#documents', data: {toggle: 'tab'}
 
   .tab-content
     #phones.tab-pane.active role='tabpanel'
@@ -32,6 +32,12 @@
         = render 'address_fields', f: address
       .links
         = link_to_add_association 'Incluir Endereço', f, :addresses
+
+    #documents.tab-pane role='tabpanel'
+      = f.simple_fields_for :identity_documents do |identity_document|
+        = render 'identity_documents_fields', f: identity_document
+      .links
+        = link_to_add_association 'Incluir Documento', f, :identity_documents
 
   .actions
     = f.button :submit, 'Salvar Membro', disable_with: 'Por favor aguarde ...'

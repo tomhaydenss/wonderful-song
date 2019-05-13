@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_24_022632) do
+ActiveRecord::Schema.define(version: 2019_05_13_025056) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "addresses", force: :cascade do |t|
-    t.string "cep", limit: 8, null: false
-    t.string "address", limit: 255, null: false
+    t.string "postal_code", limit: 8, null: false
     t.string "neighborhood", limit: 255, null: false
     t.string "city", limit: 255, null: false
     t.string "state", limit: 2, null: false
@@ -25,6 +24,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_022632) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "member_id", null: false
+    t.string "street", limit: 255, null: false
+    t.string "number", limit: 10, null: false
     t.index ["member_id"], name: "index_addresses_on_member_id"
   end
 
@@ -56,6 +57,23 @@ ActiveRecord::Schema.define(version: 2019_04_24_022632) do
     t.index ["ensemble_parent_id"], name: "index_ensembles_on_ensemble_parent_id"
   end
 
+  create_table "identity_document_types", force: :cascade do |t|
+    t.string "description"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "identity_documents", force: :cascade do |t|
+    t.string "number"
+    t.string "complement"
+    t.bigint "identity_document_type_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "member_id", null: false
+    t.index ["identity_document_type_id"], name: "index_identity_documents_on_identity_document_type_id"
+    t.index ["member_id"], name: "index_identity_documents_on_member_id"
+  end
+
   create_table "leaderships", force: :cascade do |t|
     t.date "appointment_date"
     t.boolean "primary"
@@ -73,13 +91,12 @@ ActiveRecord::Schema.define(version: 2019_04_24_022632) do
     t.string "name", limit: 100, null: false
     t.date "joining_date"
     t.date "birthdate"
-    t.string "identity_document", limit: 255
-    t.string "cpf", limit: 11
     t.string "food_restrictions", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "organizational_information_id"
     t.bigint "ensemble_id"
+    t.string "complement"
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["organizational_information_id"], name: "index_members_on_organizational_information_id"
   end
@@ -124,6 +141,8 @@ ActiveRecord::Schema.define(version: 2019_04_24_022632) do
   add_foreign_key "emails", "members"
   add_foreign_key "ensembles", "ensemble_levels"
   add_foreign_key "ensembles", "ensembles", column: "ensemble_parent_id"
+  add_foreign_key "identity_documents", "identity_document_types"
+  add_foreign_key "identity_documents", "members"
   add_foreign_key "leaderships", "ensembles"
   add_foreign_key "leaderships", "members"
   add_foreign_key "leaderships", "positions"
