@@ -1,0 +1,16 @@
+
+h3 Dados do Nível de Núcleo
+
+table.table
+  tr
+    td Descrição
+    td
+      =@ensemble_level.description
+  tr
+    td Ordem de Precedência
+    td
+      =@ensemble_level.precedence_order
+
+= link_to 'Editar', edit_ensemble_level_path(@ensemble_level)
+= '|'
+= link_to 'Voltar', ensemble_levels_path

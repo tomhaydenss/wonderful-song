@@ -1,0 +1,6 @@
+= simple_form_for @ensemble_level do |f|
+  = f.input :description, label: 'Descrição'
+  = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
+
+  .actions
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'

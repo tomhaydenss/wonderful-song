@@ -35,4 +35,4 @@
 [Phone]*-1>[Phone_Type]
 [Phone_Type]-[note: mobile home work whatsapp etc. {bg:wheat}]
 [Identity_Document]*-1>[Identity_Document_Type]
-[Identity_Document_Type]-[note: id birth-certificate passport etc. {bg:wheat}]
+[Identity_Document_Type]-[note: id-card birth-certificate passport driver's-license etc. {bg:wheat}]

@@ -1,0 +1,19 @@
+h1 Níveis de Núcleo
+
+table.table
+  thead
+    tr
+      th Descrição
+      th Ordem de Precedência
+      th Ações
+  tbody
+    - @ensemble_levels.each do |ensemble_level|
+      tr
+        td= ensemble_level.description
+        td= ensemble_level.precedence_order
+        td
+          = link_to 'Exibir', ensemble_level, class: 'btn btn-default btn-xs'
+          = link_to 'Editar', edit_ensemble_level_path(ensemble_level), class: 'btn btn-default btn-xs'
+          = link_to 'Excluir', ensemble_level, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+
+= link_to 'Novo Nível de Núcleo', new_ensemble_level_path
