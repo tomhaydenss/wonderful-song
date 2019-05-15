@@ -1,0 +1,21 @@
+pt-BR:
+  activerecord: &models_translations
+    models:
+      user: Usuário
+    attributes:
+      user:
+        password: Senha
+        remember_me: Lembrar
+  devise:
+    sessions:
+      user:
+        signed_in: 'Bem vindo ao Sistema Sons Maravilhosos!'
+        signed_out: 'Você se deslogou. Para ter acesso aos recursos, entre novamente'
+    passwords:
+      user:
+        send_instructions: 'Dentro de alguns minutos, você receberá um e-mail com instruções para a troca da sua senha'
+    failure:
+      user:
+        already_authenticated: "Você já está logado"
+        not_found_in_database: "Usuário inexistente"
+        invalid: 'Senha inválida'
