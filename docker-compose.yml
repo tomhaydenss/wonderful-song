@@ -1,0 +1,32 @@
+version: "3.5"
+services:
+  postgres:
+    image: postgres:10-alpine
+    ports:
+      - "5432"
+  webpack:
+    image: mitsumori/dev:2.6.2
+    env_file:
+      - '.env'
+    command: bin/webpack-dev-server
+    volumes:
+      - .:/app
+      - ~/bundle/alpine/2.6.2:/usr/local/bundle
+    ports:
+      - "3035:3035"
+  app:
+    image: mitsumori/dev:2.6.2
+    stdin_open: true
+    tty: true
+    env_file:
+      - '.env'
+    command: rails server -p 3000 -b 0.0.0.0
+    volumes:
+      - .:/app
+      - ~/bundle/alpine/2.6.2:/usr/local/bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - postgres
+      - webpack
+
