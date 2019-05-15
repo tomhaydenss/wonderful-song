@@ -1,5 +1,6 @@
 class EnsembleLevelsController < ApplicationController
   before_action :set_ensemble_level, only: [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
 
   # GET /ensemble_levels
   # GET /ensemble_levels.json

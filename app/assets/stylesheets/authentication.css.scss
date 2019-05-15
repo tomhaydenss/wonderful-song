@@ -1,0 +1,33 @@
+body.sessions, body.passwords {
+  .main-content {
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
+  h2 { margin-bottom: 20px; }
+
+  .input {
+    margin-bottom: 10px;
+
+    input[type=email], input[type=password], label {
+      display: block;
+      width: 100%;
+    }
+
+    input[type=email], input[type=password] {
+      border: none;
+      border-radius: 3px;
+      padding: 5px;
+      outline: none;
+      box-shadow: 0 0 2px #66f;
+    }
+  }
+  
+  .user_remember_me { padding-left: 20px; }
+
+  .btn {
+    margin: 10px 0;
+    background-color: #114758;
+    color: white;
+  }
+}
