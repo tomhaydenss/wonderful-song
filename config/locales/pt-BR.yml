@@ -16,6 +16,7 @@ pt-BR:
         send_instructions: 'Dentro de alguns minutos, você receberá um e-mail com instruções para a troca da sua senha'
     failure:
       user:
-        already_authenticated: "Você já está logado"
-        not_found_in_database: "Usuário inexistente"
+        already_authenticated: 'Você já está logado'
+        not_found_in_database: 'Usuário inexistente'
         invalid: 'Senha inválida'
+        unauthenticated: 'Para continuar, efetue o login'

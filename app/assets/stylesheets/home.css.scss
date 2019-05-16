@@ -1,0 +1,61 @@
+@import 'variables';
+
+body.home {
+  .banner {
+    width: 100%;
+    height: 400px;
+    background-image: url(image-path('banner_home.jpg'));
+    background-size: cover;
+    background-position: center bottom;
+  }
+
+  .history {
+    padding: 50px 30px;
+    background-image: url(image-path('bg_home.png'));
+    background-size: 100% auto;
+    background-repeat: no-repeat;
+    background-position: center bottom;
+
+    h2 {
+      font-size: 50px;
+      font-weight: bold;
+      color: $blue;
+      text-transform: uppercase;
+      font-style: italic;
+    }
+
+    img {
+      transform: rotate(7.5deg);
+      width: calc(100% - 20px);
+    }
+
+    .brasil-image {
+      transform: rotate(-7.5deg);
+      width: calc(100% - 20px);
+    }
+
+    .japan {
+      height: 300px;
+    }
+
+    .brasil {
+      height: 300px;
+    }
+  }
+
+  .home-button {
+    display: block;
+    height: 50px;
+    width: 140px;
+    background-image: url(image-path('button_background.png'));
+    background-size: cover;
+    background-position: center;
+    color: white;
+    font-style: italic;
+    font-size: 1.8rem;
+    text-align: center;
+    padding-top: 10px;
+    text-decoration: none;
+    margin: 0 auto;
+  }
+}
