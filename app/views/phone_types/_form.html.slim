@@ -1,0 +1,5 @@
+= simple_form_for @phone_type do |f|
+  = f.input :description, label: 'Descrição'
+
+  .actions
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'

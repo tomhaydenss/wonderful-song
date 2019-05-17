@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
+  root to: 'home#index'
   devise_for :users
   resources :members
   resources :ensemble_levels
-  root to: 'home#index'
+  resources :phone_types
 end
