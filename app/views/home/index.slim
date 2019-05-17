@@ -1,18 +1,31 @@
 section.banner
 section.history
-  h2 Histórico do Grupo
-  span Ongakutai do Japão
-  = image_tag 'polaroide_ongakutai_japao.png'
+  .double-font
+    h2 Histórico do Grupo
+    h2.front Histórico do Grupo
+  figure
+    div.image-title
+      | Ongakutai
+      br
+      | &nbsp;&nbsp;&nbsp;&nbsp;do Japão
+    = image_tag 'polaroide_ongakutai_japao.png'
   p.japan
     | No início do ano de 1954...
-  = link_to 'Ler mais', root_path, class: 'home-button'
+  = link_to 'Ler mais', root_path, class: 'home-button read-more-japan'
 
-  h2 Taiyo Ongakutai do Brasil
-  = image_tag 'polaroide_ongakutai_brasil.png', class: 'brasil-image'
+  figure
+    div.image-title.brasil
+      | Taiyo Ongakutai
+      br
+      | &nbsp;&nbsp;&nbsp;do Brasil
+    = image_tag 'polaroide_ongakutai_brasil.png', class: 'brasil-image'
   p.brasil
     | No Brasil, em 1960...
   = link_to 'Ler mais', root_path, class: 'home-button'
 
 section.social-media
   header
-    h2 Acompanhe
+    h2
+      | Últimos posts no
+      br
+      | nosso Instagram
