@@ -1,0 +1,32 @@
+
+h3 Dados do Núcleo
+
+table.table
+  tr
+    td Nome
+    td
+      =@ensemble.name
+  tr
+    td Data de Fundação
+    td
+      =@ensemble.foundation_date
+  tr
+    td Data de Fundação
+    td
+      =@ensemble.foundation_date
+  tr
+    td Nível
+    td
+      =@ensemble.ensemble_level.description
+  tr
+    td Pertence a
+    td
+      =@ensemble.ensemble_parent.name if @ensemble.ensemble_parent.present?
+  tr
+    td Histórico
+    td
+      =@ensemble.history
+
+= link_to 'Editar', edit_ensemble_path(@ensemble)
+= '|'
+= link_to 'Voltar', ensembles_path
