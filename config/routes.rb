@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   resources :members
   resources :ensemble_levels
   resources :phone_types
+  resources :positions
 end
