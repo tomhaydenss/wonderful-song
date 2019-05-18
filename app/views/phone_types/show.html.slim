@@ -1,0 +1,12 @@
+
+h3 Dados do Tipo Telefone
+
+table.table
+  tr
+    td Descrição
+    td
+      =@phone_type.description
+
+= link_to 'Editar', edit_phone_type_path(@phone_type)
+= '|'
+= link_to 'Voltar', phone_types_path
