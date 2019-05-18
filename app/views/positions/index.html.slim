@@ -1,0 +1,17 @@
+h1 Funções
+
+table.table
+  thead
+    tr
+      th Descrição
+      th Ações
+  tbody
+    - @positions.each do |position|
+      tr
+        td= position.description
+        td
+          = link_to 'Exibir', position, class: 'btn btn-default btn-xs'
+          = link_to 'Editar', edit_position_path(position), class: 'btn btn-default btn-xs'
+          = link_to 'Excluir', position, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+
+= link_to 'Nova Função', new_position_path
