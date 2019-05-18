@@ -2,9 +2,6 @@
 @import 'font-families';
 
 body.home {
-  font-size: 100%;
-  * { font-family: 'Klavika Regular'; }
-
   h2 {
     font-family: 'Klavika Bold';
     font-size: 40px;
@@ -16,6 +13,8 @@ body.home {
   p {
     font-size: 20px;
   }
+
+  .container.content-container { width: unset; padding-top: 0 !important; }
 
   .image-title {
     font-family: 'Better Times';
@@ -33,7 +32,7 @@ body.home {
   .history {
     padding: 50px 30px;
     background-image: url(image-path('bg_home.png'));
-    background-size: 100% auto;
+    background-size: 100% 1150px;
     background-repeat: no-repeat;
     background-position: center bottom;
 
@@ -44,6 +43,7 @@ body.home {
     }
 
     h2 {
+      font-family: 'Klavika Bold';
       position: absolute;
       left: 10px;
       top: 10px;
@@ -78,7 +78,7 @@ body.home {
     }
 
     .japan {
-      height: 400px;
+      margin: 30px 0 50px;
     }
 
     .read-more-japan { margin-bottom: 100px; }
@@ -89,9 +89,11 @@ body.home {
     }
 
     .brasil {
-      height: 400px;
       color: white;
+      margin: 30px 0 50px;
     }
+
+    .brasil, .japan { text-align: justify; }
   }
 
   .home-button {
@@ -112,5 +114,64 @@ body.home {
 
   .social-media {
     header { margin: 40px 20px; }
+  }
+
+  @media screen and (min-width: 768px) {
+    .japan-image {
+      transform: rotate(15deg);
+      top: calc(-10vw);
+      @media screen and (min-width: 768px) and (max-width: 1150px) { top: 100px; }
+    }
+
+    .brasil-image {
+      transform: rotate(-15deg);
+    }
+
+    .history {
+      padding: 50px 80px;
+      background-image: url(image-path('bg_home_flipped.png'));
+      background-size: 100% 800px;
+
+      img, .brasil-image {
+        position: absolute;
+        right: 0;
+        width: 45%;
+        max-width: 500px;
+      }
+
+      p.japan, p.brasil {
+        margin: 200px 0 50px;
+        width: 50%;
+        max-height: 390px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      p.brasil {
+        margin: 200px 0 50px auto;
+      }
+
+      .brasil-container {
+        display: flex;
+        flex-direction: row-reverse;
+      }
+
+      .brasil-image {
+        left: 0;
+        top: 0;
+      }
+    }
+
+    .banner { height: 750px; }
+
+    .home-button {
+      margin: unset;
+      height: 70px;
+      width: 200px;
+      font-size: 2.5rem;
+      padding-top: 12px;
+    }
+
+    .read-more-brasil { margin-left: auto; }
   }
 }
