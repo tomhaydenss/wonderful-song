@@ -17,6 +17,7 @@ gem 'puma', '~> 3.11'
 ## backend
 gem 'bootsnap', '>= 1.1.0', require: false # Reduces boot times through caching; required in config/boot.rb
 gem 'devise'
+gem 'rails-i18n'
 
 ## frontend 
 gem 'bootstrap-sass', '~> 3.4.1'
