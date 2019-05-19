@@ -1,6 +1,6 @@
 class EnsemblesController < ApplicationController
   before_action :set_ensemble, only: [:show, :edit, :update, :destroy]
-  # before_action :authenticate_user!
+  before_action :authenticate_user!
 
   # GET /ensembles
   # GET /ensembles.json

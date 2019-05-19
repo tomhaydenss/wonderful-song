@@ -34,7 +34,7 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
             li
               =link_to "Tipos Telefone", phone_types_path
             li
-              =link_to "Tipos Documentos", root_url
+              =link_to "Tipos Documentos", identity_document_types_path
             li
               - if current_user
                 = link_to 'Sair', destroy_user_session_path, method: :delete

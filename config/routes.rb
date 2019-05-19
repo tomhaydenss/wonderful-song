@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :ensembles
   resources :phone_types
   resources :positions
+  resources :identity_document_types
 end
