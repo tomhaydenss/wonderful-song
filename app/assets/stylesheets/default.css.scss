@@ -1,1 +1,31 @@
+@import 'font-families';
+
 $blue: blue;
+
+.navbar {
+  background-color: #012848;
+  border-color: #014677;
+}
+
+.navbar-default {
+  a.navbar-brand, .navbar-nav > li > a {
+    color: white;
+    font-family: 'Klavika Bold';
+
+    &:hover {
+      color: #ddf;
+    }
+  }
+}
+
+.navbar-default .navbar-toggle .icon-bar {
+  background-color: white;
+}
+
+.navbar-default .navbar-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.navbar-default .navbar-toggle:focus {
+  background-color: transparent;
+}
