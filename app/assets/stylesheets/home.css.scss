@@ -175,3 +175,29 @@ body.home {
     .read-more-brasil { margin-left: auto; }
   }
 }
+
+body.home.brasil, body.home.japan {
+  article {
+    box-shadow: 0 0 3px #66f;
+    border-radius: 5px;
+    padding: 10px 30px;
+    margin: 50px 20px;
+    font-family: 'Klavika Regular';
+    text-align: justify;
+
+    @media screen and (min-width: 768px) {
+      padding: 20px 40px;
+    }    
+
+    @media screen and (min-width: 768px) and (max-width: 1000px) {
+      margin-top: 120px;
+    }
+
+    @media screen and (min-width: 1200px) {
+      max-width: 1150px;
+      margin: 50px auto;
+    }
+  }
+
+  h1 { margin-bottom: 50px; }
+}

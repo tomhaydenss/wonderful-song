@@ -7,4 +7,7 @@ Rails.application.routes.draw do
   resources :phone_types
   resources :positions
   resources :identity_document_types
+
+  get '/ongakutai', to: 'home#japan'
+  get '/taiyo_ongakutai', to: 'home#brasil'
 end
