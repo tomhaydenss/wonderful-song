@@ -1,6 +1,5 @@
 class PhoneTypesController < ApplicationController
   before_action :set_phone_type, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   # GET /phone_types
   # GET /phone_types.json

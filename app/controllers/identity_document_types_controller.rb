@@ -1,6 +1,5 @@
 class IdentityDocumentTypesController < ApplicationController
   before_action :set_identity_document_type, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!
 
   # GET /identity_document_types
   # GET /identity_document_types.json
