@@ -1,8 +1,9 @@
 = simple_form_for @member do |f|
   = f.input :name, label: 'Nome', hint: 'O nome do membro'
-  = f.input :joining_date, label: 'Data de ingresso', hint: 'A data em que o membro ingressou ao grupo', start_year: 1980, end_year: Date.today.year
-  = f.input :birthdate, label: 'Data de nascimento', hint: 'A data de nascimento do membro', start_year: 1970, end_year: Date.today.year
-  = f.input :food_restrictions, label: 'Restrição alimentar', hint: 'Restrições alimentares, caso possua'
+  = f.association :ensemble, label: 'Núcleo', collection: Ensemble.order(:name), label_method: :name, value_method: :id, include_blank: true
+  = f.input :joining_date, label: 'Data de ingresso', start_year: 1980, end_year: Date.today.year
+  = f.input :birthdate, label: 'Data de nascimento', start_year: 1970, end_year: Date.today.year
+  = f.input :food_restrictions, label: 'Restrição alimentar'
 
   ul.nav.nav-tabs role='tablist'
     li.active

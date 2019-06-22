@@ -3,6 +3,7 @@ h1 Membros
 table.table
   thead
     tr
+      th Núcleo
       th Nome
       th Data de ingresso
       th Data de aniversário
@@ -11,6 +12,7 @@ table.table
   tbody
     - @members.each do |member|
       tr
+        td= member.ensemble&.name
         td= member.name
         td= member.joining_date
         td= member.birthdate
