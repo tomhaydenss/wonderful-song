@@ -27,6 +27,15 @@ table.table
     td
       =@ensemble.history
 
+h3 Liderança
+
+table.table
+  -@ensemble.leaderships.each do |leadership|
+    tr
+      td= leadership.member.name
+      td= leadership.position.description
+      td= leadership.appointment_date
+
 = link_to 'Editar', edit_ensemble_path(@ensemble)
 = '|'
 = link_to 'Voltar', ensembles_path

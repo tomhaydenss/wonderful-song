@@ -5,5 +5,16 @@
   = f.association :ensemble_parent, label: 'Pertencente a', label_method: :name, value_method: :id, include_blank: true
   = f.input :history, label: 'Histórico', as: :text
 
+  ul.nav.nav-tabs role='tablist'
+    li.active
+      = link_to 'Liderança', '#leaderships', data: {toggle: 'tab'}
+
+  .tab-content
+    #leaderships.tab-pane.active role='tabpanel'
+      = f.simple_fields_for :leaderships do |leadership|
+        = render 'leadership_fields', f: leadership
+      .links
+        = link_to_add_association 'Incluir Líder', f, :leaderships
+
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'

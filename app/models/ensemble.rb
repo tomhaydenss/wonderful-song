@@ -4,4 +4,6 @@ class Ensemble < ApplicationRecord
   has_many :ensembles, class_name: "Ensemble", foreign_key: "ensemble_parent_id"
   has_many :members
   has_many :leaderships
+
+  accepts_nested_attributes_for :leaderships, :reject_if => :all_blank, :allow_destroy => true
 end

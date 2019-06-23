@@ -69,6 +69,9 @@ class EnsemblesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def ensemble_params
-      params.require(:ensemble).permit(:name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id)
+      params.require(:ensemble).permit(
+        :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id,
+        leaderships_attributes: [:id, :member_id, :position_id, :appointment_date, :_destroy],
+        )
     end
 end
