@@ -4,11 +4,13 @@ table.table
   thead
     tr
       th Descrição
+      th Ordem de Precedência
       th Ações
   tbody
     - @positions.each do |position|
       tr
         td= position.description
+        td= position.precedence_order
         td
           = link_to 'Exibir', position, class: 'btn btn-default btn-xs'
           = link_to 'Editar', edit_position_path(position), class: 'btn btn-default btn-xs'

@@ -6,6 +6,10 @@ table.table
     td Descrição
     td
       =@position.description
+  tr
+    td Ordem de Precedência
+    td
+      =@position.precedence_order
 
 = link_to 'Editar', edit_position_path(@position)
 = '|'

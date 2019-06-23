@@ -22,6 +22,10 @@ table.table
     td Restrição alimentar
     td
       =@member.food_restrictions
+  tr
+    td Informações Adicionais
+    td
+      =@member.additional_information
 
 h3 Telefones
 
@@ -53,7 +57,7 @@ table.table
     tr
       td= address.street
       td= address.number
-      td= address.complement
+      td= address.additional_information
       td= address.neighborhood
       td= address.city
       td= address.state

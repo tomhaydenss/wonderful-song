@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_05_15_011721) do
+ActiveRecord::Schema.define(version: 2019_06_23_000225) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 2019_05_15_011721) do
     t.bigint "member_id", null: false
     t.string "street", limit: 255, null: false
     t.string "number", limit: 10, null: false
+    t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_addresses_on_member_id"
   end
 
@@ -58,14 +59,14 @@ ActiveRecord::Schema.define(version: 2019_05_15_011721) do
   end
 
   create_table "identity_document_types", force: :cascade do |t|
-    t.string "description"
+    t.string "description", limit: 25
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "identity_documents", force: :cascade do |t|
-    t.string "number"
-    t.string "complement"
+    t.string "number", limit: 25
+    t.string "complement", limit: 25
     t.bigint "identity_document_type_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -96,7 +97,7 @@ ActiveRecord::Schema.define(version: 2019_05_15_011721) do
     t.datetime "updated_at", null: false
     t.bigint "organizational_information_id"
     t.bigint "ensemble_id"
-    t.string "complement"
+    t.text "additional_information"
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["organizational_information_id"], name: "index_members_on_organizational_information_id"
   end
@@ -135,6 +136,7 @@ ActiveRecord::Schema.define(version: 2019_05_15_011721) do
     t.string "description", limit: 100, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "precedence_order"
   end
 
   create_table "users", force: :cascade do |t|

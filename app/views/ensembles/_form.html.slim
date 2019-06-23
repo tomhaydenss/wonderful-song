@@ -3,7 +3,7 @@
   = f.input :foundation_date, label: 'Data de Fundação'
   = f.association :ensemble_level, label: 'Nível', label_method: :description, value_method: :id, include_blank: false
   = f.association :ensemble_parent, label: 'Pertencente a', label_method: :name, value_method: :id, include_blank: true
-  = f.input :history, label: 'Histórico'
+  = f.input :history, label: 'Histórico', as: :text
 
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
