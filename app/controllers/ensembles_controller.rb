@@ -4,7 +4,7 @@ class EnsemblesController < ApplicationController
   # GET /ensembles
   # GET /ensembles.json
   def index
-    @ensembles = Ensemble.all
+    @ensembles = Ensemble.includes(:ensemble_level).order('ensemble_levels.precedence_order')
   end
 
   # GET /ensembles/1

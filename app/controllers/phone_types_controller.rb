@@ -4,7 +4,7 @@ class PhoneTypesController < ApplicationController
   # GET /phone_types
   # GET /phone_types.json
   def index
-    @phone_types = PhoneType.all
+    @phone_types = PhoneType.order(:id).all
   end
 
   # GET /phone_types/1

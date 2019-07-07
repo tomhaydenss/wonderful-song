@@ -1,6 +1,6 @@
 = simple_form_for @ensemble do |f|
   = f.input :name, label: 'Nome'
-  = f.input :foundation_date, label: 'Data de Fundação'
+  = f.input :foundation_date, label: 'Data de Fundação', as: :date, html5: true
   = f.association :ensemble_level, label: 'Nível', label_method: :description, value_method: :id, include_blank: false
   = f.association :ensemble_parent, label: 'Pertencente a', label_method: :name, value_method: :id, include_blank: true
   = f.input :history, label: 'Histórico', as: :text
