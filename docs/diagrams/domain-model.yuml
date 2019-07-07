@@ -9,7 +9,7 @@
 
 [Position| -description:string; -precedence_order:integer]
 [Phone_Type| -description:string]
-[Phone| -phone_number:string; -primary:boolean]
+[Phone| -phone_number:string; -additional_information:string; -primary:boolean]
 [Identity_Document_Type| -description:string]
 [Identity_Document| -number:string; -complement:string]
 [Email| -email_address:string; -primary:boolean]
