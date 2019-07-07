@@ -5,5 +5,13 @@ class Ensemble < ApplicationRecord
   has_many :members
   has_many :leaderships
 
-  accepts_nested_attributes_for :leaderships, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :leaderships, reject_if: :all_blank, allow_destroy: true
+
+  scope :leadership_purpose_only, -> { where(leadership_purpose: true) }
+  scope :membership_purpose_only, -> { where(leadership_purpose: false) }
+
+  def fully_qualified_name
+    return ensemble_parent.fully_qualified_name + ' > ' + name if ensemble_parent.present?
+    name
+  end
 end

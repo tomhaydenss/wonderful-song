@@ -2,7 +2,8 @@
   = f.input :name, label: 'Nome'
   = f.input :foundation_date, label: 'Data de Fundação', as: :date, html5: true
   = f.association :ensemble_level, label: 'Nível', label_method: :description, value_method: :id, include_blank: false
-  = f.association :ensemble_parent, label: 'Pertencente a', label_method: :name, value_method: :id, include_blank: true
+  = f.association :ensemble_parent, label: 'Pertencente a', collection: Ensemble.leadership_purpose_only, label_method: :fully_qualified_name, value_method: :id, include_blank: true
+  = f.input :leadership_purpose, label: 'Liderança apenas', as: :boolean
   = f.input :history, label: 'Histórico', as: :text
 
   ul.nav.nav-tabs role='tablist'

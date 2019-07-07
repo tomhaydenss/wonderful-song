@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_06_232730) do
+ActiveRecord::Schema.define(version: 2019_07_07_040143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,6 +54,7 @@ ActiveRecord::Schema.define(version: 2019_07_06_232730) do
     t.bigint "ensemble_parent_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "leadership_purpose"
     t.index ["ensemble_level_id"], name: "index_ensembles_on_ensemble_level_id"
     t.index ["ensemble_parent_id"], name: "index_ensembles_on_ensemble_parent_id"
   end

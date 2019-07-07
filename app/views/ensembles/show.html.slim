@@ -17,7 +17,11 @@ table.table
   tr
     td Pertence a
     td
-      =@ensemble.ensemble_parent.name if @ensemble.ensemble_parent.present?
+      =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
+  tr
+    td Liderança apenas
+    td
+      =@ensemble.leadership_purpose ? "sim" : "não"
   tr
     td Histórico
     td

@@ -15,7 +15,7 @@
 [Email| -email_address:string; -primary:boolean]
 [Address| -postal_code:string; -street:string; -number:string; -additional_information:string; -neighborhood:string; -city:string; -state:string; -primary:boolean]
 [Ensemble_Level| -description:string; -precedence_order:integer]
-[Ensemble| -name:string; -foundation_date:date; -history:text]
+[Ensemble| -name:string; -foundation_date:date; -leadership_purpose:boolean; -history:text]
 [Leadership| -appointment_date:date; -primary:boolean]
 [Member| -name:string; -joining_date:date; -birthdate:date; -food_restrictions:string; -additional_information:text]
 [Organizational_Information| -associated_code:string; -convertion_date:date; -vertical_structure:not_defined_yet; -position:string; -study_level:string; -conversions_made:integer; -discussion_meeting:boolean; -sustaining_contribution:boolean; -publications_subscription:boolean]
