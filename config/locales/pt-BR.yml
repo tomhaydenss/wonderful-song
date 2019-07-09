@@ -2,10 +2,28 @@ pt-BR:
   activerecord: &models_translations
     models:
       user: Usuário
+      member: Membro
+      ensemble: Núcleo
+      ensemble_level: Nível de Núcleo
+      position: Função
+      phone_type: Tipo de Telefone
+      identity_document_type: Tipo de Documento
     attributes:
       user:
         password: Senha
         remember_me: Lembrar
+  permissions:
+    actions:
+      read: Ler
+      write: Gravar
+    subjects:
+      users: Usuários
+      members: Membros
+      ensembles: Núcleos
+      ensemble_levels: Níveis de Núcleo
+      positions: Funções
+      phone_types: Tipos de Telefone
+      identity_document_types: Tipos de Documento
   devise:
     sessions:
       user:

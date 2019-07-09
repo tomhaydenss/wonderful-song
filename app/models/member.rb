@@ -1,6 +1,7 @@
 class Member < ApplicationRecord
   belongs_to :organizational_information, optional: true
   belongs_to :ensemble, optional: true
+  has_one :user
   has_many :phones
   has_many :emails
   has_many :addresses

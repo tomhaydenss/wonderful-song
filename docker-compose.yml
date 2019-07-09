@@ -2,6 +2,8 @@ version: "3.5"
 services:
   postgres:
     image: postgres:10-alpine
+    volumes:
+      - ~/postgres-data/wonderful-song:/var/lib/postgresql/data
     ports:
       - "5432"
   webpack:

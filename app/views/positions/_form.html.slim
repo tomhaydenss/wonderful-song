@@ -1,6 +1,11 @@
 = simple_form_for @position do |f|
-  = f.input :description, label: 'Descrição'
-  = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
+  .row
+    .col-xs-12.col-md-6
+      = f.input :description, label: 'Descrição'
+    .col-xs-12.col-md-4
+      = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
 
-  .actions
-    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+  = f.input :permissions, collection: permissions, as: :check_boxes, input_html: { class: 'mr-1' }
+
+  .actions.mb-3.mt-3
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...', class: 'btn btn-primary'

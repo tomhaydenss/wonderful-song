@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_23_000225) do
+ActiveRecord::Schema.define(version: 2019_07_09_023715) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -115,6 +115,13 @@ ActiveRecord::Schema.define(version: 2019_06_23_000225) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "permissions", force: :cascade do |t|
+    t.string "action"
+    t.string "subject"
+    t.bigint "position_id"
+    t.index ["position_id"], name: "index_permissions_on_position_id"
+  end
+
   create_table "phone_types", force: :cascade do |t|
     t.string "description", limit: 100, null: false
     t.datetime "created_at", null: false
@@ -148,7 +155,9 @@ ActiveRecord::Schema.define(version: 2019_06_23_000225) do
     t.string "access_level", default: "member", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["member_id"], name: "index_users_on_member_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -163,6 +172,8 @@ ActiveRecord::Schema.define(version: 2019_06_23_000225) do
   add_foreign_key "leaderships", "positions"
   add_foreign_key "members", "ensembles"
   add_foreign_key "members", "organizational_informations"
+  add_foreign_key "permissions", "positions"
   add_foreign_key "phones", "members"
   add_foreign_key "phones", "phone_types"
+  add_foreign_key "users", "members"
 end
