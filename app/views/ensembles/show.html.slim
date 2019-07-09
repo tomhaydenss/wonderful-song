@@ -36,6 +36,7 @@ table.table
       td= leadership.position.description
       td= leadership.appointment_date
 
-= link_to 'Editar', edit_ensemble_path(@ensemble)
-= '|'
+- if current_user&.can?('write', 'ensembles')
+  = link_to 'Editar', edit_ensemble_path(@ensemble)
+  = '|'
 = link_to 'Voltar', ensembles_path

@@ -11,6 +11,7 @@ table.table
     td
       =@position.precedence_order
 
-= link_to 'Editar', edit_position_path(@position)
-= '|'
+- if current_user&.can?('write', 'positions')
+  = link_to 'Editar', edit_position_path(@position)
+  = '|'
 = link_to 'Voltar', positions_path

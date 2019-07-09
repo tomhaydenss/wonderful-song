@@ -5,7 +5,11 @@
     .col-xs-12.col-md-4
       = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
 
-  = f.input :permissions, collection: permissions, as: :check_boxes, input_html: { class: 'mr-1' }
+  .row
+    - permissions.each do |p|
+      .col-xs-12.col-sm-6
+        = check_box_tag "permissions[]", p.identifier, @permissions && @permissions.include?(p.identifier), id: "permissions_#{p.identifier}", class: 'mr-1'
+        = label_tag "permissions_#{p.identifier}", p.description
 
   .actions.mb-3.mt-3
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...', class: 'btn btn-primary'

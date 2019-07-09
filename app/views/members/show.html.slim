@@ -72,6 +72,7 @@ table.table
       td= identity_document.complement
       td= identity_document.identity_document_type.description
 
-= link_to 'Editar', edit_member_path(@member)
-= '|'
+- if current_user&.can?('write', 'members')
+  = link_to 'Editar', edit_member_path(@member)
+  = '|'
 = link_to 'Voltar', members_path

@@ -1,17 +1,21 @@
-h1 Tipo Telefone
+.container
+  h1.mb-4 Tipo Telefone
 
-table.table
-  thead
-    tr
-      th Descrição
-      th Ações
-  tbody
-    - @phone_types.each do |phone_type|
+  - if current_user&.can?('write', 'phone_types')
+    = link_to 'Novo Tipo Telefone', new_phone_type_path, class: 'btn btn-primary mb-2'
+
+  table.table
+    thead
       tr
-        td= phone_type.description
-        td
-          = link_to 'Exibir', phone_type, class: 'btn btn-default btn-xs'
-          = link_to 'Editar', edit_phone_type_path(phone_type), class: 'btn btn-default btn-xs'
-          = link_to 'Excluir', phone_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        th Descrição
+        th Ações
+    tbody
+      - @phone_types.each do |phone_type|
+        tr
+          td= phone_type.description
+          td
+            = link_to 'Exibir', phone_type, class: 'btn btn-default btn-xs'
+            - if current_user&.can?('write', 'phone_types')
+              = link_to 'Editar', edit_phone_type_path(phone_type), class: 'btn btn-default btn-xs'
+              = link_to 'Excluir', phone_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Tipo Telefone', new_phone_type_path

@@ -3,7 +3,7 @@ module PositionsHelper
     options = []
     Permission::SUBJECTS.each do |subject|
       Permission::ACTIONS.each do |action|
-        options << I18n.t(action, scope: 'permissions.actions') + ' ' + I18n.t(subject, scope: 'permissions.subjects')
+        options << Permission.new(action: action, subject: subject)
       end
     end
     options

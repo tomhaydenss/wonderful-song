@@ -7,6 +7,7 @@ table.table
     td
       =@identity_document_type.description
 
-= link_to 'Editar', edit_identity_document_type_path(@identity_document_type)
-= '|'
+- if current_user&.can?('write', 'identity_document_types')
+  = link_to 'Editar', edit_identity_document_type_path(@identity_document_type)
+  = '|'
 = link_to 'Voltar', identity_document_types_path

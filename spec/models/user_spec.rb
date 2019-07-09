@@ -15,5 +15,11 @@ RSpec.describe User, type: :model do
       subject.member.positions.last.permissions.create(params)
       expect(subject.can? params[:action], params[:subject]).to eq true
     end
+
+    it 'returns false if user has no permission' do
+      params = { action: Permission::ACTIONS.sample, subject: Permission::SUBJECTS.sample }
+      subject.member.positions.last.permissions.delete_all
+      expect(subject.can? params[:action], params[:subject]).to eq false
+    end
   end
 end

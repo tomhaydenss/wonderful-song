@@ -1,25 +1,29 @@
-h1 Membros
+.container
+  h1.mb-4 Membros
 
-table.table
-  thead
-    tr
-      th Núcleo
-      th Nome
-      th Data de ingresso
-      th Data de aniversário
-      th Restrição Alimentar
-      th Ações
-  tbody
-    - @members.each do |member|
+  - if current_user&.can?('write', 'members')
+    = link_to 'Novo Membro', new_member_path, class: 'btn btn-primary mb-2'
+
+  table.table
+    thead
       tr
-        td= member.ensemble&.name
-        td= member.name
-        td= member.joining_date
-        td= member.birthdate
-        td= member.food_restrictions
-        td
-          = link_to 'Exibir', member, class: 'btn btn-default btn-xs'
-          = link_to 'Editar', edit_member_path(member), class: 'btn btn-default btn-xs'
-          = link_to 'Excluir', member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        th Núcleo
+        th Nome
+        th Data de ingresso
+        th Data de aniversário
+        th Restrição Alimentar
+        th Ações
+    tbody
+      - @members.each do |member|
+        tr
+          td= member.ensemble&.name
+          td= member.name
+          td= member.joining_date
+          td= member.birthdate
+          td= member.food_restrictions
+          td
+            = link_to 'Exibir', member, class: 'btn btn-default btn-xs'
+            - if current_user&.can?('write', 'members')
+              = link_to 'Editar', edit_member_path(member), class: 'btn btn-default btn-xs'
+              = link_to 'Excluir', member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Membro', new_member_path

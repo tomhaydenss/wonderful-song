@@ -11,6 +11,7 @@ table.table
     td
       =@ensemble_level.precedence_order
 
-= link_to 'Editar', edit_ensemble_level_path(@ensemble_level)
-= '|'
+- if current_user&.can?('write', 'ensemble_levels')
+  = link_to 'Editar', edit_ensemble_level_path(@ensemble_level)
+  = '|'
 = link_to 'Voltar', ensemble_levels_path

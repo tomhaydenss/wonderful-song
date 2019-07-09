@@ -7,4 +7,12 @@ class Permission < ApplicationRecord
   validates_presence_of :action, :subject
   validates_inclusion_of :action, in: ACTIONS
   validates_inclusion_of :subject, in: SUBJECTS
+
+  def description
+    I18n.t(action, scope: 'permissions.actions') + ' ' + I18n.t(subject, scope: 'permissions.subjects')
+  end
+
+  def identifier
+    action + '_' + subject
+  end
 end
