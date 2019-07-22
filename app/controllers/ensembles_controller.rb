@@ -72,7 +72,8 @@ class EnsemblesController < ApplicationController
     def ensemble_params
       params.require(:ensemble).permit(
         :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id, :leadership_purpose,
-        leaderships_attributes: [:id, :member_id, :position_id, :appointment_date, :_destroy],
+        leaders_attributes: [:id, :member_id, :appointment_date, :primary, :_destroy, 
+          leader_roles_attributes: [:id, :position_id, :additional_information, :primary, :_destroy]]
         )
     end
 end

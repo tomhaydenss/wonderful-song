@@ -30,11 +30,17 @@ table.table
 h3 Liderança
 
 table.table
-  -@ensemble.leaderships.each do |leadership|
+  tr
+    th= 'Líder'
+    th= 'Data Nomeação'
+    th= 'Função'
+    th= 'Informação Adicional'
+  -@ensemble.leaders.each do |leader|
     tr
-      td= leadership.member.name
-      td= leadership.position.description
-      td= leadership.appointment_date
+      td= leader.member.name
+      td= leader.appointment_date
+      td= leader.leader_roles.map(&:position).map(&:description).join(' + ')
+      td= leader.leader_roles.map(&:additional_information).reject(&:blank?).join(' + ')
 
 = link_to 'Editar', edit_ensemble_path(@ensemble)
 = '|'

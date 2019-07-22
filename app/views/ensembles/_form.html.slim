@@ -8,14 +8,14 @@
 
   ul.nav.nav-tabs role='tablist'
     li.active
-      = link_to 'Liderança', '#leaderships', data: {toggle: 'tab'}
+      = link_to 'Liderança', '#leaders', data: {toggle: 'tab'}
 
   .tab-content
-    #leaderships.tab-pane.active role='tabpanel'
-      = f.simple_fields_for :leaderships do |leadership|
-        = render 'leadership_fields', f: leadership
+    #leaders.tab-pane.active role='tabpanel'
+      = f.simple_fields_for :leaders do |leader|
+        = render 'leader_fields', f: leader
       .links
-        = link_to_add_association 'Incluir Líder', f, :leaderships
+        = link_to_add_association 'Incluir Líder', f, :leaders
 
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
