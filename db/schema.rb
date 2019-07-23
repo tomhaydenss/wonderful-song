@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_08_032219) do
+ActiveRecord::Schema.define(version: 2019_07_23_013108) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -106,22 +106,23 @@ ActiveRecord::Schema.define(version: 2019_07_08_032219) do
     t.string "food_restrictions", limit: 100
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.bigint "organizational_information_id"
     t.bigint "ensemble_id"
     t.text "additional_information"
+    t.bigint "membership_id"
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
-    t.index ["organizational_information_id"], name: "index_members_on_organizational_information_id"
+    t.index ["membership_id"], name: "index_members_on_membership_id"
   end
 
-  create_table "organizational_informations", force: :cascade do |t|
-    t.string "associated_code", limit: 10, null: false
-    t.date "convertion_date"
-    t.string "position", limit: 100
-    t.string "study_level", limit: 100
-    t.integer "conversions_made", default: 0
-    t.boolean "discussion_meeting", default: false
+  create_table "memberships", id: :integer, default: nil, force: :cascade do |t|
+    t.string "name", limit: 100
+    t.date "joining_date"
+    t.string "position", limit: 50
+    t.string "study_level", limit: 50
     t.boolean "sustaining_contribution", default: false
-    t.boolean "publications_subscription", default: false
+    t.jsonb "discussion_meeting", default: {}, null: false
+    t.jsonb "publications_subscriptions", default: {}, null: false
+    t.jsonb "members_sponsored", default: {}, null: false
+    t.jsonb "organizational_information", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -175,7 +176,7 @@ ActiveRecord::Schema.define(version: 2019_07_08_032219) do
   add_foreign_key "leaders", "ensembles"
   add_foreign_key "leaders", "members"
   add_foreign_key "members", "ensembles"
-  add_foreign_key "members", "organizational_informations"
+  add_foreign_key "members", "memberships"
   add_foreign_key "phones", "members"
   add_foreign_key "phones", "phone_types"
 end
