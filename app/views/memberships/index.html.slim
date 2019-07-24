@@ -1,0 +1,32 @@
+h1 Membros Associados
+
+= simple_form_for @membership do |f|
+  = f.file_field :csv_file, label: 'Arquivo .csv'
+  = f.button :submit, 'Importar Membros', disable_with: 'Por favor aguarde ...'
+
+table.table
+  thead
+    tr
+      th Código
+      th Nome
+      th Dt.Ingresso
+      th Função
+      th Grau de Estudo
+      th Contribuição
+      th Últ.Palestra
+      th Assinaturas
+      th Novos Membros
+      th Dados Organizacionais
+  tbody
+    - @memberships.each do |membership|
+      tr
+        td= membership.id
+        td= membership.name
+        td= membership.joining_date
+        td= membership.organizational_position
+        td= membership.study_level
+        td= membership.sustaining_contribution
+        td= membership.has_attended_to_last_meeting?
+        td= membership.has_subscribed_to_pulications?
+        td= membership.members_sponsored['total']
+        td= membership.fully_qualified_organization_name
