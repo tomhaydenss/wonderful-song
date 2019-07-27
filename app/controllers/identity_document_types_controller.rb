@@ -4,7 +4,7 @@ class IdentityDocumentTypesController < ApplicationController
   # GET /identity_document_types
   # GET /identity_document_types.json
   def index
-    @identity_document_types = IdentityDocumentType.all
+    @identity_document_types = IdentityDocumentType.order(:id).all
   end
 
   # GET /identity_document_types/1
