@@ -4,19 +4,17 @@ table.table
   thead
     tr
       th Núcleo
+      th Código
       th Nome
-      th Data de ingresso
       th Data de aniversário
-      th Restrição Alimentar
       th Ações
   tbody
     - @members.each do |member|
       tr
         td= member.ensemble&.name
+        td= member.membership_id
         td= member.name
-        td= member.joining_date
         td= member.birthdate
-        td= member.food_restrictions
         td
           = link_to 'Exibir', member, class: 'btn btn-default btn-xs'
           = link_to 'Editar', edit_member_path(member), class: 'btn btn-default btn-xs'

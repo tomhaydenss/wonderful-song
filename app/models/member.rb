@@ -8,5 +8,5 @@ class Member < ApplicationRecord
   has_many :leaders
   has_many :leader_roles, through: :leaders
 
-  accepts_nested_attributes_for :identity_documents, :phones, :emails, :addresses, :reject_if => :all_blank, :allow_destroy => true
+  accepts_nested_attributes_for :identity_documents, :phones, :addresses, :reject_if => :all_blank, :allow_destroy => true
 end
