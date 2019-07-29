@@ -1,6 +1,7 @@
 = simple_form_for @member do |f|
-  = f.input :name, label: 'Nome'
   = f.association :ensemble, label: 'Núcleo', collection: Ensemble.membership_purpose_only, label_method: :fully_qualified_name, value_method: :id, include_blank: true
+  = f.input :name, label: 'Nome'
+  = f.input :email, :label => 'E-Mail'
   = f.input :joining_date, label: 'Data de ingresso', as: :date, html5: true
   = f.input :birthdate, label: 'Data de nascimento', as: :date, html5: true
   = f.input :food_restrictions, label: 'Restrição alimentar'
@@ -9,8 +10,6 @@
   ul.nav.nav-tabs role='tablist'
     li.active
       = link_to 'Telefones', '#phones', data: {toggle: 'tab'}
-    li
-      = link_to 'E-Mails', '#emails', data: {toggle: 'tab'}
     li
       = link_to 'Endereços', '#addresses', data: {toggle: 'tab'}
     li
@@ -22,12 +21,6 @@
         = render 'phone_fields', f: phone
       .links
         = link_to_add_association 'Incluir Telefone', f, :phones
-
-    #emails.tab-pane role='tabpanel'
-      = f.simple_fields_for :emails do |email|
-        = render 'email_fields', f: email
-      .links
-        = link_to_add_association 'Incluir E-Mail', f, :emails
 
     #addresses.tab-pane role='tabpanel'
       = f.simple_fields_for :addresses do |address|

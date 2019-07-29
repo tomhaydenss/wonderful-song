@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_24_123753) do
+ActiveRecord::Schema.define(version: 2019_07_28_022224) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,15 +49,6 @@ ActiveRecord::Schema.define(version: 2019_07_24_123753) do
     t.string "number", limit: 10, null: false
     t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_addresses_on_member_id"
-  end
-
-  create_table "emails", force: :cascade do |t|
-    t.string "email_address", limit: 100, null: false
-    t.boolean "primary"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.bigint "member_id", null: false
-    t.index ["member_id"], name: "index_emails_on_member_id"
   end
 
   create_table "ensemble_levels", force: :cascade do |t|
@@ -130,6 +121,7 @@ ActiveRecord::Schema.define(version: 2019_07_24_123753) do
     t.bigint "ensemble_id"
     t.text "additional_information"
     t.bigint "membership_id"
+    t.string "email", limit: 100
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["membership_id"], name: "index_members_on_membership_id"
   end
@@ -188,7 +180,6 @@ ActiveRecord::Schema.define(version: 2019_07_24_123753) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "addresses", "members"
-  add_foreign_key "emails", "members"
   add_foreign_key "ensembles", "ensemble_levels"
   add_foreign_key "ensembles", "ensembles", column: "ensemble_parent_id"
   add_foreign_key "identity_documents", "identity_document_types"

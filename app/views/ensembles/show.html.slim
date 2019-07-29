@@ -39,8 +39,8 @@ table.table
     tr
       td= leader.member.name
       td= leader.appointment_date
-      td= leader.leader_roles.map(&:position).map(&:description).join(' + ')
-      td= leader.leader_roles.map(&:additional_information).reject(&:blank?).join(' + ')
+      td= leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:position).map(&:description).join(' + ')
+      td= leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:additional_information).reject(&:blank?).join(' + ')
 
 = link_to 'Editar', edit_ensemble_path(@ensemble)
 = '|'

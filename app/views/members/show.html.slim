@@ -3,13 +3,21 @@ h3 Dados do Membro
 
 table.table
   tr
+    td Núcleo
+    td
+      =@member.ensemble&.name
+  tr
+    td Código
+    td
+      =@member.membership_id
+  tr
     td Nome
     td
       =@member.name
   tr
-    td Núcleo
+    td E-Mail
     td
-      =@member.ensemble&.name
+      =@member.email
   tr
     td Data de ingresso
     td
@@ -35,13 +43,6 @@ table.table
       td= phone.phone_number
       td= phone.phone_type.description
       td= phone.additional_information
-
-h3 E-Mails
-
-table.table
-  -@member.emails.each do |email|
-    tr
-      td= email.email_address
 
 h3 Endereços
 
