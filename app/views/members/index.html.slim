@@ -1,5 +1,6 @@
 h1 Membros
-
+- @filterable_ensembles.each do |filter|
+  = link_to filter.name, members_path(ensemble_id: filter.id), class: params[:ensemble_id].to_i == filter.id ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
 table.table
   thead
     tr

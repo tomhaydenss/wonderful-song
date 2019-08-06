@@ -14,4 +14,13 @@ class Ensemble < ApplicationRecord
     return ensemble_parent.fully_qualified_name + ' » ' + name if ensemble_parent.present?
     name
   end
+
+  def filterable_ensembles
+    return self unless leadership_purpose
+    
+    ensembles.inject([]) do |array, ensemble|
+      array << ensemble.filterable_ensembles
+      array.flatten
+    end
+  end
 end

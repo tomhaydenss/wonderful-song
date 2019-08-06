@@ -1,10 +1,12 @@
 class MembersController < ApplicationController
+  before_action :set_filterable_ensembles, only: [:index]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
   # GET /members
   # GET /members.json
   def index
-    @members = Member.order(:name).all
+    filters = params.slice(:ensemble_id)
+    @members = Member.filter(filters).order(:name).all
   end
 
   # GET /members/1
@@ -62,6 +64,12 @@ class MembersController < ApplicationController
   end
 
   private
+    def set_filterable_ensembles
+      # TODO waiting for authorization impl
+      # @filterable_ensembles = current_user.member.highest_ensemble_level_through_leadership.filterable_ensembles
+      @filterable_ensembles = Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first.filterable_ensembles # admin only
+    end
+
     # Use callbacks to share common setup or constraints between actions.
     def set_member
       @member = Member.find(params[:id])
