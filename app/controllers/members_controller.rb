@@ -65,7 +65,7 @@ class MembersController < ApplicationController
 
   private
     def set_filterable_ensembles
-      # TODO waiting for athorization impl
+      # TODO waiting for authorization impl
       # @filterable_ensembles = current_user.member.highest_ensemble_level_through_leadership.filterable_ensembles
       @filterable_ensembles = Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first.filterable_ensembles # admin only
     end
