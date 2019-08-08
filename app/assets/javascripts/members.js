@@ -17,7 +17,7 @@ function findAddressByPostalCode(postalCodeField) {
       return response.json();
     })
     .then(address => {
-      if ((address.erro = true)) throw new Error();
+      if (address.erro) throw new Error();
 
       $neighborhood.value = address.bairro;
       $street.value = address.logradouro;
