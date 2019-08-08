@@ -1,6 +1,8 @@
 class MembershipsController < ApplicationController
   before_action :valid_file, only: [:create]
 
+  autocomplete :membership, :name, full: true
+
   def index
     @membership = Membership.new
     @memberships = Membership.order(:id).all

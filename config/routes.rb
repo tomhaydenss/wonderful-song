@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :positions
   resources :identity_document_types
   resources :memberships, only: [:index, :create]
+  resources :memberships do
+    get :autocomplete_membership_name, on: :collection
+  end
 
   get '/ongakutai', to: 'home#japan'
   get '/taiyo_ongakutai', to: 'home#brasil'

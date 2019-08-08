@@ -24,6 +24,8 @@ gem 'bootstrap-sass', '~> 3.4.1'
 gem 'cocoon'
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'rails4-autocomplete'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'slim'

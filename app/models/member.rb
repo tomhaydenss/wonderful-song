@@ -1,5 +1,7 @@
 class Member < ApplicationRecord
   include Filterable
+
+  validates :name, :membership_id, presence: true
   
   belongs_to :membership, optional: true
   belongs_to :ensemble, optional: true
