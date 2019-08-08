@@ -1,11 +1,11 @@
 .nested-fields.form-inline style='display:inline;'
-  = f.input :postal_code, label: 'CEP'
-  = f.input :street, label: 'Logradouro'
+  = f.input :postal_code, label: 'CEP', placeholder: '99999999', hint: 'Informe números apenas', input_html: { maxlength: 8, onblur: "findAddressByPostalCode(this)" }
+  = f.input :street, label: 'Logradouro', readonly: true
   = f.input :number, label: 'Número'
-  = f.input :additional_information, label: 'Complemento'
-  = f.input :neighborhood, label: 'Bairro'
-  = f.input :city, label: 'Cidade'
-  = f.input :state, label: 'Estado', priority: [ "SP" ], collection: [ "AC", "AL", "AP", "AM", "BA", "CE", "DF", "ES", "GO", "MA", "MT", "MS", "MG", "PA", "PB", "PR", "PE", "PI", "RJ", "RN", "RS", "RO", "RR", "SC", "SP", "SE", "TO" ]
+  = f.input :additional_information, label: 'Complemento', placeholder: 'Apt/Bloco/Quadra/etc'
+  = f.input :neighborhood, label: 'Bairro', readonly: true
+  = f.input :city, label: 'Cidade', readonly: true
+  = f.input :state, label: 'Estado', readonly: true
   / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false
   = link_to_remove_association 'Excluir Endereço', f
 
