@@ -2,10 +2,12 @@ class MembersController < ApplicationController
   before_action :set_filterable_ensembles, only: [:index]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  autocomplete :member, :name, full: true
+
   # GET /members
   # GET /members.json
   def index
-    filters = params.slice(:ensemble_id)
+    filters = params.slice(:ensemble_id, :search)
     @members = Member.filter(filters).order(:name).all.paginate(page: params[:page], per_page: 15)
   end
 

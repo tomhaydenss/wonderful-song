@@ -1,6 +1,13 @@
 h1 Membros
+
 = link_to 'Novo Membro', new_member_path
 br
+=form_tag(members_path, method: :get, id: 'search-form')
+  =text_field_tag :search, params[:search], placeholder: 'Pesquisar por nome', type: 'search', data: { autocomplete: members_autocomplete_member_name_path }
+  =submit_tag 'Pesquisar'
+javascript:
+  $('#search').bind('railsAutocomplete.select', function(event, data) { $('#search-form').submit() });
+
 - @filterable_ensembles.each do |filter|
   = link_to filter.name, members_path(ensemble_id: filter.id), class: params[:ensemble_id].to_i == filter.id ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
 table.table

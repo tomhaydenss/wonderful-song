@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  get 'members/autocomplete_member_name'
+    resources :members
+
   devise_for :users
   resources :members
   resources :ensemble_levels

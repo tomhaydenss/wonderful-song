@@ -12,6 +12,7 @@ class Member < ApplicationRecord
   has_many :leader_roles, through: :leaders
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
+  scope :search, ->(search) { where('name ILIKE ?', "%#{search}%") }
 
   accepts_nested_attributes_for :identity_documents, :phones, :addresses, :reject_if => :all_blank, :allow_destroy => true
 
