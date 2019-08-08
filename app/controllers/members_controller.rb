@@ -6,7 +6,7 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     filters = params.slice(:ensemble_id)
-    @members = Member.filter(filters).order(:name).all
+    @members = Member.filter(filters).order(:name).all.paginate(page: params[:page], per_page: 15)
   end
 
   # GET /members/1

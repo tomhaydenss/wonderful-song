@@ -4,7 +4,7 @@ class EnsembleLevelsController < ApplicationController
   # GET /ensemble_levels
   # GET /ensemble_levels.json
   def index
-    @ensemble_levels = EnsembleLevel.order(:precedence_order).all
+    @ensemble_levels = EnsembleLevel.order(:precedence_order).all.paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensemble_levels/1

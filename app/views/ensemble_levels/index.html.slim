@@ -1,5 +1,7 @@
 h1 Níveis de Núcleo
 
+= link_to 'Novo Nível de Núcleo', new_ensemble_level_path
+br
 table.table
   thead
     tr
@@ -16,4 +18,4 @@ table.table
           = link_to 'Editar', edit_ensemble_level_path(ensemble_level), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', ensemble_level, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Nível de Núcleo', new_ensemble_level_path
+= will_paginate @memberships, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

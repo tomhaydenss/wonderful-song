@@ -1,4 +1,6 @@
 h1 Membros
+= link_to 'Novo Membro', new_member_path
+br
 - @filterable_ensembles.each do |filter|
   = link_to filter.name, members_path(ensemble_id: filter.id), class: params[:ensemble_id].to_i == filter.id ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
 table.table
@@ -21,4 +23,4 @@ table.table
           = link_to 'Editar', edit_member_path(member), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Membro', new_member_path
+= will_paginate @members, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

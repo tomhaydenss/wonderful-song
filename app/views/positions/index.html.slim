@@ -1,5 +1,7 @@
 h1 Funções
 
+= link_to 'Nova Função', new_position_path
+br
 table.table
   thead
     tr
@@ -16,4 +18,4 @@ table.table
           = link_to 'Editar', edit_position_path(position), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', position, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Nova Função', new_position_path
+= will_paginate @positions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

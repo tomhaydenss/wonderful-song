@@ -5,7 +5,7 @@ class EnsemblesController < ApplicationController
   # GET /ensembles.json
   def index
     # @ensembles = Ensemble.includes(:ensemble_level).order('ensemble_levels.precedence_order')
-    @ensembles = Ensemble.order('id, foundation_date')
+    @ensembles = Ensemble.order('id, foundation_date').paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensembles/1

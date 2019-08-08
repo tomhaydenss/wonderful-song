@@ -1,5 +1,6 @@
 h1 Núcleo
-
+= link_to 'Novo Núcleo', new_ensemble_path
+br
 table.table
   thead
     tr
@@ -20,4 +21,4 @@ table.table
           = link_to 'Editar', edit_ensemble_path(ensemble), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Núcleo', new_ensemble_path
+= will_paginate @ensembles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

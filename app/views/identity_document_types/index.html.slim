@@ -1,5 +1,7 @@
 h1 Tipo Documento
 
+= link_to 'Novo Tipo Documento', new_identity_document_type_path
+br
 table.table
   thead
     tr
@@ -14,4 +16,4 @@ table.table
           = link_to 'Editar', edit_identity_document_type_path(identity_document_type), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', identity_document_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Tipo Documento', new_identity_document_type_path
+= will_paginate @identity_document_types, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

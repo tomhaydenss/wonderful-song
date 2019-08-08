@@ -4,7 +4,7 @@ class PhoneTypesController < ApplicationController
   # GET /phone_types
   # GET /phone_types.json
   def index
-    @phone_types = PhoneType.order(:id).all
+    @phone_types = PhoneType.order(:id).all.paginate(page: params[:page], per_page: 15)
   end
 
   # GET /phone_types/1

@@ -30,3 +30,5 @@ table.table
         td= membership.sustaining_contribution
         td= membership.members_sponsored['total']
         td= membership.fully_qualified_organization_name
+
+= will_paginate @memberships, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

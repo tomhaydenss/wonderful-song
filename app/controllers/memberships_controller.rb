@@ -5,7 +5,7 @@ class MembershipsController < ApplicationController
 
   def index
     @membership = Membership.new
-    @memberships = Membership.order(:id).all
+    @memberships = Membership.order(:id).all.paginate(page: params[:page], per_page: 15)
   end
 
   def create

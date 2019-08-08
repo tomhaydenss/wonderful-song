@@ -1,5 +1,7 @@
 h1 Tipo Telefone
 
+= link_to 'Novo Tipo Telefone', new_phone_type_path
+br
 table.table
   thead
     tr
@@ -14,4 +16,4 @@ table.table
           = link_to 'Editar', edit_phone_type_path(phone_type), class: 'btn btn-default btn-xs'
           = link_to 'Excluir', phone_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
 
-= link_to 'Novo Tipo Telefone', new_phone_type_path
+= will_paginate @phone_types, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

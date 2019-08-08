@@ -1,5 +1,5 @@
 .nested-fields.form-inline style='display:inline;'
-  = f.input :postal_code, label: 'CEP', placeholder: '99999999', hint: 'Informe números apenas', input_html: { maxlength: 8, onblur: "findAddressByPostalCode(this)" }
+  = f.input :postal_code, label: 'CEP', placeholder: '99999999', hint: 'Informe números apenas, ex: 01001000', input_html: { maxlength: 8, onblur: "findAddressByPostalCode(this)" }
   = f.input :street, label: 'Logradouro', readonly: true
   = f.input :number, label: 'Número'
   = f.input :additional_information, label: 'Complemento', placeholder: 'Apt/Bloco/Quadra/etc'
