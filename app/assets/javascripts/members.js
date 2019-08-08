@@ -12,19 +12,21 @@ function findAddressByPostalCode(postalCodeField) {
   const $state = document.querySelector(
     `[name="member[addresses_attributes][${id}][state]"]`
   );
-  fetch(`https://viacep.com.br/ws/${postalCodeField.value}/json/`)
-    .then(response => {
-      return response.json();
-    })
-    .then(address => {
-      if (address.erro) throw new Error();
+  if (postalCodeField.value.trim()) {
+    fetch(`https://viacep.com.br/ws/${postalCodeField.value}/json/`)
+      .then(response => {
+        return response.json();
+      })
+      .then(address => {
+        if (address.erro) throw new Error();
 
-      $neighborhood.value = address.bairro;
-      $street.value = address.logradouro;
-      $city.value = address.localidade;
-      $state.value = address.uf;
-    })
-    .catch(error => {
-      alert("Não foi possível encontrar um endereço para o CEP informado.");
-    });
+        $neighborhood.value = address.bairro;
+        $street.value = address.logradouro;
+        $city.value = address.localidade;
+        $state.value = address.uf;
+      })
+      .catch(error => {
+        alert("Não foi possível encontrar um endereço para o CEP informado.");
+      });
+  }
 }
