@@ -2,11 +2,13 @@ class MembersController < ApplicationController
   before_action :set_filterable_ensembles, only: [:index]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
 
+  autocomplete :member, :name, full: true
+
   # GET /members
   # GET /members.json
   def index
-    filters = params.slice(:ensemble_id)
-    @members = Member.filter(filters).order(:name).all
+    filters = params.slice(:ensemble_id, :search)
+    @members = Member.filter(filters).order(:name).all.paginate(page: params[:page], per_page: 15)
   end
 
   # GET /members/1
@@ -78,7 +80,7 @@ class MembersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.require(:member).permit(
-        :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information,
+        :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id,
         phones_attributes: [:id, :phone_number, :phone_type_id, :additional_information, :primary, :_destroy],
         emails_attributes: [:id, :email_address, :primary, :_destroy],
         addresses_attributes: [:id, :postal_code, :street, :number, :additional_information, :neighborhood, :city, :state, :primary, :_destroy],

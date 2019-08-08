@@ -1,5 +1,5 @@
 .nested-fields.form-inline style='display:inline;'
-  = f.input :phone_number, label: 'Número', placeholder: 'ex: (21) 988887777'
+  = f.input :phone_number, label: 'Número', placeholder: 'ex: (21) 98888-7777'
   = f.association :phone_type, collection: PhoneType.order(:id), label: 'Tipo', label_method: :description, value_method: :id, include_blank: false
   = f.input :additional_information, label: 'Obs'
   / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false

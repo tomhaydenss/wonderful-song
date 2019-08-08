@@ -1,9 +1,11 @@
 class MembershipsController < ApplicationController
   before_action :valid_file, only: [:create]
 
+  autocomplete :membership, :name, full: true
+
   def index
     @membership = Membership.new
-    @memberships = Membership.order(:id).all
+    @memberships = Membership.order(:id).all.paginate(page: params[:page], per_page: 15)
   end
 
   def create

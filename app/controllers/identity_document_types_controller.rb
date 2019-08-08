@@ -4,7 +4,7 @@ class IdentityDocumentTypesController < ApplicationController
   # GET /identity_document_types
   # GET /identity_document_types.json
   def index
-    @identity_document_types = IdentityDocumentType.order(:id).all
+    @identity_document_types = IdentityDocumentType.order(:id).all.paginate(page: params[:page], per_page: 15)
   end
 
   # GET /identity_document_types/1

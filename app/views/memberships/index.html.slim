@@ -12,10 +12,10 @@ table.table
       th Dt.Ingresso
       th Função
       th Grau de Estudo
-      th Contribuição
       th Últ.Palestra
       th Assinaturas
-      th Novos Membros
+      th Contribuição
+      th Membros Indicados
       th Dados Organizacionais
   tbody
     - @memberships.each do |membership|
@@ -25,8 +25,10 @@ table.table
         td= membership.joining_date
         td= membership.organizational_position
         td= membership.study_level
-        td= membership.sustaining_contribution
         td= membership.has_attended_to_last_meeting?
         td= membership.has_subscribed_to_pulications?
+        td= membership.sustaining_contribution
         td= membership.members_sponsored['total']
         td= membership.fully_qualified_organization_name
+
+= will_paginate @memberships, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

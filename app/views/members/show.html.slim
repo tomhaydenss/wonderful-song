@@ -4,75 +4,89 @@ h3 Dados do Membro
 table.table
   tr
     td Núcleo
-    td
-      =@member.ensemble&.name
-  tr
-    td Código
-    td
-      =@member.membership_id
+    td{colspan=3}=@member.ensemble&.fully_qualified_name
   tr
     td Nome
-    td
-      =@member.name
-  tr
+    td=@member.name
     td E-Mail
-    td
-      =@member.email
+    td=@member.email
   tr
     td Data de ingresso
-    td
-      =@member.joining_date
-  tr
+    td=@member.joining_date
     td Data de nascimento
-    td
-      =@member.birthdate
+    td=@member.birthdate
   tr
     td Restrição alimentar
-    td
-      =@member.food_restrictions
-  tr
+    td=@member.food_restrictions
     td Informações Adicionais
-    td
-      =@member.additional_information
+    td=@member.additional_information
+
+h3 Dados Organizacionais
+
+table.table
+  tr
+    td Organização
+    td{colspan=7}= @member.membership.fully_qualified_organization_name
+  tr
+    td Código
+    td Dt.Ingresso
+    td Função
+    td Grau de Estudo
+    td Últ.Palestra
+    td Assinaturas
+    td Contribuição
+    td Membros Indicados
+  tr
+    td= @member.membership.id
+    td= @member.membership.joining_date
+    td= @member.membership.organizational_position
+    td= @member.membership.study_level
+    td= @member.membership.has_attended_to_last_meeting? ? '✅' : '❌'
+    td= @member.membership.has_subscribed_to_pulications? ? '✅' : '❌'
+    td= @member.membership.sustaining_contribution ? '✅' : '❌'
+    td= @member.membership.members_sponsored['total']
 
 h3 Telefones
 
-table.table
-  -@member.phones.each do |phone|
-    tr
-      td= phone.phone_number
-      td= phone.phone_type.description
-      td= phone.additional_information
+- unless @member.phones.empty?
+  table.table
+    -@member.phones.each do |phone|
+      tr
+        td= phone.phone_number
+        td= phone.phone_type.description
+        td= phone.additional_information
 
 h3 Endereços
 
-table.table
-  tr
-    td Logradouro
-    td Número
-    td Complemento
-    td Bairro
-    td Cidade
-    td Estado
-    td CEP
-  -@member.addresses.each do |address|
+- unless @member.addresses.empty?
+  table.table
     tr
-      td= address.street
-      td= address.number
-      td= address.additional_information
-      td= address.neighborhood
-      td= address.city
-      td= address.state
-      td= address.postal_code
+      td Logradouro
+      td Número
+      td Complemento
+      td Bairro
+      td Cidade
+      td Estado
+      td CEP
+    -@member.addresses.each do |address|
+      tr
+        td= address.street
+        td= address.number
+        td= address.additional_information
+        td= address.neighborhood
+        td= address.city
+        td= address.state
+        td= address.postal_code
 
 h3 Documentos
 
-table.table
-  -@member.identity_documents.each do |identity_document|
-    tr
-      td= identity_document.number
-      td= identity_document.complement
-      td= identity_document.identity_document_type.description
+- unless @member.identity_documents.empty?
+  table.table
+    -@member.identity_documents.each do |identity_document|
+      tr
+        td= identity_document.identity_document_type.description
+        td= identity_document.number
+        td= identity_document.complement
 
 = link_to 'Editar', edit_member_path(@member)
 = '|'

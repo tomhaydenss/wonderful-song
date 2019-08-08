@@ -1,5 +1,7 @@
 class Member < ApplicationRecord
   include Filterable
+
+  validates :name, :membership_id, presence: true
   
   belongs_to :membership, optional: true
   belongs_to :ensemble, optional: true
@@ -10,6 +12,7 @@ class Member < ApplicationRecord
   has_many :leader_roles, through: :leaders
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
+  scope :search, ->(search) { where('name ILIKE ?', "%#{search}%") }
 
   accepts_nested_attributes_for :identity_documents, :phones, :addresses, :reject_if => :all_blank, :allow_destroy => true
 

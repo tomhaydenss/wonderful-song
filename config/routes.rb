@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   root to: 'home#index'
+  get 'members/autocomplete_member_name'
+    resources :members
+
   devise_for :users
   resources :members
   resources :ensemble_levels
@@ -8,6 +11,9 @@ Rails.application.routes.draw do
   resources :positions
   resources :identity_document_types
   resources :memberships, only: [:index, :create]
+  resources :memberships do
+    get :autocomplete_membership_name, on: :collection
+  end
 
   get '/ongakutai', to: 'home#japan'
   get '/taiyo_ongakutai', to: 'home#brasil'

@@ -1,30 +1,30 @@
-// $(document).ready(function() {
-//     $("#phones a.add_fields").
-//       data("association-insertion-position", 'before').
-//       data("association-insertion-node", 'this');
+function findAddressByPostalCode(postalCodeField) {
+  const id = postalCodeField.id.split("_")[3];
+  const $neighborhood = document.querySelector(
+    `[name="member[addresses_attributes][${id}][neighborhood]"]`
+  );
+  const $street = document.querySelector(
+    `[name="member[addresses_attributes][${id}][street]"]`
+  );
+  const $city = document.querySelector(
+    `[name="member[addresses_attributes][${id}][city]"]`
+  );
+  const $state = document.querySelector(
+    `[name="member[addresses_attributes][${id}][state]"]`
+  );
+  fetch(`https://viacep.com.br/ws/${postalCodeField.value}/json/`)
+    .then(response => {
+      return response.json();
+    })
+    .then(address => {
+      if ((address.erro = true)) throw new Error();
 
-//     $('#phones').bind('cocoon:after-insert',
-//          function(e, phone) {
-//              console.log('inserting new phone ...');
-//              $(".member-phone-fields a.add-phone").
-//                  data("association-insertion-position", 'after').
-//                  data("association-insertion-node", 'this');
-//              $(this).find('.member-phone-fields').bind('cocoon:after-insert',
-//                   function() {
-//                     console.log('insert new phone ...');
-//                     console.log($(this));
-//                     $(this).find(".phone_from_list").remove();
-//                     $(this).find("a.add_fields").hide();
-//                   });
-//          });
-
-//     $('.member-phone-fields').bind('cocoon:after-insert',
-//         function(e) {
-//             console.log('replace OLD phone ...');
-//             e.stopPropagation();
-//             console.log($(this));
-//             $(this).find(".phone_from_list").remove();
-//             $(this).find("a.add_fields").hide();
-//         });
-//     //$('body').tabs();
-// });
+      $neighborhood.value = address.bairro;
+      $street.value = address.logradouro;
+      $city.value = address.localidade;
+      $state.value = address.uf;
+    })
+    .catch(error => {
+      alert("Não foi possível encontrar um endereço para o CEP informado.");
+    });
+}
