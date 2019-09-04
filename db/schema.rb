@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_28_022224) do
+ActiveRecord::Schema.define(version: 2019_09_03_003244) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2019_07_28_022224) do
   end
 
   create_table "identity_documents", force: :cascade do |t|
-    t.string "number", limit: 25
+    t.string "number", limit: 100
     t.string "complement", limit: 25
     t.bigint "identity_document_type_id"
     t.datetime "created_at", null: false
