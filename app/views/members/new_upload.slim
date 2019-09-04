@@ -1,0 +1,5 @@
+h1 Importação de Membros
+
+= simple_form_for @member, url: members_upload_path, method: :post do |f|
+  = f.file_field :csv_file, label: 'Arquivo .csv'
+  = f.button :submit, 'Importar Membros', disable_with: 'Por favor aguarde ...'

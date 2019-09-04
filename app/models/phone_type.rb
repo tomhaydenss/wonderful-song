@@ -1,2 +1,4 @@
 class PhoneType < ApplicationRecord
-end
+    scope :mobile, -> { where(description: 'Celular').first }
+    scope :home, -> { where(description: 'Residencial').first }
+  end

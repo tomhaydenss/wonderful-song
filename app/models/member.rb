@@ -10,6 +10,7 @@ class Member < ApplicationRecord
   has_many :identity_documents, dependent: :delete_all
   has_many :leaders
   has_many :leader_roles, through: :leaders
+  has_one_attached :csv_file
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
   scope :search, ->(search) { where('name ILIKE ?', "%#{search}%") }

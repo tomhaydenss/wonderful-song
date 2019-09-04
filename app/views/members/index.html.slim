@@ -1,6 +1,7 @@
 h1 Membros
 
-= link_to 'Novo Membro', new_member_path
+= link_to 'Novo Membro', new_member_path, class: "btn"
+= link_to 'Importação', members_upload_new_path, class: "btn"
 br
 =form_tag(members_path, method: :get, id: 'search-form')
   =text_field_tag :search, params[:search], placeholder: 'Pesquisar por nome', type: 'search', data: { autocomplete: members_autocomplete_member_name_path }

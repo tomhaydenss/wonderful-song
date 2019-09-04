@@ -1,6 +1,7 @@
 class MembersController < ApplicationController
   before_action :set_filterable_ensembles, only: [:index]
   before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :new_member, only: [:new, :new_upload]
 
   autocomplete :member, :name, full: true
 
@@ -17,9 +18,7 @@ class MembersController < ApplicationController
   end
 
   # GET /members/new
-  def new
-    @member = Member.new
-  end
+  def new; end
 
   # GET /members/1/edit
   def edit
@@ -65,6 +64,14 @@ class MembersController < ApplicationController
     end
   end
 
+  def new_upload; end
+
+  def upload
+    @member = Member.new(member_params)
+    MemberImportJob.perform_now(@member)
+    redirect_to members_path, flash: { success: 'Member file was successfully uploaded.' }
+  end
+
   private
     def set_filterable_ensembles
       # TODO waiting for authorization impl
@@ -77,10 +84,14 @@ class MembersController < ApplicationController
       @member = Member.find(params[:id])
     end
 
+    def new_member
+      @member = Member.new
+    end
+
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.require(:member).permit(
-        :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id,
+        :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id, :csv_file,
         phones_attributes: [:id, :phone_number, :phone_type_id, :additional_information, :primary, :_destroy],
         emails_attributes: [:id, :email_address, :primary, :_destroy],
         addresses_attributes: [:id, :postal_code, :street, :number, :additional_information, :neighborhood, :city, :state, :primary, :_destroy],
