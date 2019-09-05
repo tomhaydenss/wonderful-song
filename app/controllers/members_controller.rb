@@ -1,6 +1,6 @@
 class MembersController < ApplicationController
-  before_action :set_filterable_ensembles, only: [:index]
-  before_action :set_member, only: [:show, :edit, :update, :destroy]
+  before_action :set_available_ensembles, only: [:index, :new]
+  before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
   before_action :new_member, only: [:new, :new_upload]
 
   autocomplete :member, :name, full: true
@@ -72,16 +72,18 @@ class MembersController < ApplicationController
     redirect_to members_path, flash: { success: 'Member file was successfully uploaded.' }
   end
 
+  def new_transfer; end
+
   private
-    def set_filterable_ensembles
+    def set_available_ensembles
       # TODO waiting for authorization impl
       # @filterable_ensembles = current_user.member.highest_ensemble_level_through_leadership.filterable_ensembles
-      @filterable_ensembles = Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first.filterable_ensembles # admin only
+      @available_ensembles = Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first.filterable_ensembles # admin only
     end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_member
-      @member = Member.find(params[:id])
+      @member = Member.find(params[:id] || params[:member_id])
     end
 
     def new_member

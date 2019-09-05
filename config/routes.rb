@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   post 'members/upload', to: 'members#upload'
 
   devise_for :users
-  resources :members
+  resources :members do
+    resources :transfers, only: [:new], to: 'members#new_transfer'
+  end
   resources :ensemble_levels
   resources :ensembles
   resources :phone_types

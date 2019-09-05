@@ -1,5 +1,8 @@
 = simple_form_for @member do |f|
-  = f.association :ensemble, label: 'Núcleo', collection: Ensemble.membership_purpose_only, label_method: :fully_qualified_name, value_method: :id, include_blank: true
+  - if @member.new_record?
+    = f.association :ensemble, label: 'Núcleo', collection: EnsembleHelper.ensembles_as_grouped_options(@available_ensembles), as: :grouped_select, group_method: :last, include_blank: true
+  - else
+    = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: {value: @member.ensemble.name }
   = f.input :membership_id, label: 'Código de Membro', readonly: true
   = f.input :name, label: 'Nome', url: memberships_autocomplete_membership_name_path, as: :autocomplete, id_element: '#member_membership_id'
   = f.input :email, label: 'E-Mail'
