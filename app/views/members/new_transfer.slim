@@ -1,0 +1,11 @@
+h1 Transferir Membro
+
+= simple_form_for @member do |f|
+  = f.input :id, as: :hidden
+  = f.input :name, label: 'Nome', readonly: true
+  p
+    b Selecione o Núcleo de destino
+  = f.input :ensemble_id, label: false, collection: EnsembleHelper.ensembles_as_grouped_options(Ensemble.membership_purpose_only), as: :grouped_select, group_method: :last, include_blank: false, input_html: { size: 15}
+  = f.button :submit, 'Tranferir Membro', disable_with: 'Por favor aguarde ...'
+
+= link_to 'Voltar', @member
