@@ -28,7 +28,7 @@ h3 Dados Organizacionais
 table.table
   tr
     td Organização
-    td{colspan=7}= @member.membership.fully_qualified_organization_name
+    td{colspan=7}= @member.membership&.fully_qualified_organization_name
   tr
     td Código
     td Dt.Ingresso
@@ -39,14 +39,14 @@ table.table
     td Contribuição
     td Membros Indicados
   tr
-    td= @member.membership.id
-    td= @member.membership.joining_date
-    td= @member.membership.organizational_position
-    td= @member.membership.study_level
-    td= @member.membership.has_attended_to_last_meeting? ? '✅' : '❌'
-    td= @member.membership.has_subscribed_to_pulications? ? '✅' : '❌'
-    td= @member.membership.sustaining_contribution ? '✅' : '❌'
-    td= @member.membership.members_sponsored['total']
+    td= @member.membership&.id
+    td= @member.membership&.joining_date
+    td= @member.membership&.organizational_position
+    td= @member.membership&.study_level
+    td= @member.membership&.has_attended_to_last_meeting? ? '✅' : '❌'
+    td= @member.membership&.has_subscribed_to_pulications? ? '✅' : '❌'
+    td= @member.membership&.sustaining_contribution ? '✅' : '❌'
+    td= @member.membership.present? ? @member.membership.members_sponsored['total'] : ''
 
 h3 Telefones
 
