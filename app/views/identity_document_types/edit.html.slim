@@ -1,7 +1,4 @@
-h1 Tipo Documento
+.page-header
+  h2 Alterar Tipo Documento
 
-== render 'form'
-
-= link_to 'Exibir', @identity_document_type
-= '|'
-= link_to 'Voltar', identity_document_types_path
+== render 'form', back_button_action: @identity_document_type

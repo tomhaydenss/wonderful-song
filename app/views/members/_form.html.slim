@@ -2,9 +2,11 @@
   - if @member.new_record?
     = f.association :ensemble, label: 'Núcleo', collection: EnsembleHelper.ensembles_as_grouped_options(@available_ensembles), as: :grouped_select, group_method: :last, include_blank: true
   - else
-    = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: {value: @member.ensemble&.name }
-  = f.input :membership_id, label: 'Código de Membro', readonly: true
-  = f.input :name, label: 'Nome', url: memberships_autocomplete_membership_name_path, as: :autocomplete, id_element: '#member_membership_id'
+    = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: { value: @member.ensemble&.name }
+  = f.input :membership_id, label: 'Código de Membro', readonly: true, input_html: { tabindex: -1 }
+  .form-group
+    = label_tag(:name, 'Nome')
+    = text_field_tag :name, params[:search], class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id' }
   = f.input :email, label: 'E-Mail'
   = f.input :joining_date, label: 'Data de ingresso', as: :date, html5: true
   = f.input :birthdate, label: 'Data de nascimento', as: :date, html5: true
@@ -24,19 +26,26 @@
       = f.simple_fields_for :phones do |phone|
         = render 'phone_fields', f: phone
       .links
-        = link_to_add_association 'Incluir Telefone', f, :phones
+        = link_to_add_association f, :phones, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Telefone
 
     #addresses.tab-pane role='tabpanel'
       = f.simple_fields_for :addresses do |address|
         = render 'address_fields', f: address
       .links
-        = link_to_add_association 'Incluir Endereço', f, :addresses
+        = link_to_add_association f, :addresses, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Endereço
 
     #documents.tab-pane role='tabpanel'
       = f.simple_fields_for :identity_documents do |identity_document|
         = render 'identity_document_fields', f: identity_document
       .links
-        = link_to_add_association 'Incluir Documento', f, :identity_documents
-
+        = link_to_add_association f, :identity_documents, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Documento
+  hr
   .actions
-    = f.button :submit, 'Salvar Membro', disable_with: 'Por favor aguarde ...'
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', back_button_action, class: 'btn btn-default'

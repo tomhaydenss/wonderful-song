@@ -3,19 +3,21 @@
   = f.input :foundation_date, label: 'Data de Fundação', as: :date, html5: true
   = f.association :ensemble_level, label: 'Nível', label_method: :description, value_method: :id, include_blank: false
   = f.association :ensemble_parent, label: 'Pertencente a', collection: Ensemble.leadership_purpose_only, label_method: :fully_qualified_name, value_method: :id, include_blank: true
-  = f.input :leadership_purpose, label: 'Liderança apenas', as: :boolean
-  = f.input :history, label: 'Histórico', as: :text
+  = f.input :leadership_purpose, label: 'Liderança apenas?', as: :boolean, wrapper: :checkbox
 
   ul.nav.nav-tabs role='tablist'
     li.active
-      = link_to 'Liderança', '#leaders', data: {toggle: 'tab'}
+      = link_to 'Liderança', '#leaders', data: { toggle: 'tab' }
 
   .tab-content
     #leaders.tab-pane.active role='tabpanel'
       = f.simple_fields_for :leaders do |leader|
         = render 'leader_fields', f: leader
       .links
-        = link_to_add_association 'Incluir Líder', f, :leaders
-
+        = link_to_add_association f, :leaders, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Líder
+  hr
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', back_button_action, class: 'btn btn-default'

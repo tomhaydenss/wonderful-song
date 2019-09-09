@@ -1,7 +1,4 @@
-h1 Tipo Telefone
+.page-header
+  h2 Alterar Tipo Telefone
 
-== render 'form'
-
-= link_to 'Exibir', @phone_type
-= '|'
-= link_to 'Voltar', phone_types_path
+== render 'form', back_button_action: @phone_type

@@ -1,11 +1,12 @@
-.nested-fields.form-inline style='display:inline;'
-  = f.input :postal_code, label: 'CEP', placeholder: '99999999', hint: 'Informe números apenas, ex: 01001000', input_html: { maxlength: 8, onblur: "findAddressByPostalCode(this)" }
-  = f.input :street, label: 'Logradouro', readonly: true
-  = f.input :number, label: 'Número'
-  = f.input :additional_information, label: 'Complemento', placeholder: 'Apt/Bloco/Quadra/etc'
-  = f.input :neighborhood, label: 'Bairro', readonly: true
-  = f.input :city, label: 'Cidade', readonly: true
-  = f.input :state, label: 'Estado', readonly: true
-  / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false
-  = link_to_remove_association 'Excluir Endereço', f
-
+.nested-fields.well.well-compact
+  .form-inline
+    = f.input :postal_code, label: 'CEP', placeholder: '99999999', hint: 'Informe números apenas, ex: 01001000', input_html: { maxlength: 8, onblur: "findAddressByPostalCode(this)" }
+    = f.input :street, label: 'Logradouro', readonly: true, input_html: { tabindex: -1 }
+    = f.input :number, label: 'Número'
+    = f.input :additional_information, label: 'Complemento', placeholder: 'Apt/Bloco/Quadra/etc'
+    = f.input :neighborhood, label: 'Bairro', readonly: true, input_html: { tabindex: -1 }
+    = f.input :city, label: 'Cidade', readonly: true, input_html: { tabindex: -1 }
+    = f.input :state, label: 'Estado', readonly: true, input_html: { tabindex: -1 }
+    = link_to_remove_association f, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger btn-xs' do
+      .glyphicon.glyphicon-remove
+      | Excluir este endereço

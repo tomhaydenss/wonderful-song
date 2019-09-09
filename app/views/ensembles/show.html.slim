@@ -1,47 +1,44 @@
+.page-header
+  h2 Visualizar Núcleo
+  .btn-group
+    =link_to 'Alterar', edit_ensemble_path(@ensemble), class: 'btn btn-default'
+    =link_to 'Excluir', @ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Voltar', ensembles_path, class: 'btn btn-default'
 
 h3 Dados do Núcleo
+h6
+  b Nome
+p =@ensemble.name
 
-table.table
-  tr
-    td Nome
-    td
-      =@ensemble.name
-  tr
-    td Data de Fundação
-    td
-      =@ensemble.foundation_date
-  tr
-    td Nível
-    td
-      =@ensemble.ensemble_level.description
-  tr
-    td Pertence a
-    td
-      =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
-  tr
-    td Liderança apenas
-    td
-      =@ensemble.leadership_purpose ? "sim" : "não"
-  tr
-    td Histórico
-    td
-      =@ensemble.history
+h6
+  b Data de Fundação
+p =@ensemble.foundation_date
+
+h6
+  b Nível
+p =@ensemble.ensemble_level.description
+
+h6
+  b Pertence a
+p =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
+
+h6
+  b Liderança apenas
+p =@ensemble.leadership_purpose ? "sim" : "não"
+
 
 h3 Liderança
-
-table.table
-  tr
-    th= 'Líder'
-    th= 'Data Nomeação'
-    th= 'Função'
-    th= 'Informação Adicional'
-  -@ensemble.leaders.each do |leader|
+table class=['table', 'table-striped']
+  thead
     tr
-      td= leader.member.name
-      td= leader.appointment_date
-      td= leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:position).map(&:description).join(' + ')
-      td= leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:additional_information).reject(&:blank?).join(' + ')
-
-= link_to 'Editar', edit_ensemble_path(@ensemble)
-= '|'
-= link_to 'Voltar', ensembles_path
+      th Líder
+      th Data Nomeação
+      th Função
+      th Informação Adicional
+  tbody
+    -@ensemble.leaders.each do |leader|
+      tr
+        td =leader.member.name
+        td =leader.appointment_date
+        td =leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:position).map(&:description).join(' + ')
+        td =leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:additional_information).reject(&:blank?).join(' + ')

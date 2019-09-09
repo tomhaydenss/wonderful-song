@@ -1,10 +1,11 @@
-h1 Membros Associados
+.page-header
+  h2 Membros Associados
 
 = simple_form_for @membership do |f|
   = f.file_field :csv_file, label: 'Arquivo .csv'
-  = f.button :submit, 'Importar Membros', disable_with: 'Por favor aguarde ...'
+  = f.button :submit, 'Importar', disable_with: 'Por favor aguarde ...'
 
-table.table
+table class=['table', 'table-striped']
   thead
     tr
       th Código
@@ -31,4 +32,4 @@ table.table
         td= membership.members_sponsored['total']
         td= membership.fully_qualified_organization_name
 
-= will_paginate @memberships, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+= will_paginate @memberships, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'
