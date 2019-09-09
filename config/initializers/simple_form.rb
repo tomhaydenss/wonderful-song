@@ -13,7 +13,7 @@ SimpleForm.setup do |config|
   # wrapper, change the order or even add your own to the
   # stack. The options given below are used to wrap the
   # whole input.
-  config.wrappers :default, class: :input,
+  config.wrappers :default, class: 'form-group',
     hint_class: :field_with_hint, error_class: :field_with_errors, valid_class: :field_without_errors do |b|
     ## Extensions enabled by default
     # Any of these extensions can be disabled for a
@@ -53,7 +53,8 @@ SimpleForm.setup do |config|
 
     ## Inputs
     # b.use :input, class: 'input', error_class: 'is-invalid', valid_class: 'is-valid'
-    b.use :label_input
+    b.use :label
+    b.use :input, class: 'form-control'
     b.use :hint,  wrap_with: { tag: :span, class: :hint }
     b.use :error, wrap_with: { tag: :span, class: :error }
 
@@ -71,7 +72,7 @@ SimpleForm.setup do |config|
   # Defaults to :nested for bootstrap config.
   #   inline: input + label
   #   nested: label > input
-  config.boolean_style = :nested
+  config.boolean_style = :inline
 
   # Default class for buttons
   config.button_class = 'btn'
@@ -179,4 +180,14 @@ SimpleForm.setup do |config|
   # Defines validation classes to the input_field. By default it's nil.
   # config.input_field_valid_class = 'is-valid'
   # config.input_field_error_class = 'is-invalid'
+
+  config.wrappers :checkbox, class: 'form-check' do |b|
+    b.use :input, class: 'form-check-input'
+    b.use :label, class: 'form-check-label'
+  end
+
+  config.wrappers :checkbox_inline, class: 'form-group' do |b|
+    b.use :input, class: 'form-check-input'
+    b.use :label, class: 'form-check-label'
+  end
 end

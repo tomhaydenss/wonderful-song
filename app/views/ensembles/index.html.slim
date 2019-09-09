@@ -1,25 +1,19 @@
-h1 Núcleo
+.page-header
+  h2 Núcleos
+  .btn-group
+    =link_to 'Incluir', new_ensemble_path, class: 'btn btn-default'
 
-= link_to 'Novo Núcleo', new_ensemble_path
-br
-table.table
+table class=['table', 'table-striped']
   thead
     tr
       th Nome
-      th Data de Fundação
       th Nível
       th Pertencente a
-      th Ações
   tbody
     - @ensembles.each do |ensemble|
       tr
-        td= ensemble.name
-        td= ensemble.foundation_date
-        td= ensemble.ensemble_level.description
-        td= ensemble.ensemble_parent&.name
-        td
-          = link_to 'Exibir', ensemble, class: 'btn btn-default btn-xs'
-          = link_to 'Editar', edit_ensemble_path(ensemble), class: 'btn btn-default btn-xs'
-          = link_to 'Excluir', ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td =link_to ensemble.name, ensemble
+        td =ensemble.ensemble_level.description
+        td =ensemble.ensemble_parent&.name
 
-= will_paginate @ensembles, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+=will_paginate @ensembles, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

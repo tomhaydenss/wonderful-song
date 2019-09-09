@@ -31,7 +31,7 @@ gem 'simple_form'
 gem 'slim'
 gem 'slim-rails', require: false
 gem 'webpacker' # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
-gem 'will_paginate-bootstrap4'
+gem 'will_paginate-bootstrap'
 
 
 group :development, :test do

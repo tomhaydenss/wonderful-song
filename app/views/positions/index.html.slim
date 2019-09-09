@@ -1,21 +1,17 @@
-h1 Funções
+.page-header
+  h2 Funções
+  .btn-group
+    =link_to 'Incluir', new_position_path, class: 'btn btn-default'
 
-= link_to 'Nova Função', new_position_path
-br
-table.table
+table class=['table', 'table-striped']
   thead
     tr
       th Descrição
       th Ordem de Precedência
-      th Ações
   tbody
     - @positions.each do |position|
       tr
-        td= position.description
-        td= position.precedence_order
-        td
-          = link_to 'Exibir', position, class: 'btn btn-default btn-xs'
-          = link_to 'Editar', edit_position_path(position), class: 'btn btn-default btn-xs'
-          = link_to 'Excluir', position, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td =link_to position.description, position
+        td =position.precedence_order
 
-= will_paginate @positions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+=will_paginate @positions, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'
