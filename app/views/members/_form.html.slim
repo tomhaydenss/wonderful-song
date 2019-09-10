@@ -6,9 +6,9 @@
   = f.input :membership_id, label: 'Código de Membro', readonly: true, input_html: { tabindex: -1 }
   .form-group
     = label_tag(:name, 'Nome')
-    = text_field_tag :name, params[:search], class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id' }
+    = text_field_tag :name, (params[:search] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { email: '#member_email', birthdate: '#member_birthdate'} }
   = f.input :email, label: 'E-Mail'
-  = f.input :joining_date, label: 'Data de ingresso', as: :date, html5: true
+  = f.input :joining_date, label: 'Data de ingresso no grupo', as: :date, html5: true
   = f.input :birthdate, label: 'Data de nascimento', as: :date, html5: true
   = f.input :food_restrictions, label: 'Restrição alimentar'
   = f.input :additional_information, label: 'Informações adicionais', as: :text

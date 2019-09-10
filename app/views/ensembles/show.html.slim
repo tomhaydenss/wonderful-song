@@ -18,13 +18,14 @@ h6
   b Nível
 p =@ensemble.ensemble_level.description
 
-h6
-  b Pertence a
-p =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
+- if @ensemble.ensemble_parent.present?
+  h6
+    b Pertence a
+  p =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
 
 h6
   b Liderança apenas
-p =@ensemble.leadership_purpose ? "sim" : "não"
+p =@ensemble.leadership_purpose ? '✅' : '❌'
 
 
 h3 Liderança
