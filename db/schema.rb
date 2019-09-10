@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_03_003244) do
+ActiveRecord::Schema.define(version: 2019_09_10_004839) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -129,7 +129,6 @@ ActiveRecord::Schema.define(version: 2019_09_03_003244) do
   create_table "memberships", id: :integer, default: nil, force: :cascade do |t|
     t.string "name", limit: 100
     t.date "joining_date"
-    t.string "organizational_position", limit: 50
     t.string "study_level", limit: 50
     t.boolean "sustaining_contribution", default: false
     t.jsonb "discussion_meeting", default: {}, null: false
@@ -138,6 +137,10 @@ ActiveRecord::Schema.define(version: 2019_09_03_003244) do
     t.jsonb "organizational_information", default: {}, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.jsonb "organizational_positions", default: {}, null: false
+    t.date "birthdate"
+    t.string "email", limit: 100
+    t.jsonb "phones", default: {}, null: false
   end
 
   create_table "phone_types", force: :cascade do |t|

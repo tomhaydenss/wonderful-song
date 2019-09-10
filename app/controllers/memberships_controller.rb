@@ -1,7 +1,7 @@
 class MembershipsController < ApplicationController
   before_action :valid_file, only: [:create]
 
-  autocomplete :membership, :name, full: true
+  autocomplete :membership, :name, full: true, extra_data: [:email, :birthdate]
 
   def index
     @membership = Membership.new

@@ -11,6 +11,10 @@ class Membership < ApplicationRecord
   end
 
   def fully_qualified_organization_name
-    organizational_information['organizations'].map { |item| item['name'] }.reject(&:blank?).join(' » ')
+    organizational_information['organizations'].map { |item| "#{item['level']} #{item['name']}" }.reject(&:blank?).join(' » ')
+  end
+
+  def organizational_position
+    organizational_positions.fetch('positions', {}).map { |item| item['position'] }.reject(&:blank?).join(' / ')
   end
 end

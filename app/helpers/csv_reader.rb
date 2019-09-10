@@ -9,6 +9,12 @@ class CSVReader
     @blob = blob
   end
 
+  def headers
+    download_blob_to_tempfile do |file|
+      return CSV.read(file, headers: true).headers
+    end
+  end
+
   def each_line
     download_blob_to_tempfile do |file|
       CSV.foreach(file, headers: true).with_index(2) do |row, index|
