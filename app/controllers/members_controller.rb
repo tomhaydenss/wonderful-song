@@ -34,6 +34,7 @@ class MembersController < ApplicationController
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
       else
+        set_available_ensembles
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
@@ -95,7 +96,6 @@ class MembersController < ApplicationController
       params.require(:member).permit(
         :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id, :csv_file,
         phones_attributes: [:id, :phone_number, :phone_type_id, :additional_information, :primary, :_destroy],
-        emails_attributes: [:id, :email_address, :primary, :_destroy],
         addresses_attributes: [:id, :postal_code, :street, :number, :additional_information, :neighborhood, :city, :state, :primary, :_destroy],
         identity_documents_attributes: [:id, :number, :complement, :identity_document_type_id, :_destroy]
       )

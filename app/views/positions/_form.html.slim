@@ -1,5 +1,5 @@
 = simple_form_for @position do |f|
-  = f.input :description, label: 'Descrição'
+  = f.input :description, label: 'Descrição', input_html: { maxlength: 100 }
   = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
 
   .actions

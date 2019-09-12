@@ -17,8 +17,7 @@ class FullMembershipParser
   private
 
   def name(row)
-    name = row['Nome'].strip
-    NameFormatter.format(name)
+    row['Nome'].strip
   end
 
   def joining_date(row)

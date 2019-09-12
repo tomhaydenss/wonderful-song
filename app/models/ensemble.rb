@@ -5,6 +5,9 @@ class Ensemble < ApplicationRecord
   has_many :members
   has_many :leaders
 
+  validates :name, presence: true
+  validates :name, uniqueness: { case_sensitive: false }
+
   accepts_nested_attributes_for :leaders, reject_if: :all_blank, allow_destroy: true
 
   scope :leadership_purpose_only, -> { where(leadership_purpose: true) }

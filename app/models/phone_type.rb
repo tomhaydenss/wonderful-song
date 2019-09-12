@@ -1,4 +1,7 @@
 class PhoneType < ApplicationRecord
-    scope :mobile, -> { where(description: 'Celular').first }
-    scope :home, -> { where(description: 'Residencial').first }
-  end
+  validates :description, presence: true
+  validates :description, uniqueness: { case_sensitive: false }
+  
+  scope :mobile, -> { where(description: 'Celular').first }
+  scope :home, -> { where(description: 'Residencial').first }
+end
