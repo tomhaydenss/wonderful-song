@@ -5,41 +5,37 @@
     =link_to 'Excluir', @ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
     =link_to 'Voltar', ensembles_path, class: 'btn btn-default'
 
-h3 Dados do Núcleo
-h6
-  b Nome
-p =@ensemble.name
-
-h6
-  b Data de Fundação
-p =@ensemble.foundation_date
-
-h6
-  b Nível
-p =@ensemble.ensemble_level.description
-
-- if @ensemble.ensemble_parent.present?
-  h6
-    b Pertence a
-  p =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
-
-h6
-  b Liderança apenas
-p =@ensemble.leadership_purpose ? '✅' : '❌'
-
-
-h3 Liderança
-table class=['table', 'table-striped']
-  thead
-    tr
-      th Líder
-      th Data Nomeação
-      th Função
-      th Informação Adicional
-  tbody
-    -@ensemble.leaders.each do |leader|
+div class=['panel', 'panel-default']
+  .panel-heading
+    b Dados do Núcleo
+  table class=['table', 'table-striped']
+    thead
       tr
-        td =leader.member.name
-        td =leader.appointment_date
-        td =leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:position).map(&:description).join(' + ')
-        td =leader.leader_roles.includes(:position).order('positions.precedence_order').map(&:additional_information).reject(&:blank?).join(' + ')
+        th Nome
+        th Nível
+        th Pertence a
+        th Liderança apenas?
+    tbody
+      tr
+        td =@ensemble.name
+        td =@ensemble.ensemble_level.description
+        td =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
+        td =@ensemble.leadership_purpose ? '✅' : '❌'
+
+div class=['panel', 'panel-default']
+  .panel-heading
+    b Liderança
+  table class=['table', 'table-striped']
+    thead
+      tr
+        th Líder
+        th Data Nomeação
+        th Função
+        th Informação Adicional
+    tbody
+      -@ensemble.leaders.each do |leader|
+        tr
+          td =leader.member.name
+          td =leader.appointment_date
+          td =leader.positions
+          td =leader.positions_complements

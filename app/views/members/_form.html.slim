@@ -5,21 +5,25 @@
     = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: { value: @member.ensemble&.name }
   = f.input :membership_id, label: 'Código de Membro', readonly: true, input_html: { tabindex: -1 }
   .form-group
-    = label_tag(:name, 'Nome')
-    = text_field_tag :name, (params[:search] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { email: '#member_email', birthdate: '#member_birthdate'} }
-  = f.input :email, label: 'E-Mail'
+    = label_tag 'member[name]' do
+      abbr title="required" = '*'
+      = ' Nome'
+    = text_field_tag 'member[name]', (params[:name] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { email: '#member_email', birthdate: '#member_birthdate'} }
+    - if @member.errors[:name].any?
+      span.error = @member.errors['name'].join(' / ')
+  = f.input :email, label: 'E-Mail', input_html: { maxlength: 100 }
   = f.input :joining_date, label: 'Data de ingresso no grupo', as: :date, html5: true
   = f.input :birthdate, label: 'Data de nascimento', as: :date, html5: true
-  = f.input :food_restrictions, label: 'Restrição alimentar'
+  = f.input :food_restrictions, label: 'Restrição alimentar', input_html: { maxlength: 100 }
   = f.input :additional_information, label: 'Informações adicionais', as: :text
 
   ul.nav.nav-tabs role='tablist'
     li.active
-      = link_to 'Telefones', '#phones', data: {toggle: 'tab'}
+      = link_to 'Telefones', '#phones', id: 'tab_phone', data: { toggle: 'tab' }
     li
-      = link_to 'Endereços', '#addresses', data: {toggle: 'tab'}
+      = link_to 'Endereços', '#addresses', id: 'tab_address', data: { toggle: 'tab' }
     li
-      = link_to 'Documentos', '#documents', data: {toggle: 'tab'}
+      = link_to 'Documentos', '#documents', id: 'tab_document', data: { toggle: 'tab' }
 
   .tab-content
     #phones.tab-pane.active role='tabpanel'
@@ -27,7 +31,7 @@
         = render 'phone_fields', f: phone
       .links
         = link_to_add_association f, :phones, class: 'btn btn-default btn-xs' do
-          .glyphicon.glyphicon-plus
+          .glyphicon.glyphicon-plus =
           | Incluir novo Telefone
 
     #addresses.tab-pane role='tabpanel'
@@ -49,3 +53,13 @@
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
     = link_to 'Voltar', back_button_action, class: 'btn btn-default'
+
+- if @member.errors.keys.select { |k| k.to_s.include? 'phone' }.any?
+  javascript:
+    showTab('phone');
+- if @member.errors.keys.select { |k| k.to_s.include? 'address' }.any?
+  javascript:
+    showTab('address');
+- if @member.errors.keys.select { |k| k.to_s.include? 'document' }.any?
+  javascript:
+    showTab('document');

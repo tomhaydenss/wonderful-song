@@ -3,7 +3,7 @@ class PartialMembershipParser
 
   def parse(row)
     return unless ALLOWED_DIVISIONS.include? row['Divisão']
-    
+
     membership = Membership.where(id: row['Cód. Membro']).first_or_initialize
     membership.name = name(row)
     membership.joining_date = joining_date(row)
@@ -21,8 +21,7 @@ class PartialMembershipParser
   private
 
   def name(row)
-    name = row['Nome'].strip
-    NameFormatter.format(name)
+    row['Nome'].strip
   end
 
   def joining_date(row)
@@ -39,8 +38,8 @@ class PartialMembershipParser
     positions = row['Funções'].strip
     return {} if positions == '-'
 
-    organizational_positions = positions.split('/').inject([]) do |array, organizational_position|
-      /(?<position>.*) (?<division>DE|DMJ) \(.*/ =~ organizational_position.strip
+    organizational_positions = positions.split(' / ').inject([]) do |array, organizational_position|
+      /(?<position>.*) (?<division>DE|DMJ|DJ|Futuro|Esperança|Herdeiros|Universitários) \(.*/ =~ organizational_position.strip
       array << { position: position, division: division } if position.present?
     end
     { positions: organizational_positions }
@@ -64,7 +63,7 @@ class PartialMembershipParser
 
   def organizational_information(row)
     organizational_information = []
-    row['Organização'].strip.split('/').each do |organization|
+    row['Organização'].strip.split(' / ').each do |organization|
       /(?<level>Coor. Geral|Coor.|Sub.|RM\/RE|Regional|Área|Distrito|Comunidade|Bloco) (?<name>.*)/ =~ organization.strip
       organizational_information << { level: level, name: name } if level.present?
     end
