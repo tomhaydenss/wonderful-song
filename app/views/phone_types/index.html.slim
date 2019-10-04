@@ -1,21 +1,16 @@
-.container
-  h1.mb-4 Tipo Telefone
-
+.page-header
+  h2 Tipos Telefone
   - if current_user&.can?('write', 'phone_types')
-    = link_to 'Novo Tipo Telefone', new_phone_type_path, class: 'btn btn-primary mb-2'
+    .btn-group
+      =link_to 'Incluir', new_phone_type_path, class: 'btn btn-default'
 
-  table.table
-    thead
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+  tbody
+    - @phone_types.each do |phone_type|
       tr
-        th Descrição
-        th Ações
-    tbody
-      - @phone_types.each do |phone_type|
-        tr
-          td= phone_type.description
-          td
-            = link_to 'Exibir', phone_type, class: 'btn btn-default btn-xs'
-            - if current_user&.can?('write', 'phone_types')
-              = link_to 'Editar', edit_phone_type_path(phone_type), class: 'btn btn-default btn-xs'
-              = link_to 'Excluir', phone_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td =link_to phone_type.description, phone_type
 
+= will_paginate @phone_types, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

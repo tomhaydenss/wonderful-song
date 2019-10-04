@@ -1,13 +1,11 @@
+.page-header
+  h2 Visualizar Tipo Documento
+  .btn-group
+    - if current_user&.can?('write', 'identity_document_types')
+      = link_to 'Alterar', edit_identity_document_type_path(@identity_document_type), class: 'btn btn-default'
+      = link_to 'Excluir', @identity_document_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    = link_to 'Voltar', identity_document_types_path, class: 'btn btn-default'
 
-h3 Dados do Tipo Documento
-
-table.table
-  tr
-    td Descrição
-    td
-      =@identity_document_type.description
-
-- if current_user&.can?('write', 'identity_document_types')
-  = link_to 'Editar', edit_identity_document_type_path(@identity_document_type)
-  = '|'
-= link_to 'Voltar', identity_document_types_path
+h6
+  b Descrição
+p = @identity_document_type.description

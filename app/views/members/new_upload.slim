@@ -1,0 +1,9 @@
+.page-header
+  h2 Importar Membros
+
+= simple_form_for @member do |f|
+  = f.file_field :csv_file, label: 'Arquivo .csv'
+
+  .actions
+    = f.button :submit, 'Importar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', members_path, class: 'btn btn-default'

@@ -1,45 +1,65 @@
 = simple_form_for @member do |f|
-  = f.input :name, label: 'Nome'
-  = f.association :ensemble, label: 'Núcleo', collection: Ensemble.order(:name), label_method: :name, value_method: :id, include_blank: true
-  = f.input :joining_date, label: 'Data de ingresso', start_year: 1980, end_year: Date.today.year
-  = f.input :birthdate, label: 'Data de nascimento', start_year: 1970, end_year: Date.today.year
-  = f.input :food_restrictions, label: 'Restrição alimentar'
+  - if @member.new_record?
+    = f.association :ensemble, label: 'Núcleo', collection: EnsembleHelper.ensembles_as_grouped_options(@available_ensembles), as: :grouped_select, group_method: :last, include_blank: true
+  - else
+    = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: { value: @member.ensemble&.name }
+  = f.input :membership_id, label: 'Código de Membro', readonly: true, input_html: { tabindex: -1 }
+  .form-group
+    = label_tag 'member[name]' do
+      abbr title="required" = '*'
+      = ' Nome'
+    = text_field_tag 'member[name]', (params[:name] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { email: '#member_email', birthdate: '#member_birthdate'} }
+    - if @member.errors[:name].any?
+      span.error = @member.errors['name'].join(' / ')
+  = f.input :email, label: 'E-Mail', input_html: { maxlength: 100 }
+  = f.input :joining_date, label: 'Data de ingresso no grupo', as: :date, html5: true
+  = f.input :birthdate, label: 'Data de nascimento', as: :date, html5: true
+  = f.input :food_restrictions, label: 'Restrição alimentar', input_html: { maxlength: 100 }
   = f.input :additional_information, label: 'Informações adicionais', as: :text
 
   ul.nav.nav-tabs role='tablist'
     li.active
-      = link_to 'Telefones', '#phones', data: {toggle: 'tab'}
+      = link_to 'Telefones', '#phones', id: 'tab_phone', data: { toggle: 'tab' }
     li
-      = link_to 'E-Mails', '#emails', data: {toggle: 'tab'}
+      = link_to 'Endereços', '#addresses', id: 'tab_address', data: { toggle: 'tab' }
     li
-      = link_to 'Endereços', '#addresses', data: {toggle: 'tab'}
-    li
-      = link_to 'Documentos', '#documents', data: {toggle: 'tab'}
+      = link_to 'Documentos', '#documents', id: 'tab_document', data: { toggle: 'tab' }
 
   .tab-content
     #phones.tab-pane.active role='tabpanel'
       = f.simple_fields_for :phones do |phone|
         = render 'phone_fields', f: phone
       .links
-        = link_to_add_association 'Incluir Telefone', f, :phones
-
-    #emails.tab-pane role='tabpanel'
-      = f.simple_fields_for :emails do |email|
-        = render 'email_fields', f: email
-      .links
-        = link_to_add_association 'Incluir E-Mail', f, :emails
+        = link_to_add_association f, :phones, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus =
+          | Incluir novo Telefone
 
     #addresses.tab-pane role='tabpanel'
       = f.simple_fields_for :addresses do |address|
         = render 'address_fields', f: address
       .links
-        = link_to_add_association 'Incluir Endereço', f, :addresses
+        = link_to_add_association f, :addresses, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Endereço
 
     #documents.tab-pane role='tabpanel'
       = f.simple_fields_for :identity_documents do |identity_document|
         = render 'identity_document_fields', f: identity_document
       .links
-        = link_to_add_association 'Incluir Documento', f, :identity_documents
-
+        = link_to_add_association f, :identity_documents, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus
+          | Incluir novo Documento
+  hr
   .actions
-    = f.button :submit, 'Salvar Membro', disable_with: 'Por favor aguarde ...'
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', back_button_action, class: 'btn btn-default'
+
+- if @member.errors.keys.select { |k| k.to_s.include? 'phone' }.any?
+  javascript:
+    showTab('phone');
+- if @member.errors.keys.select { |k| k.to_s.include? 'address' }.any?
+  javascript:
+    showTab('address');
+- if @member.errors.keys.select { |k| k.to_s.include? 'document' }.any?
+  javascript:
+    showTab('document');

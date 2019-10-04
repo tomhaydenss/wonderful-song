@@ -4,7 +4,8 @@ class EnsemblesController < ApplicationController
   # GET /ensembles
   # GET /ensembles.json
   def index
-    @ensembles = Ensemble.all
+    # @ensembles = Ensemble.includes(:ensemble_level).order('ensemble_levels.precedence_order')
+    @ensembles = Ensemble.order('id, foundation_date').paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensembles/1
@@ -70,8 +71,9 @@ class EnsemblesController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def ensemble_params
       params.require(:ensemble).permit(
-        :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id,
-        leaderships_attributes: [:id, :member_id, :position_id, :appointment_date, :_destroy],
+        :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id, :leadership_purpose,
+        leaders_attributes: [:id, :member_id, :appointment_date, :primary, :_destroy, 
+          leader_roles_attributes: [:id, :position_id, :additional_information, :primary, :_destroy]]
         )
     end
 end

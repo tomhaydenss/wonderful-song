@@ -1,5 +1,8 @@
-.nested-fields.form-inline style='display:inline;'
-  = f.input :phone_number, label: 'Número', placeholder: 'ex: (21) 988887777'
-  = f.association :phone_type, label: 'Tipo', label_method: :description, value_method: :id, include_blank: false
-  / = f.input :primary, as: :boolean, checked_value: true, unchecked_value: false
-  = link_to_remove_association 'Excluir Telefone', f
+.nested-fields.well.well-compact
+  .form-inline
+    = f.association :phone_type, collection: PhoneType.order(:id), label: 'Tipo', label_method: :description, value_method: :id, include_blank: false
+    = f.input :phone_number, label: 'Número', placeholder: 'ex: (21) 98888-7777', input_html: { maxlength: 15, oninput: 'formatPhone(this)' }
+    = f.input :additional_information, label: 'Obs', input_html: { size: 25, maxlength: 100 }
+    = link_to_remove_association f, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger btn-xs' do
+      .glyphicon.glyphicon-remove
+      | Excluir este telefone

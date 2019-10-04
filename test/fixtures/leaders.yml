@@ -1,9 +1,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  email_address: MyString
+  appointment_date: 2019-07-08
   primary: false
+  ensemble: one
+  member: one
 
 two:
-  email_address: MyString
+  appointment_date: 2019-07-08
   primary: false
+  ensemble: two
+  member: two

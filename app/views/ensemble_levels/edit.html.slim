@@ -1,7 +1,4 @@
-h1 Níveis de Núcleo
+.page-header
+  h2 Alterar Nível de Núcleo
 
-== render 'form'
-
-= link_to 'Exibir', @ensemble_level
-= '|'
-= link_to 'Voltar', ensemble_levels_path
+== render 'form', back_button_action: @ensemble_level

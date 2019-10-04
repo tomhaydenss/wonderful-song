@@ -1,23 +1,18 @@
-.container
-  h1.mb-4 Níveis de Núcleo
-
+.page-header
+  h2 Níveis de Núcleo
   - if current_user&.can?('write', 'ensemble_levels')
-    = link_to 'Novo Nível de Núcleo', new_ensemble_level_path, class: 'btn btn-primary mb-2'
+    .btn-group
+      =link_to 'Incluir', new_ensemble_level_path, class: 'btn btn-default'
 
-  table.table
-    thead
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+      th Ordem de Precedência
+  tbody
+    - @ensemble_levels.each do |ensemble_level|
       tr
-        th Descrição
-        th Ordem de Precedência
-        th Ações
-    tbody
-      - @ensemble_levels.each do |ensemble_level|
-        tr
-          td= ensemble_level.description
-          td= ensemble_level.precedence_order
-          td
-            = link_to 'Exibir', ensemble_level, class: 'btn btn-default btn-xs'
-            - if current_user&.can?('write', 'ensemble_levels')
-              = link_to 'Editar', edit_ensemble_level_path(ensemble_level), class: 'btn btn-default btn-xs'
-              = link_to 'Excluir', ensemble_level, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td =link_to ensemble_level.description, ensemble_level
+        td =ensemble_level.precedence_order
 
+=will_paginate @ensemble_levels, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

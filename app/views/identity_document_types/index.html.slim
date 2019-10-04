@@ -1,21 +1,16 @@
-.container
-  h1.mb-4 Tipo Documento
-
+.page-header
+  h2 Tipos Documento
   - if current_user&.can?('write', 'identity_document_types')
-    = link_to 'Novo Tipo Documento', new_identity_document_type_path, class: 'btn btn-primary mb-2'
+    .btn-group
+      = link_to 'Incluir', new_identity_document_type_path, class: 'btn btn-default'
 
-  table.table
-    thead
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+  tbody
+    - @identity_document_types.each do |identity_document_type|
       tr
-        th Descrição
-        th Ações
-    tbody
-      - @identity_document_types.each do |identity_document_type|
-        tr
-          td= identity_document_type.description
-          td
-            = link_to 'Exibir', identity_document_type, class: 'btn btn-default btn-xs'
-            - if current_user&.can?('write', 'identity_document_types')
-              = link_to 'Editar', edit_identity_document_type_path(identity_document_type), class: 'btn btn-default btn-xs'
-              = link_to 'Excluir', identity_document_type, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td = link_to identity_document_type.description, identity_document_type
 
+= will_paginate @identity_document_types, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

@@ -6,7 +6,7 @@ class CreateLeaderships < ActiveRecord::Migration[5.2]
       t.references :ensemble, foreign_key: true, index: true, null: false
       t.references :member, foreign_key: true, index: true, null: false
       t.references :position, foreign_key: true, index: true, null: false
-      
+
       t.timestamps
     end
   end

@@ -1,42 +1,42 @@
+.page-header
+  h2 Visualizar Núcleo
+  .btn-group
+    - if current_user&.can?('write', 'ensembles')
+      =link_to 'Alterar', edit_ensemble_path(@ensemble), class: 'btn btn-default'
+      =link_to 'Excluir', @ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Voltar', ensembles_path, class: 'btn btn-default'
 
-h3 Dados do Núcleo
+div class=['panel', 'panel-default']
+  .panel-heading
+    b Dados do Núcleo
+  table class=['table', 'table-striped']
+    thead
+      tr
+        th Nome
+        th Nível
+        th Pertence a
+        th Liderança apenas?
+    tbody
+      tr
+        td =@ensemble.name
+        td =@ensemble.ensemble_level.description
+        td =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
+        td =@ensemble.leadership_purpose ? '✅' : '❌'
 
-table.table
-  tr
-    td Nome
-    td
-      =@ensemble.name
-  tr
-    td Data de Fundação
-    td
-      =@ensemble.foundation_date
-  tr
-    td Data de Fundação
-    td
-      =@ensemble.foundation_date
-  tr
-    td Nível
-    td
-      =@ensemble.ensemble_level.description
-  tr
-    td Pertence a
-    td
-      =@ensemble.ensemble_parent.name if @ensemble.ensemble_parent.present?
-  tr
-    td Histórico
-    td
-      =@ensemble.history
-
-h3 Liderança
-
-table.table
-  -@ensemble.leaderships.each do |leadership|
-    tr
-      td= leadership.member.name
-      td= leadership.position.description
-      td= leadership.appointment_date
-
-- if current_user&.can?('write', 'ensembles')
-  = link_to 'Editar', edit_ensemble_path(@ensemble)
-  = '|'
-= link_to 'Voltar', ensembles_path
+div class=['panel', 'panel-default']
+  .panel-heading
+    b Liderança
+  table class=['table', 'table-striped']
+    thead
+      tr
+        th Líder
+        th Data Nomeação
+        th Função
+        th Informação Adicional
+    tbody
+      -@ensemble.leaders.each do |leader|
+        tr
+          td =leader.member.name
+          td =leader.appointment_date
+          td =leader.positions
+          td =leader.positions_complements

@@ -1,7 +1,4 @@
-h1 Núcleo
+.page-header
+  h2 Alterar Núcleo
 
-== render 'form'
-
-= link_to 'Exibir', @ensemble
-= '|'
-= link_to 'Voltar', ensembles_path
+== render 'form', back_button_action: @ensemble

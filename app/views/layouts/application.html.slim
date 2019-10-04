@@ -30,21 +30,23 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
               - if current_user.can?('read', 'ensembles')
                 li
                   =link_to "Núcleos", ensembles_path
-              - if current_user.can?('read', 'ensembles')
-                li
-                  =link_to "Níveis de Núcleo", ensemble_levels_path
               - if current_user.can?('read', 'ensemble_levels')
                 li
-                  =link_to "Funções", positions_path
+                  =link_to "Níveis de Núcleo", ensemble_levels_path
               - if current_user.can?('read', 'positions')
                 li
-                  =link_to "Tipos Telefone", phone_types_path
+                  =link_to "Funções", positions_path
               - if current_user.can?('read', 'phone_types')
                 li
-                  =link_to "Tipos Documentos", identity_document_types_path
+                  =link_to "Tipos Telefone", phone_types_path
               - if current_user.can?('read', 'identity_document_types')
                 li
-                  = link_to 'Sair', destroy_user_session_path, method: :delete
+                  =link_to "Tipos Documentos", identity_document_types_path
+              - if current_user.can?('read', 'members')
+                li
+                  =link_to "Membros Associados", memberships_path
+              li
+                = link_to 'Sair', destroy_user_session_path, method: :delete
             - else
               li
                 = link_to 'Login', new_user_session_path

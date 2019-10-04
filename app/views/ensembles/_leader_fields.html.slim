@@ -1,0 +1,15 @@
+.nested-fields.well.well-compact
+  .form-inline
+    = f.association :member, label: 'Líder', label_method: :name, value_method: :id, include_blank: false
+    = f.input :appointment_date, label: 'Data da Nomeação', as: :date, html5: true
+    = f.input :primary, label: 'Tornar este o principal líder', as: :boolean, wrapper: :checkbox_inline
+    = link_to_remove_association f, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger btn-xs' do
+      .glyphicon.glyphicon-remove
+      | Excluir este Líder
+  .leader_roles
+    = f.simple_fields_for :leader_roles do |leader_role|
+      = render 'leader_role_fields', :f => leader_role
+    .links
+      = link_to_add_association f, :leader_roles, class: 'btn btn-default btn-xs' do
+        .glyphicon.glyphicon-plus
+        | Incluir nova Função

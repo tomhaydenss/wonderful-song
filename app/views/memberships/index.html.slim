@@ -1,0 +1,35 @@
+.page-header
+  h2 Membros Associados
+
+= simple_form_for @membership do |f|
+  = f.file_field :csv_file, label: 'Arquivo .csv'
+  = f.button :submit, 'Importar', disable_with: 'Por favor aguarde ...'
+
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Código
+      th Nome
+      th Dt.Ingresso
+      th Função
+      th Grau de Estudo
+      th Últ.Palestra
+      th Assinaturas
+      th Contribuição
+      th Membros Indicados
+      th Dados Organizacionais
+  tbody
+    - @memberships.each do |membership|
+      tr
+        td= membership.id
+        td= membership.name
+        td= membership.joining_date
+        td= membership.organizational_position
+        td= membership.study_level
+        td= membership.has_attended_to_last_meeting?
+        td= membership.has_subscribed_to_pulications?
+        td= membership.sustaining_contribution
+        td= membership.members_sponsored['total']
+        td= membership.fully_qualified_organization_name
+
+= will_paginate @memberships, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

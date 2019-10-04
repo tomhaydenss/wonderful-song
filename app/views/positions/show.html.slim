@@ -1,6 +1,15 @@
+.page-header
+  h2 Visualizar Função
+  .btn-group
+    =link_to 'Alterar', edit_position_path(@position), class: 'btn btn-default'
+    =link_to 'Excluir', @position, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Voltar', positions_path, class: 'btn btn-default'
 
-h3 Dados da Função
+h6
+  b Descrição
+p =@position.description
 
+<<<<<<< HEAD
 table.table
   tr
     td Descrição
@@ -15,3 +24,8 @@ table.table
   = link_to 'Editar', edit_position_path(@position)
   = '|'
 = link_to 'Voltar', positions_path
+=======
+h6
+  b Ordem de Precedência
+p =@position.precedence_order
+>>>>>>> 29f8852fdd5b9785d416a58b99e75e8420612778

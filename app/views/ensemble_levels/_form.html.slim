@@ -1,6 +1,7 @@
 = simple_form_for @ensemble_level do |f|
-  = f.input :description, label: 'Descrição'
+  = f.input :description, label: 'Descrição', input_html: { maxlength: 100 }
   = f.input :precedence_order, label: 'Ordem de Precedência', as: :numeric
 
   .actions
-    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    =f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    =link_to 'Voltar', back_button_action, class: 'btn btn-default'

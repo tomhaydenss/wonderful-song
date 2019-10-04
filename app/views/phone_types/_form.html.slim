@@ -1,5 +1,6 @@
 = simple_form_for @phone_type do |f|
-  = f.input :description, label: 'Descrição'
+  = f.input :description, label: 'Descrição', input_html: { maxlength: 100 }
 
   .actions
     = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', back_button_action, class: 'btn btn-default'

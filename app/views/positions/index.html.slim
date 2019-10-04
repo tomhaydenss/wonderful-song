@@ -1,22 +1,18 @@
-.container
-  h1.mb-4 Funções
+.page-header
+  h2 Funções
+  .btn-group
+    - if current_user&.can?('write', 'positions')
+      =link_to 'Incluir', new_position_path, class: 'btn btn-default'
 
-  - if current_user&.can?('write', 'positions')
-    = link_to 'Nova Função', new_position_path, class: 'btn btn-primary mb-2'
-
-  table.table
-    thead
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+      th Ordem de Precedência
+  tbody
+    - @positions.each do |position|
       tr
-        th Descrição
-        th Ordem de Precedência
-        th Ações
-    tbody
-      - @positions.each do |position|
-        tr
-          td= position.description
-          td= position.precedence_order
-          td
-            = link_to 'Exibir', position, class: 'btn btn-default btn-xs'
-            = link_to 'Editar', edit_position_path(position), class: 'btn btn-default btn-xs'
-            = link_to 'Excluir', position, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-xs btn-danger'
+        td =link_to position.description, position
+        td =position.precedence_order
 
+=will_paginate @positions, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'
