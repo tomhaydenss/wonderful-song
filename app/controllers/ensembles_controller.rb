@@ -1,11 +1,12 @@
 class EnsemblesController < ApplicationController
+  before_action -> { self.fetch_permitted_ensembles_only(true) }, only: [:index, :new]
   before_action :set_ensemble, only: [:show, :edit, :update, :destroy]
 
   # GET /ensembles
   # GET /ensembles.json
   def index
-    # @ensembles = Ensemble.includes(:ensemble_level).order('ensemble_levels.precedence_order')
-    @ensembles = Ensemble.order('id, foundation_date').paginate(page: params[:page], per_page: 15)
+    filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only)
+    @ensembles = Ensemble.filter(filters).order('id, foundation_date').paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensembles/1

@@ -5,10 +5,10 @@ class Member < ApplicationRecord
   validates :name, :membership_id, presence: true
   validate :member_cannot_be_associated_with_another_ensemble
   validates :membership_id, uniqueness: true, if: ->(m) { m.membership_id.present? }
-  validates_associated :addresses
   
   belongs_to :membership, optional: true
   belongs_to :ensemble, optional: true
+  has_one :user
   has_many :phones, dependent: :delete_all
   has_many :addresses, dependent: :delete_all
   has_many :identity_documents, dependent: :delete_all
@@ -18,6 +18,8 @@ class Member < ApplicationRecord
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
   scope :search, ->(search) { where('name ILIKE ?', "%#{search}%") }
+  scope :valid_for_signup, ->(membership_id, birthdate) { where(membership_id: membership_id, birthdate: birthdate).where.not(ensemble_id: nil) }
+  scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles) }
 
   accepts_nested_attributes_for :identity_documents, :phones, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :addresses, allow_destroy: true
@@ -28,11 +30,11 @@ class Member < ApplicationRecord
 
   def highest_ensemble_level_through_leadership
     leaders.select { |leader| leader.ensemble.ensemble_level.precedence_order.present? }
-          .sort_by { |leader| leader.ensemble.ensemble_level.precedence_order }.first.ensemble
+          .sort_by { |leader| leader.ensemble.ensemble_level.precedence_order }.first&.ensemble
   end
 
   def positions
-    leaders.inject([]) { |array, leader| puts array << "#{leader.positions} (#{leader.ensemble.name})"; array }.join(' / ')
+    leaders.inject([]) { |array, leader| array << "#{leader.positions} (#{leader.ensemble.name})"; array }.join(' / ')
   end
 
   private

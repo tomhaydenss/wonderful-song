@@ -1,5 +1,5 @@
 class MembersController < ApplicationController
-  before_action :set_available_ensembles, only: [:index, :new]
+  before_action :fetch_permitted_ensembles_only, only: [:index, :new]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
   before_action :new_member, only: [:new, :new_upload]
 
@@ -8,7 +8,7 @@ class MembersController < ApplicationController
   # GET /members
   # GET /members.json
   def index
-    filters = params.slice(:ensemble_id, :search)
+    filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only, :ensemble_id, :search)
     @members = Member.filter(filters).order(:name).all.paginate(page: params[:page], per_page: 15)
   end
 
@@ -34,7 +34,7 @@ class MembersController < ApplicationController
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
       else
-        set_available_ensembles
+        set_permitted_ensembles
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
@@ -65,6 +65,10 @@ class MembersController < ApplicationController
     end
   end
 
+  def my_info
+    redirect_to current_user.member
+  end
+
   def new_upload; end
 
   def upload
@@ -76,12 +80,6 @@ class MembersController < ApplicationController
   def new_transfer; end
 
   private
-    def set_available_ensembles
-      # TODO waiting for authorization impl
-      # @filterable_ensembles = current_user.member.highest_ensemble_level_through_leadership.filterable_ensembles
-      @available_ensembles = Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first.filterable_ensembles # admin only
-    end
-
     # Use callbacks to share common setup or constraints between actions.
     def set_member
       @member = Member.find(params[:id] || params[:member_id])

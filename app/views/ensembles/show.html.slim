@@ -2,7 +2,7 @@
   h2 Visualizar Núcleo
   .btn-group
     =link_to 'Alterar', edit_ensemble_path(@ensemble), class: 'btn btn-default'
-    =link_to 'Excluir', @ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Excluir', @ensemble, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger' if current_user.any_roles?([:main_leader, :admin])
     =link_to 'Voltar', ensembles_path, class: 'btn btn-default'
 
 div class=['panel', 'panel-default']

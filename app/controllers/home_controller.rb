@@ -7,4 +7,6 @@ class HomeController < ApplicationController
 
   def japan
   end
+
+  def precepts; end
 end

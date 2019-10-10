@@ -11,10 +11,14 @@ pt-BR:
       user:
         signed_in: 'Bem vindo ao Sistema Sons Maravilhosos!'
         signed_out: 'Você se deslogou. Para ter acesso aos recursos, entre novamente'
+        already_signed_out: 'Você já se deslogou'
     passwords:
       user:
         send_instructions: 'Dentro de alguns minutos, você receberá um e-mail com instruções para a troca da sua senha'
+    registrations:
+      signed_up: 'Seja bem-vindo! Seu registro foi realizado com sucesso. Que tal atualizar os seus dados?'
     failure:
+      already_authenticated: 'Você já está logado'
       user:
         already_authenticated: 'Você já está logado'
         not_found_in_database: 'Usuário inexistente'

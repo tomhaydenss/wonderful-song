@@ -2,9 +2,10 @@
   h2 Ficha do Membro
   .btn-group
     =link_to 'Alterar', edit_member_path(@member), class: 'btn btn-default'
-    =link_to 'Transferir', new_member_transfer_path(@member), class: 'btn btn-default'
-    =link_to 'Excluir', @member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
-    =link_to 'Voltar', members_path, class: 'btn btn-default'
+    - if current_user.any_roles?([:leader, :main_leader, :admin])
+      =link_to 'Transferir', new_member_transfer_path(@member), class: 'btn btn-default'
+      =link_to 'Excluir', @member, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+      =link_to 'Voltar', members_path, class: 'btn btn-default'
 
 div class=['panel', 'panel-default']
   .panel-heading

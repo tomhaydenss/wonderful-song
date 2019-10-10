@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_09_10_004839) do
+ActiveRecord::Schema.define(version: 2019_10_08_042728) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2019_09_10_004839) do
   end
 
   create_table "addresses", force: :cascade do |t|
-    t.string "postal_code", limit: 8, null: false
+    t.string "postal_code", limit: 9, null: false
     t.string "neighborhood", limit: 255, null: false
     t.string "city", limit: 255, null: false
     t.string "state", limit: 2, null: false
@@ -177,7 +177,9 @@ ActiveRecord::Schema.define(version: 2019_09_10_004839) do
     t.string "access_level", default: "member", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "member_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["member_id"], name: "index_users_on_member_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
@@ -195,4 +197,5 @@ ActiveRecord::Schema.define(version: 2019_09_10_004839) do
   add_foreign_key "members", "memberships"
   add_foreign_key "phones", "members"
   add_foreign_key "phones", "phone_types"
+  add_foreign_key "users", "members"
 end
