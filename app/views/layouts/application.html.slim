@@ -24,20 +24,22 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
             - if current_user
               li
                 =link_to "Home", root_url
-              li
-                =link_to "Membros", members_path
-              li
-                =link_to "Núcleos", ensembles_path
-              li
-                =link_to "Níveis de Núcleo", ensemble_levels_path
-              li
-                =link_to "Funções", positions_path
-              li
-                =link_to "Tipos Telefone", phone_types_path
-              li
-                =link_to "Tipos Documentos", identity_document_types_path
-              li
-                =link_to "Membros Associados", memberships_path
+              - if current_user.any_roles? [:leader, :main_leader, :admin]
+                li
+                  =link_to "Membros", members_path
+                li
+                  =link_to "Núcleos", ensembles_path
+              - if current_user.any_roles? [:admin]
+                li
+                  =link_to "Níveis de Núcleo", ensemble_levels_path
+                li
+                  =link_to "Funções", positions_path
+                li
+                  =link_to "Tipos Telefone", phone_types_path
+                li
+                  =link_to "Tipos Documentos", identity_document_types_path
+                li
+                  =link_to "Membros Associados", memberships_path
               li
                 = link_to 'Sair', destroy_user_session_path, method: :delete
             - else
