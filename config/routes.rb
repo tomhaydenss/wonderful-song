@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   root to: 'home#index'
   get '/ongakutai', to: 'home#japan'
   get '/taiyo_ongakutai', to: 'home#brasil'
+  get '/precepts', to: 'home#precepts'
 
   get 'members/autocomplete_member_name', to: 'members#autocomplete_member_name'
   get 'memberships/autocomplete_membership_name', to: 'memberships#autocomplete_membership_name'

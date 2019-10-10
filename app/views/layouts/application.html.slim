@@ -24,6 +24,8 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
             - if current_user
               li
                 =link_to "Home", root_url
+              li
+                =link_to "Poema", precepts_path
               - unless current_user.any_roles? [:admin]
                 li
                   =link_to "Meus Dados", my_info_path
