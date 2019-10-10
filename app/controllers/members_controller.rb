@@ -65,6 +65,10 @@ class MembersController < ApplicationController
     end
   end
 
+  def my_info
+    redirect_to current_user.member
+  end
+
   def new_upload; end
 
   def upload
