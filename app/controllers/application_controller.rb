@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     # TODO should be replaced by authorization feature
     unless current_user&.any_roles?([:admin])
       case params[:controller]
-      when 'ensemble_levels', 'identity_document_types', 'memberships', 'phone_types', 'positions'
+      when 'ensemble_levels', 'identity_document_types', 'phone_types', 'positions'
         reject_access
       when 'ensembles'
         reject_access unless current_user.any_roles?([:leader, :main_leader])
@@ -58,6 +58,11 @@ class ApplicationController < ActionController::Base
           if another_member?(params[:id].to_i)
             reject_access unless can_access_another_member?(params[:id])
           end
+        end
+      when 'memberships'
+        case params[:action]
+        when 'autocomplete'
+          reject_access unless current_user.any_roles?([:leader, :main_leader])
         end
       end
     end

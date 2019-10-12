@@ -12,9 +12,9 @@ class Ensemble < ApplicationRecord
 
   accepts_nested_attributes_for :leaders, reject_if: :all_blank, allow_destroy: true
 
-  scope :leadership_purpose_only, -> { where(leadership_purpose: true) }
-  scope :membership_purpose_only, -> { where(leadership_purpose: false) }
-  scope :permitted_ensembles_only, ->(ensembles) { where(id: ensembles) }
+  scope :leadership_purpose_only, -> { where(leadership_purpose: true).includes(:ensemble_parent) }
+  scope :membership_purpose_only, -> { where(leadership_purpose: false).includes(:ensemble_parent) }
+  scope :permitted_ensembles_only, ->(ensembles) { where(id: ensembles).includes(:ensemble_parent) }
 
   def fully_qualified_name
     return ensemble_parent.fully_qualified_name + ' » ' + name if ensemble_parent.present?

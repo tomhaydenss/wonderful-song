@@ -6,7 +6,7 @@ class EnsemblesController < ApplicationController
   # GET /ensembles.json
   def index
     filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only)
-    @ensembles = Ensemble.filter(filters).order('id, foundation_date').paginate(page: params[:page], per_page: 15)
+    @ensembles = Ensemble.filter(filters).order('id, foundation_date').includes(:ensemble_parent).paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensembles/1

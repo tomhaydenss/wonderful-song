@@ -9,7 +9,7 @@ class MembersController < ApplicationController
   # GET /members.json
   def index
     filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only, :ensemble_id, :search)
-    @members = Member.filter(filters).order(:name).all.paginate(page: params[:page], per_page: 15)
+    @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
   end
 
   # GET /members/1
