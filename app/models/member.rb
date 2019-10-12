@@ -19,7 +19,7 @@ class Member < ApplicationRecord
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
   scope :search, ->(search) { where('name ILIKE ?', "%#{search}%") }
   scope :valid_for_signup, ->(membership_id, birthdate) { where(membership_id: membership_id, birthdate: birthdate).where.not(ensemble_id: nil) }
-  scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles) }
+  scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles).includes(:ensemble) }
 
   accepts_nested_attributes_for :identity_documents, :phones, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :addresses, allow_destroy: true

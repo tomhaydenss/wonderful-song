@@ -1,6 +1,8 @@
 .nested-fields.well.well-compact
   .form-inline
-    = f.association :member, label: 'Líder', label_method: :name, value_method: :id, include_blank: false
+    - members_available = (current_user.any_roles?([:main_leader, :admin])) ? Member.all.includes(:ensemble).order(:name) : Member.permitted_ensembles_only(@permitted_ensembles_only).order(:name)
+    = f.association :member, label: 'Líder', collection: MembersHelper.members_as_grouped_options(members_available), as: :grouped_select, group_method: :last, include_blank: false
+
     = f.input :appointment_date, label: 'Data da Nomeação', as: :date, html5: true
     = f.input :primary, label: 'Tornar este o principal líder', as: :boolean, wrapper: :checkbox_inline
     = link_to_remove_association f, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger btn-xs' do

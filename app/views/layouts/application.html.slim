@@ -23,8 +23,6 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
           ul.nav.navbar-nav
             - if current_user
               li
-                =link_to "Home", root_url
-              li
                 =link_to "Poema", precepts_path
               - unless current_user.any_roles? [:admin]
                 li
