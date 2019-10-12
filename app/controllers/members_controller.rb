@@ -1,15 +1,30 @@
 class MembersController < ApplicationController
+  include MembersToCsv
+
   before_action :fetch_permitted_ensembles_only, only: [:index, :new]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
   before_action :new_member, only: [:new, :new_upload]
+  before_action :apply_filter, only: [:index]
 
   autocomplete :member, :name, full: true
 
   # GET /members
   # GET /members.json
   def index
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @members, status: :ok, location: @member }
+      format.csv { send_data to_csv(@members), filename: "members-#{DateTime.now}.csv" }
+    end
+  end
+
+  def apply_filter
     filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only, :ensemble_id, :search)
-    @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+    if %w(json csv).include? params['format']
+      @members = Member.filter(filters).order(:name).all.includes(:ensemble)
+    else
+      @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+    end
   end
 
   # GET /members/1
