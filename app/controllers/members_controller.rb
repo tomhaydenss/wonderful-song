@@ -1,15 +1,31 @@
 class MembersController < ApplicationController
+  include MembersToCsv
+
   before_action :fetch_permitted_ensembles_only, only: [:index, :new]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
   before_action :new_member, only: [:new, :new_upload]
+  before_action :apply_filter, only: [:index]
+  before_action :valid_file, only: [:upload]
 
   autocomplete :member, :name, full: true
 
   # GET /members
   # GET /members.json
   def index
+    respond_to do |format|
+      format.html { render :index }
+      format.json { render json: @members, status: :ok, location: @member }
+      format.csv { send_data to_csv(@members), filename: "members-#{DateTime.now.strftime('%Y%m%d%H%M%S')}.csv" }
+    end
+  end
+
+  def apply_filter
     filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only, :ensemble_id, :search)
-    @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+    if %w(json csv).include? params['format']
+      @members = Member.filter(filters).order(:name).all.includes(:ensemble)
+    else
+      @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+    end
   end
 
   # GET /members/1
@@ -34,7 +50,7 @@ class MembersController < ApplicationController
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
         format.json { render :show, status: :created, location: @member }
       else
-        set_permitted_ensembles
+        fetch_permitted_ensembles_only
         format.html { render :new }
         format.json { render json: @member.errors, status: :unprocessable_entity }
       end
@@ -87,6 +103,10 @@ class MembersController < ApplicationController
 
     def new_member
       @member = Member.new
+    end
+
+    def valid_file
+      redirect_to members_upload_new_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:member].present?
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
