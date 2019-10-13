@@ -1,7 +1,7 @@
 .page-header
   h2 Importar Membros
 
-= simple_form_for @member do |f|
+= simple_form_for @member, url: members_upload_path, method: :post do |f|
   = f.file_field :csv_file, label: 'Arquivo .csv'
 
   .actions

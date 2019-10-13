@@ -5,7 +5,7 @@ module MembersToCsv
 
   def to_csv(members)
     CSV.generate(headers: true) do |csv|
-      csv << attributes = %w(nucleo codigo_membro nome email data_nascimento data_ingresso_grupo cpf rg certidao_nascimento restricao_alimentar telefones observacao enderecos)
+      csv << attributes = %w(nucleo codigo_membro nome email data_nascimento data_ingresso_grupo cpf rg certidao_nascimento restricao_alimentar telefones informacoes_adicionais enderecos)
       members.each do |member|
         csv << attributes.map{ |attr| self.send(attr, member) }
       end
@@ -70,7 +70,7 @@ module MembersToCsv
     phones.present? ? phones.join('|') : ''
   end
   
-  def observacao(member)
+  def informacoes_adicionais(member)
     member.additional_information
   end
   

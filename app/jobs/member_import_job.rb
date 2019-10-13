@@ -27,7 +27,7 @@ class MemberImportJob < ApplicationJob
     member.ensemble = ensemble(row)
     member.name = name(row, membership)
     member.birthdate = birthdate(row, membership)
-    member.email = email(row)
+    member.email = email(row, membership)
     member.food_restrictions = food_restrictions(row)
     member.additional_information = additional_information(row)
     member.identity_documents << identity_documents(row, member.identity_documents)
@@ -41,18 +41,22 @@ class MemberImportJob < ApplicationJob
   end
 
   def name(row, membership)
+    return membership.name if membership.name.present?
+
     name = row['nome'].strip
     name.present? ? name : membership.name
   end
 
   def birthdate(row, membership)
-    # return membership.birthdate if membership.birthdate.present?
+    return membership.birthdate if membership.birthdate.present?
 
     birthdate = row['data_nascimento']&.strip
     Date.strptime(birthdate, '%d/%m/%Y') if birthdate.present?
   end
 
-  def email(row)
+  def email(row, membership)
+    return membership.email if membership.email.present?
+
     email = row['email']&.strip
     email if email.present?
   end
@@ -62,7 +66,7 @@ class MemberImportJob < ApplicationJob
   end
 
   def additional_information(row)
-    row['observacao']&.strip
+    row['informacoes_adicionais']&.strip
   end
 
   def identity_documents(row, current_documents)
@@ -107,7 +111,7 @@ class MemberImportJob < ApplicationJob
   end
 
   def phone_type(type)
-    return PhoneType.home if type.casecmp('fixo').zero?
+    return PhoneType.home if type.present? && type.casecmp('fixo').zero?
     PhoneType.mobile
   end
 

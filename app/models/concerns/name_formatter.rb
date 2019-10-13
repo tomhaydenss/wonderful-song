@@ -1,4 +1,6 @@
 module NameFormatter
+  extend ActiveSupport::Concern
+
   def format_name(name)
     return name if name.blank?
 
