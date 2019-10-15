@@ -110,8 +110,11 @@ div class=['panel', 'panel-default']
           th CEP
       tbody
         -@member.addresses.each do |address|
+          - google_maps_terms = %w(street number neighborhood city state postal_code).map{ |attr| address.send(attr) }.select { |item| item.present? }.join(',')
           tr
-            td =address.street
+            td
+              =link_to '🌎', "https://maps.google.com/?q=#{google_maps_terms}", target: "_blank", class: 'btn btn-default btn-xs' if address.postal_code.present?
+              =address.street
             td =address.number
             td =address.additional_information
             td =address.neighborhood

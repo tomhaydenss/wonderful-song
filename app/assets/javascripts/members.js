@@ -91,7 +91,7 @@ function documentType(numberField) {
   return documentTypeField.options[documentTypeField.selectedIndex].outerText;
 }
 
-function changePlaceHolderByDocumentType(documentTypeField) {
+function changeFormattingByDocumentType(documentTypeField) {
   const id = documentTypeField.id.split("_")[4];
   const numberField = document.querySelector(
     `#member_identity_documents_attributes_${id}_number`
@@ -112,7 +112,7 @@ function changePlaceHolderByDocumentType(documentTypeField) {
       complementField.placeholder = "ex. FL. 99, LV. A-77";
       break;
     default:
-      numberField.setAttribute("maxLength", 100);
+      numberField.setAttribute("maxLength", 14);
       numberField.placeholder = "ex: 12345678-9";
       complementField.placeholder = "ex: SSP-SP";
   }
