@@ -86,7 +86,7 @@ class MemberImportJob < ApplicationJob
   def identity_document(row, type)
     return if row[type.to_s].blank?
 
-    number, complement = row[type.to_s].strip.split('\;')[0..1]
+    number, complement = row[type.to_s].strip.split(';')[0..1]
     IdentityDocument.new(number: number, complement: complement, identity_document_type: DOCUMENTS_MAP[type], skip_validation: true)
   end
 
@@ -115,8 +115,8 @@ class MemberImportJob < ApplicationJob
     return [] if row['enderecos'].blank?
 
     addresses = []
-    row['enderecos'].strip.split('\|').each_with_index do |address, index|
-      postal_code, street, number, additional_information, neighborhood, city, state = address.split('\;')[0..6]
+    row['enderecos'].strip.split('|').each_with_index do |address, index|
+      postal_code, street, number, additional_information, neighborhood, city, state = address.split(';')[0..6]
       addresses << Address.new(
                     postal_code: postal_code, 
                     street: street, 

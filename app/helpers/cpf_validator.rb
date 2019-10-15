@@ -13,7 +13,8 @@ class CPFValidator
   end
 
   def self.evaluate_digit(digits)
-    sum_of_digits(digits) * 10 % 11
+    digit = sum_of_digits(digits) * 10 % 11
+    digit < 10 ? digit : 0
   end
   
   def self.sum_of_digits(digits)
