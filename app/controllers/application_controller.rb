@@ -15,15 +15,15 @@ class ApplicationController < ActionController::Base
 
   def fetch_permitted_ensembles_only(include_parent_ensemble = false)
     ensemble ||= Ensemble.joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first if current_user.any_roles? [:admin]
-    ensemble ||= current_user.member.highest_ensemble_level_through_leadership
+    ensemble ||= current_user&.member&.highest_ensemble_level_through_leadership
     @permitted_ensembles_only = ensemble.present? ? ensemble.filterable_ensembles(include_parent_ensemble) : []
   end
 
-  def permitted_ensembles_only
+  def permitted_ensembles_only(members_without_ensemble = false)
     @permitted_ensembles_only ||= fetch_permitted_ensembles_only(true)
-    {
-      permitted_ensembles_only: @permitted_ensembles_only.map { |ensemble| ensemble.id }
-    }
+    permitted_ensembles_only  = { permitted_ensembles_only: @permitted_ensembles_only.map { |ensemble| ensemble.id } }
+    permitted_ensembles_only[:permitted_ensembles_only] << nil if members_without_ensemble && current_user.any_roles?([:main_leader, :admin])
+    permitted_ensembles_only
   end
 
   def check_permissions

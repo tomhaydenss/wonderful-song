@@ -20,7 +20,7 @@ class MembersController < ApplicationController
   end
 
   def apply_filter
-    filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only, :ensemble_id, :search)
+    filters = params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
     if %w(json csv).include? params['format']
       @members = Member.filter(filters).order(:name).all.includes(:ensemble)
     else
