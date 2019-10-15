@@ -1,4 +1,6 @@
 class IdentityDocument < ApplicationRecord
+  attr_accessor :skip_validation
+
   belongs_to :identity_document_type
 
   validates :number, presence: true
@@ -6,7 +8,7 @@ class IdentityDocument < ApplicationRecord
   validates :number, format: { with: /\A[0-9]{3}.[0-9]{3}.[0-9]{3}-[0-9]{2}\z/ }, if: :tax_payer_type?
   validate :validate_tax_payer_number, if: :tax_payer_type?
   validate :validate_id_number, if: :id_type?
-  validates :complement, presence: true, if: :id_type?
+  validates :complement, presence: true, if: ->(doc) { doc.id_type? && !skip_validation }
 
   def tax_payer_type?
     identity_document_type.tax_payer?

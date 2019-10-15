@@ -1,6 +1,12 @@
 class MemberImportJob < ApplicationJob
   queue_as :member_list
 
+  DOCUMENTS_MAP = {
+    cpf: IdentityDocumentType.tax_payer_id,
+    rg: IdentityDocumentType.identity_card,
+    certidao_nascimento: IdentityDocumentType.birth_certificate
+  }
+
   def perform(member_upload)
     CSVReader.new(member_upload.csv_file).each_line do |row, index|
       begin
@@ -71,27 +77,17 @@ class MemberImportJob < ApplicationJob
 
   def identity_documents(row, current_documents)
     identity_documents = []
-    identity_documents << tax_payer_id(row)
-    identity_documents << identity_card(row)
-    identity_documents << birth_certificate(row)
+    DOCUMENTS_MAP.keys.each do |key|
+      identity_documents << identity_document(row, key)
+    end
     identity_documents.compact.reject { |item| current_documents.pluck(:number).include?(item.number) }
   end
 
-  def tax_payer_id(row)
-    tax_payer_id = row['cpf']&.strip
-    IdentityDocument.new(number: tax_payer_id, identity_document_type: IdentityDocumentType.tax_payer_id) if tax_payer_id.present? 
-  end
+  def identity_document(row, type)
+    return if row[type.to_s].blank?
 
-  def identity_card(row)
-    return if row['rg'].blank?
-    
-    number, complement = row['rg'].strip.split(';')[0..1]
-    IdentityDocument.new(number: number, complement: complement, identity_document_type: IdentityDocumentType.identity_card)
-  end
-
-  def birth_certificate(row)
-    birth_certificate = row['certidao_nascimento']&.strip
-    IdentityDocument.new(number: birth_certificate, identity_document_type: IdentityDocumentType.birth_certificate) if birth_certificate.present? 
+    number, complement = row[type.to_s].strip.split('\;')[0..1]
+    IdentityDocument.new(number: number, complement: complement, identity_document_type: DOCUMENTS_MAP[type], skip_validation: true)
   end
 
   def phones(row, current_phones)
@@ -101,11 +97,11 @@ class MemberImportJob < ApplicationJob
     row['telefones'].strip.split('|').each_with_index do |phone, index|
       phone_number, phone_type, additional_information = phone.split(';')[0..2]
       phones << Phone.new(
-                  phone_number: phone_number,
-                  phone_type: phone_type(phone_type),
-                  additional_information: additional_information,
-                  primary: index.zero?
-                )
+        phone_number: phone_number,
+        phone_type: phone_type(phone_type),
+        additional_information: additional_information,
+        primary: index.zero?
+      )
     end
     phones.reject { |item| current_phones.pluck(:phone_number).include?(item.phone_number) }.uniq { |item| item.phone_number }
   end
@@ -119,8 +115,8 @@ class MemberImportJob < ApplicationJob
     return [] if row['enderecos'].blank?
 
     addresses = []
-    row['enderecos'].strip.split('|').each_with_index do |address, index|
-      postal_code, street, number, additional_information, neighborhood, city, state = address.split(';')[0..6]
+    row['enderecos'].strip.split('\|').each_with_index do |address, index|
+      postal_code, street, number, additional_information, neighborhood, city, state = address.split('\;')[0..6]
       addresses << Address.new(
                     postal_code: postal_code, 
                     street: street, 
