@@ -12,7 +12,7 @@
     =button_tag 'Pesquisar', class: 'btn btn-default'
       i class=['glyphicon', 'glyphicon-search']
 javascript:
-  $('#search').bind('railsAutocomplete.select', function(event, data) { $('#search-form').submit() });
+  $('#search').bind('railsAutocomplete.select', function(event, data) { window.location.href = `/members/${data.item.id}` });
 br
 - @permitted_ensembles_only.each do |filter|
   = link_to filter.name, members_path(ensemble_id: filter.id), class: params[:ensemble_id].to_i == filter.id ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
