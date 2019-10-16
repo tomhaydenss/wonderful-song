@@ -4,7 +4,7 @@
     - if current_user.any_roles?([:leader, :main_leader, :admin])
       = link_to 'Incluir', new_member_path, class: 'btn btn-default'
       = link_to 'Importar', members_upload_new_path, class: 'btn btn-default'
-      = link_to 'Exportar', members_path(format: 'csv'), class: 'btn btn-default'
+      = link_to 'Exportar', members_path(format: 'csv', ensemble_id: params[:ensemble_id]), class: 'btn btn-default'
 
 =form_tag(members_path, method: :get, id: 'search-form', class: 'input-group')
   =text_field_tag :search, params[:search], placeholder: 'Pesquisar por nome', type: 'search', class: 'form-control', data: { autocomplete: members_autocomplete_member_name_path }

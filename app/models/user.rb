@@ -64,6 +64,6 @@ class User < ApplicationRecord
   end
   
   def admin?
-    self.member.blank?
+    self.email == 'admin'
   end
 end

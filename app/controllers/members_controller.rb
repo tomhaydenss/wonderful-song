@@ -22,7 +22,7 @@ class MembersController < ApplicationController
   def apply_filter
     filters = params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
     if %w(json csv).include? params['format']
-      @members = Member.filter(filters).order(:name).all.includes(:ensemble)
+      @members = Member.filter(filters).order(:name).all.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
     else
       @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
     end
@@ -62,7 +62,9 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update_attributes(member_params)
-        format.html { redirect_to @member, notice: 'Member was successfully updated.' }
+        format.html do
+          redirect_to ((request.params['commit'] == 'Salvar') ? @member : members_path), notice: 'Member was successfully updated.' 
+        end
         format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
