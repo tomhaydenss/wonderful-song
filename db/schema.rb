@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_15_171631) do
+ActiveRecord::Schema.define(version: 2019_10_16_224047) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,12 +70,14 @@ ActiveRecord::Schema.define(version: 2019_10_15_171631) do
     t.boolean "leadership_purpose"
     t.index ["ensemble_level_id"], name: "index_ensembles_on_ensemble_level_id"
     t.index ["ensemble_parent_id"], name: "index_ensembles_on_ensemble_parent_id"
+    t.index ["name"], name: "index_ensembles_on_name"
   end
 
   create_table "identity_document_types", force: :cascade do |t|
     t.string "description", limit: 25
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["description"], name: "index_identity_document_types_on_description"
   end
 
   create_table "identity_documents", force: :cascade do |t|
@@ -87,6 +89,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_171631) do
     t.bigint "member_id", null: false
     t.index ["identity_document_type_id"], name: "index_identity_documents_on_identity_document_type_id"
     t.index ["member_id"], name: "index_identity_documents_on_member_id"
+    t.index ["number"], name: "index_identity_documents_on_number"
   end
 
   create_table "leader_roles", force: :cascade do |t|
@@ -125,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_171631) do
     t.string "email", limit: 100
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["membership_id"], name: "index_members_on_membership_id"
+    t.index ["name"], name: "index_members_on_name"
   end
 
   create_table "memberships", id: :integer, default: nil, force: :cascade do |t|
@@ -148,6 +152,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_171631) do
     t.string "description", limit: 100, null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["description"], name: "index_phone_types_on_description"
   end
 
   create_table "phones", force: :cascade do |t|
@@ -159,6 +164,7 @@ ActiveRecord::Schema.define(version: 2019_10_15_171631) do
     t.boolean "primary"
     t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_phones_on_member_id"
+    t.index ["phone_number"], name: "index_phones_on_phone_number"
     t.index ["phone_type_id"], name: "index_phones_on_phone_type_id"
   end
 

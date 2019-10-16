@@ -4,12 +4,17 @@ module MembersToCsv
   extend ActiveSupport::Concern
 
   def to_csv(members)
-    CSV.generate(headers: true) do |csv|
-      csv << attributes = %w(nucleo codigo_membro nome email data_nascimento data_ingresso_grupo cpf rg certidao_nascimento restricao_alimentar telefones informacoes_adicionais enderecos)
-      members.each do |member|
-        csv << attributes.map{ |attr| self.send(attr, member) }
+    result = nil
+    time = Benchmark.measure do
+      result = CSV.generate(headers: true) do |csv|
+        csv << attributes = %w(nucleo codigo_membro nome email data_nascimento data_ingresso_grupo cpf rg certidao_nascimento restricao_alimentar telefones informacoes_adicionais enderecos)
+        members.each do |member|
+          csv << attributes.map{ |attr| self.send(attr, member) }
+        end
       end
     end
+    logger.info("Time spent to convert an ensemble with #{members.count} records to csv: #{time}")
+    result
   end
 
   private

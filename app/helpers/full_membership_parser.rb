@@ -3,7 +3,7 @@ class FullMembershipParser
     membership = Membership.where(id: row['Cód. Membro']).first_or_initialize
     membership.name = name(row)
     membership.joining_date = joining_date(row)
-    membership.birthdate = birthdate(row)
+    # membership.birthdate ||= birthdate(row)
     membership.organizational_positions = organizational_positions(row) 
     membership.study_level = study_level(row) 
     membership.sustaining_contribution = sustaining_contribution(row) 
@@ -25,10 +25,11 @@ class FullMembershipParser
     Date.strptime(joining_date, '%d/%m/%Y') if joining_date != 'N/A'
   end
 
-  def birthdate(row)
-    birthdate = row['Nascimento']
-    Date.strptime(birthdate, '%d/%m/%Y') if birthdate.present? && birthdate != 'N/A'
-  end
+  # Not available yet at this file layout
+  # def birthdate(row)
+  #   birthdate = row['Nascimento']
+  #   Date.strptime(birthdate, '%d/%m/%Y') if birthdate.present? && birthdate != 'N/A'
+  # end
 
   def organizational_positions(row)
     organizational_position = row['Função'].strip
