@@ -17,9 +17,11 @@ class Member < ApplicationRecord
   has_one_attached :csv_file
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
-  scope :search, ->(search) { where('unaccent(name) ILIKE ?', "%#{search}%") }
+  scope :search, ->(search) { where('immutable_unaccent(name) ILIKE ?', "%#{search}%") }
+  scope :autocomplete, ->(term, limit = 10) { search(term).limit(limit) }
   scope :valid_for_signup, ->(membership_id, birthdate) { where(membership_id: membership_id, birthdate: birthdate).where.not(ensemble_id: nil) }
   scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles).includes(:ensemble) }
+  scope :by_membership_id, ->(membership_id) { where(membership_id:membership_id).includes(:ensemble) }
 
   accepts_nested_attributes_for :identity_documents, :phones, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :addresses, allow_destroy: true
@@ -41,7 +43,7 @@ class Member < ApplicationRecord
 
   def member_cannot_be_associated_with_another_ensemble
     return if membership_id.blank?
-    member = Member.where(membership_id: membership_id).reject { |m| m.id == id }.first
+    member = Member.by_membership_id(membership_id).reject { |m| m.id == id }.first
     return if member.blank? || member.ensemble.blank?
 
     errors.add(:membership_id, "Membro já associado com o núcleo #{member.ensemble.fully_qualified_name}")

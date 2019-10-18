@@ -10,9 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_16_224047) do
+ActiveRecord::Schema.define(version: 2019_10_17_230108) do
 
   # These are extensions that must be enabled in order to support this database
+  enable_extension "fuzzystrmatch"
+  enable_extension "pg_trgm"
   enable_extension "plpgsql"
   enable_extension "unaccent"
 
@@ -126,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_224047) do
     t.text "additional_information"
     t.bigint "membership_id"
     t.string "email", limit: 100
+    t.index "immutable_unaccent(name) gist_trgm_ops", name: "index_members_on_unaccent_name", using: :gist
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["membership_id"], name: "index_members_on_membership_id"
     t.index ["name"], name: "index_members_on_name"
@@ -146,6 +149,7 @@ ActiveRecord::Schema.define(version: 2019_10_16_224047) do
     t.date "birthdate"
     t.string "email", limit: 100
     t.jsonb "phones", default: {}, null: false
+    t.index "immutable_unaccent(name) gist_trgm_ops", name: "index_memberships_on_unaccent_name", using: :gist
   end
 
   create_table "phone_types", force: :cascade do |t|

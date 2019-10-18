@@ -7,7 +7,10 @@ class MembersController < ApplicationController
   before_action :apply_filter, only: [:index]
   before_action :valid_file, only: [:upload]
 
-  autocomplete :member, :name, full: true
+  def autocomplete_member_name
+    members = Member.autocomplete(params[:term])
+    render json: json_for_autocomplete(members, :name)
+  end
 
   # GET /members
   # GET /members.json
@@ -20,11 +23,11 @@ class MembersController < ApplicationController
   end
 
   def apply_filter
-    filters = params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
+    @members = Member.filter(filters).order(:name)
     if %w(json csv).include? params['format']
-      @members = Member.filter(filters).order(:name).all.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
+      @members = @members.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
     else
-      @members = Member.filter(filters).order(:name).all.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+      @members = @members.includes(:ensemble).paginate(page: params[:page], per_page: 15)
     end
   end
 
@@ -111,6 +114,10 @@ class MembersController < ApplicationController
       redirect_to members_upload_new_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:member].present?
     end
 
+    def filters
+      params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
+    end
+  
     # Never trust parameters from the scary internet, only allow the white list through.
     def member_params
       params.require(:member).permit(
