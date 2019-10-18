@@ -3,6 +3,7 @@ class Membership < ApplicationRecord
 
   has_one_attached :csv_file
 
+  scope :first_by_id, ->(id) { where(id: id).first }
   scope :autocomplete, ->(term, limit = 10) { where('immutable_unaccent(name) ILIKE ?', "%#{term}%").limit(limit) }
 
   def autocomplete_label
