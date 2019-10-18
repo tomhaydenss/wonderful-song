@@ -1,7 +1,10 @@
 class MembershipsController < ApplicationController
   before_action :valid_file, only: [:create]
 
-  autocomplete :membership, :name, full: true, extra_data: [:email, :birthdate]
+  def autocomplete_membership_name
+    memberships = Membership.autocomplete(params[:term])
+    render json: json_for_autocomplete(memberships, :autocomplete_label, [:name, :email, :birthdate])
+  end
 
   def index
     @membership = Membership.new

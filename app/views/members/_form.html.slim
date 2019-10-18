@@ -8,7 +8,7 @@
     = label_tag 'member[name]' do
       abbr title="required" = '*'
       = ' Nome'
-    = text_field_tag 'member[name]', (params[:name] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { email: '#member_email', birthdate: '#member_birthdate'} }
+    = text_field_tag 'member[name]', (params[:name] || @member&.name), class: 'form-control', data: { autocomplete: memberships_autocomplete_membership_name_path, id_element: '#member_membership_id', update_elements: { name: '#member_name', email: '#member_email', birthdate: '#member_birthdate'} }
     - if @member.errors[:name].any?
       span.error = @member.errors['name'].join(' / ')
   = f.input :email, label: 'E-Mail', input_html: { maxlength: 100 }

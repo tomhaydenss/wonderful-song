@@ -14,6 +14,7 @@
 javascript:
   $('#search').bind('railsAutocomplete.select', function(event, data) { window.location.href = `/members/${data.item.id}` });
 br
+= link_to 'Todos', members_path, class: (params[:ensemble_id].blank? && params[:search].blank?) ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
 - @permitted_ensembles_only.each do |filter|
   = link_to filter.name, members_path(ensemble_id: filter.id), class: params[:ensemble_id].to_i == filter.id ? "btn btn-primary btn-xs" : "btn btn-default btn-xs"
 
