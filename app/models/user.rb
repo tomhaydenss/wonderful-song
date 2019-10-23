@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   attr_reader :membership_id, :birthdate
 
+  validates :membership_id, :birthdate, presence: true
   validate :valid_member
   validates :member_id, uniqueness: true, if: ->(u) { u.member_id.present? }
 
