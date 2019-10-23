@@ -12,12 +12,14 @@ div class=['panel', 'panel-default']
     thead
       tr
         th Nome
+        th Data de Fundação
         th Nível
         th Pertence a
         th Liderança apenas?
     tbody
       tr
         td =@ensemble.name
+        td =@ensemble.foundation_date
         td =@ensemble.ensemble_level.description
         td =@ensemble.ensemble_parent.fully_qualified_name if @ensemble.ensemble_parent.present?
         td =@ensemble.leadership_purpose ? '✅' : '❌'
