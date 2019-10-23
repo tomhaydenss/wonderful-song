@@ -17,7 +17,7 @@ class Member < ApplicationRecord
   has_one_attached :csv_file
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
-  scope :search, ->(search) { where('immutable_unaccent(name) ILIKE ?', "%#{search}%") }
+  scope :search, ->(search) { where('immutable_unaccent(name) ILIKE ?', "%#{search.split.join('%')}%") }
   scope :autocomplete, ->(term, limit = 10) { search(term).limit(limit) }
   scope :valid_for_signup, ->(membership_id, birthdate) { where(membership_id: membership_id, birthdate: birthdate).where.not(ensemble_id: nil) }
   scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles).includes(:ensemble) }

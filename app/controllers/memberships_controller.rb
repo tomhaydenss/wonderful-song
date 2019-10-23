@@ -1,8 +1,11 @@
 class MembershipsController < ApplicationController
+  include StringUtils
+
   before_action :valid_file, only: [:create]
 
   def autocomplete_membership_name
-    memberships = Membership.autocomplete(params[:term])
+    memberships = Membership.by_id(params[:term]) if searching_by_membership_id?
+    memberships ||= Membership.autocomplete(params[:term])
     render json: json_for_autocomplete(memberships, :autocomplete_label, [:name, :email, :birthdate])
   end
 
@@ -21,6 +24,10 @@ class MembershipsController < ApplicationController
 
   def valid_file
     redirect_to memberships_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:membership].present?
+  end
+
+  def searching_by_membership_id?
+    digits_only(params[:term]).to_i > 0
   end
   
   def membership_params

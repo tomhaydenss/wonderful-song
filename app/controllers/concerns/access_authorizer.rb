@@ -8,7 +8,7 @@ module AccessAuthorizer
   end
 
   def fetch_permitted_ensembles_only(include_parent_ensemble = false)
-    ensemble = Ensemble.for_admin if current_user.any_roles? [:admin]
+    ensemble = Ensemble.top_level if current_user.any_roles? [:admin]
     ensemble ||= current_user&.member&.highest_ensemble_level_through_leadership
     @permitted_ensembles_only = ensemble.present? ? ensemble.filterable_ensembles(include_parent_ensemble) : []
   end

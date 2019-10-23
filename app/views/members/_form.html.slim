@@ -1,6 +1,6 @@
 = simple_form_for @member do |f|
   - if @member.new_record?
-    = f.association :ensemble, label: 'Núcleo', collection: EnsembleHelper.ensembles_as_grouped_options(@permitted_ensembles_only), as: :grouped_select, group_method: :last, include_blank: true
+    = f.association :ensemble, label: 'Núcleo', collection: EnsembleHelper.ensembles_as_grouped_options(@permitted_ensembles_only), as: :grouped_select, group_method: :last, include_blank: false
   - else
     = f.input :ensemble, label: 'Núcleo', readonly: true, input_html: { value: @member.ensemble&.name }
   = f.input :membership_id, label: 'Código de Membro', readonly: true, input_html: { tabindex: -1 }
