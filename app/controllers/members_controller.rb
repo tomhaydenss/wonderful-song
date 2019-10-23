@@ -1,5 +1,6 @@
 class MembersController < ApplicationController
   include MembersToCsv
+  include StringUtils
 
   before_action :fetch_permitted_ensembles_only, only: [:index, :new]
   before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
@@ -8,7 +9,8 @@ class MembersController < ApplicationController
   before_action :valid_file, only: [:upload]
 
   def autocomplete_member_name
-    members = Member.autocomplete(params[:term])
+    members = Member.by_membership_id(params[:term]) if searching_by_membership_id?
+    members ||= Member.autocomplete(params[:term])
     render json: json_for_autocomplete(members, :name)
   end
 
@@ -116,6 +118,10 @@ class MembersController < ApplicationController
 
     def filters
       params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
+    end
+
+    def searching_by_membership_id?
+      digits_only(params[:term]).to_i > 0
     end
   
     # Never trust parameters from the scary internet, only allow the white list through.

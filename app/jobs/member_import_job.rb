@@ -25,7 +25,7 @@ class MemberImportJob < ApplicationJob
   def membership(id)
     return if id == nil
 
-    Membership.first_by_id(id)
+    Membership.by_id(id).first
   end
 
   def save_member(row, membership)
@@ -43,7 +43,7 @@ class MemberImportJob < ApplicationJob
   end
 
   def ensemble(row)
-    Ensemble.first_by_name(row['nucleo'].strip)
+    Ensemble.by_name(row['nucleo'].strip).first
   end
 
   def name(row, membership)

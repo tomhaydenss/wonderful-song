@@ -1,4 +1,5 @@
 class IdentityDocument < ApplicationRecord
+  include StringUtils
   attr_accessor :skip_validation
 
   belongs_to :identity_document_type
@@ -19,10 +20,6 @@ class IdentityDocument < ApplicationRecord
   end
 
   private
-
-  def digits_only(number)
-    number.scan(/\d/).join('')
-  end
 
   def validate_tax_payer_number(validator = CPFValidator)
     errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(self.number))

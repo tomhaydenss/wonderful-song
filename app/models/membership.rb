@@ -3,15 +3,14 @@ class Membership < ApplicationRecord
 
   has_one_attached :csv_file
 
-  scope :first_by_id, ->(id) { where(id: id).first }
-  scope :autocomplete, ->(term, limit = 10) { where('immutable_unaccent(name) ILIKE ?', "%#{term}%").limit(limit) }
+  scope :by_id, ->(id) { where(id: id) }
+  scope :autocomplete, ->(term, limit = 10) { where('immutable_unaccent(name) ILIKE ?', "%#{term.split.join('%')}%").limit(limit) }
 
   def autocomplete_label
     "#{id} - #{name} (#{fully_qualified_organization_name})"
   end
 
   def name
-    # format_name(self.name)
     format_name(read_attribute(:name))
   end
 

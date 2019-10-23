@@ -15,8 +15,8 @@ class Ensemble < ApplicationRecord
   scope :leadership_purpose_only, -> { where(leadership_purpose: true).includes(:ensemble_parent) }
   scope :membership_purpose_only, -> { where(leadership_purpose: false).includes(:ensemble_parent) }
   scope :permitted_ensembles_only, ->(ensembles) { where(id: ensembles).includes(:ensemble_parent) }
-  scope :for_admin, -> { joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first }
-  scope :first_by_name, ->(name) { where(name: name).first }
+  scope :top_level, -> { joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first }
+  scope :by_name, ->(name) { where(name: name) }
 
   def fully_qualified_name
     return ensemble_parent.fully_qualified_name + ' » ' + name if ensemble_parent.present?
