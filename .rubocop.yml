@@ -1,0 +1,53 @@
+AllCops:
+  TargetRubyVersion: 2.6.2
+  # Include common Ruby source files.
+  Include:
+    - "**/*.rb"
+    - "**/*.gemspec"
+    - "**/*.podspec"
+    - "**/*.jbuilder"
+    - "**/*.rake"
+    - "**/*.opal"
+    - "**/Gemfile"
+    - "**/Rakefile"
+    - "**/Capfile"
+    - "**/Guardfile"
+    - "**/Podfile"
+    - "**/Thorfile"
+    - "**/Vagrantfile"
+    - "**/Berksfile"
+    - "**/Cheffile"
+    - "**/Vagabondfile"
+    - "**/Fastfile"
+    - "**/*Fastfile"
+  Exclude:
+    - "vendor/**/*"
+    - "bin/**/*"
+    - "db/**/*"
+    - "config/environments/*"
+    - "config/initializers/*"
+    - "test/**/*"
+
+Style/Documentation:
+  Description: "Document classes and non-namespace modules."
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 140
+  # To make it possible to copy or click on URIs in the code, we allow lines
+  # containing a URI to be longer than Max.
+  AllowHeredoc: true
+  AllowURI: true
+  URISchemes:
+    - http
+    - https
+Metrics/BlockLength:
+  ExcludedMethods: ["describe", "context", "define"]
+  Exclude:
+    - "spec/factories/**/*"
+
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - as
+    - e
+    - id
