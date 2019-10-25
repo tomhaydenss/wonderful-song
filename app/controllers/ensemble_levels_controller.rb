@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class EnsembleLevelsController < ApplicationController
-  before_action :set_ensemble_level, only: [:show, :edit, :update, :destroy]
+  before_action :set_ensemble_level, only: %i[show edit update destroy]
 
   # GET /ensemble_levels
   # GET /ensemble_levels.json
@@ -9,8 +11,7 @@ class EnsembleLevelsController < ApplicationController
 
   # GET /ensemble_levels/1
   # GET /ensemble_levels/1.json
-  def show
-  end
+  def show; end
 
   # GET /ensemble_levels/new
   def new
@@ -18,8 +19,7 @@ class EnsembleLevelsController < ApplicationController
   end
 
   # GET /ensemble_levels/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /ensemble_levels
   # POST /ensemble_levels.json
@@ -62,13 +62,14 @@ class EnsembleLevelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ensemble_level
-      @ensemble_level = EnsembleLevel.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ensemble_level_params
-      params.require(:ensemble_level).permit(:description, :precedence_order)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ensemble_level
+    @ensemble_level = EnsembleLevel.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ensemble_level_params
+    params.require(:ensemble_level).permit(:description, :precedence_order)
+  end
 end

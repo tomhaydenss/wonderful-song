@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MemberImportJob < ApplicationJob
   queue_as :member_list
 
@@ -5,16 +7,14 @@ class MemberImportJob < ApplicationJob
     cpf: IdentityDocumentType.tax_payer_id,
     rg: IdentityDocumentType.identity_card,
     certidao_nascimento: IdentityDocumentType.birth_certificate
-  }
+  }.freeze
 
   def perform(member_upload)
     CSVReader.new(member_upload.csv_file).each_line do |row, index|
-      begin
-        membership = membership(row['codigo_membro']&.strip)
-        save_member(row, membership) if membership.present?
-      rescue StandardError => e
-        logger.error "The following error was found at line ##{index}: #{e}"
-      end
+      membership = membership(row['codigo_membro']&.strip)
+      save_member(row, membership) if membership.present?
+    rescue StandardError => e
+      logger.error "The following error was found at line ##{index}: #{e}"
     end
   ensure
     member_upload.csv_file.purge
@@ -23,11 +23,13 @@ class MemberImportJob < ApplicationJob
   private
 
   def membership(id)
-    return if id == nil
+    return if id.nil?
 
     Membership.by_id(id).first
   end
 
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def save_member(row, membership)
     member = Member.find_or_initialize_by(membership: membership)
     member.ensemble = ensemble(row)
@@ -41,6 +43,8 @@ class MemberImportJob < ApplicationJob
     member.addresses << addresses(row, member.addresses)
     member.save
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   def ensemble(row)
     Ensemble.by_name(row['nucleo'].strip).first
@@ -77,9 +81,7 @@ class MemberImportJob < ApplicationJob
 
   def identity_documents(row, current_documents)
     identity_documents = []
-    DOCUMENTS_MAP.keys.each do |key|
-      identity_documents << identity_document(row, key)
-    end
+    DOCUMENTS_MAP.keys.each { |key| identity_documents << identity_document(row, key) }
     identity_documents.compact.reject { |item| current_documents.pluck(:number).include?(item.number) }
   end
 
@@ -93,41 +95,38 @@ class MemberImportJob < ApplicationJob
   def phones(row, current_phones)
     return [] if row['telefones'].blank?
 
-    phones = []
-    row['telefones'].strip.split('|').each_with_index do |phone, index|
-      phone_number, phone_type, additional_information = phone.split(';')[0..2]
-      phones << Phone.new(
-        phone_number: phone_number,
-        phone_type: phone_type(phone_type),
-        additional_information: additional_information,
-        primary: index.zero?
-      )
+    phones = row['telefones'].strip.split('|').inject([]) do |hash, phone|
+      hash << Phone.new(phone_params(phone))
     end
-    phones.reject { |item| current_phones.pluck(:phone_number).include?(item.phone_number) }.uniq { |item| item.phone_number }
+    phones.reject { |item| current_phones.pluck(:phone_number).include?(item.phone_number) }.uniq(&:phone_number)
+  end
+
+  def phone_params(phone_separeted_by_semicolon)
+    phone_number, phone_type, additional_information = phone_separeted_by_semicolon.split(';')[0..2]
+    { phone_number: phone_number, phone_type: phone_type(phone_type), additional_information: additional_information }
   end
 
   def phone_type(type)
     return PhoneType.home if type.present? && type.casecmp('fixo').zero?
+
     PhoneType.mobile
   end
 
   def addresses(row, current_addresses)
     return [] if row['enderecos'].blank?
 
-    addresses = []
-    row['enderecos'].strip.split('|').each_with_index do |address, index|
-      postal_code, street, number, additional_information, neighborhood, city, state = address.split(';')[0..6]
-      addresses << Address.new(
-                    postal_code: postal_code, 
-                    street: street, 
-                    number: number, 
-                    additional_information: additional_information, 
-                    neighborhood: neighborhood, 
-                    city: city, 
-                    state: state,
-                    primary: index.zero?
-                  )
+    addresses = row['enderecos'].strip.split('|').inject([]) do |hash, address|
+      hash << Address.new(address_params(address))
     end
-    addresses.reject { |item| current_addresses.pluck(:postal_code).include?(item.postal_code) }.uniq { |item| item.postal_code }
+    addresses.reject { |item| current_addresses.pluck(:postal_code).include?(item.postal_code) }.uniq(&:postal_code)
+  end
+
+  def address_params(address_separeted_by_semicolon)
+    postal_code, street, number, additional_information, neighborhood, city, state = address_separeted_by_semicolon.split(';')[0..6]
+    {
+      postal_code: postal_code, street: street, number: number,
+      additional_information: additional_information,
+      neighborhood: neighborhood, city: city, state: state
+    }
   end
 end

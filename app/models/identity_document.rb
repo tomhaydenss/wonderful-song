@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IdentityDocument < ApplicationRecord
   include StringUtils
   attr_accessor :skip_validation
@@ -22,10 +24,10 @@ class IdentityDocument < ApplicationRecord
   private
 
   def validate_tax_payer_number(validator = CPFValidator)
-    errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(self.number))
+    errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(number))
   end
-  
+
   def validate_id_number
-    errors.add(:number, :invalid) unless digits_only(self.number).length >= 4
+    errors.add(:number, :invalid) unless digits_only(number).length >= 4
   end
 end

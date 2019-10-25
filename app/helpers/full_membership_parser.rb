@@ -1,18 +1,24 @@
+# frozen_string_literal: true
+
 class FullMembershipParser
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def parse(row)
     membership = Membership.where(id: row['Cód. Membro']).first_or_initialize
     membership.name = name(row)
     membership.joining_date = joining_date(row)
     # membership.birthdate ||= birthdate(row)
-    membership.organizational_positions = organizational_positions(row) 
-    membership.study_level = study_level(row) 
-    membership.sustaining_contribution = sustaining_contribution(row) 
-    membership.discussion_meeting = discussion_meeting(row) 
-    membership.publications_subscriptions = publications_subscriptions(row) 
-    membership.members_sponsored = members_sponsored(row) 
-    membership.organizational_information = organizational_information(row) 
+    membership.organizational_positions = organizational_positions(row)
+    membership.study_level = study_level(row)
+    membership.sustaining_contribution = sustaining_contribution(row)
+    membership.discussion_meeting = discussion_meeting(row)
+    membership.publications_subscriptions = publications_subscriptions(row)
+    membership.members_sponsored = members_sponsored(row)
+    membership.organizational_information = organizational_information(row)
     membership
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -79,7 +85,7 @@ class FullMembershipParser
     organizational_information = []
     all_but_first = row['Organização'].strip.split(';')[1..-1]
     all_but_first.each do |organization|
-      /(?<level>Coor. Geral|Coor.|Sub.|RM\/RE|Regional|Área|Distrito|Comunidade|Bloco) (?<name>.*) [(](?<code>.*)[)]/ =~ organization
+      %r{(?<level>Coor. Geral|Coor.|Sub.|RM/RE|Regional|Área|Distrito|Comunidade|Bloco) (?<name>.*) [(](?<_code>.*)[)]} =~ organization
       organizational_information << { level: level, name: name } if level.present?
     end
     { organizations: organizational_information }

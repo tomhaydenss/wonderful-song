@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class IdentityDocumentTypesController < ApplicationController
-  before_action :set_identity_document_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_identity_document_type, only: %i[show edit update destroy]
 
   # GET /identity_document_types
   # GET /identity_document_types.json
@@ -9,8 +11,7 @@ class IdentityDocumentTypesController < ApplicationController
 
   # GET /identity_document_types/1
   # GET /identity_document_types/1.json
-  def show
-  end
+  def show; end
 
   # GET /identity_document_types/new
   def new
@@ -18,8 +19,7 @@ class IdentityDocumentTypesController < ApplicationController
   end
 
   # GET /identity_document_types/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /identity_document_types
   # POST /identity_document_types.json
@@ -62,13 +62,14 @@ class IdentityDocumentTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_identity_document_type
-      @identity_document_type = IdentityDocumentType.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def identity_document_type_params
-      params.require(:identity_document_type).permit(:description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_identity_document_type
+    @identity_document_type = IdentityDocumentType.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def identity_document_type_params
+    params.require(:identity_document_type).permit(:description)
+  end
 end

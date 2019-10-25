@@ -1,6 +1,10 @@
-class PartialMembershipParser
-  ALLOWED_DIVISIONS = %w[DMJ DEM]
+# frozen_string_literal: true
 
+class PartialMembershipParser
+  ALLOWED_DIVISIONS = %w[DMJ DEM].freeze
+
+  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/MethodLength
   def parse(row)
     return unless ALLOWED_DIVISIONS.include? row['Divisão']
 
@@ -8,15 +12,17 @@ class PartialMembershipParser
     membership.name = name(row)
     membership.joining_date = joining_date(row)
     membership.birthdate = birthdate(row)
-    membership.organizational_positions = organizational_positions(row) 
-    membership.study_level = study_level(row) 
-    membership.sustaining_contribution = sustaining_contribution(row) 
-    membership.publications_subscriptions = publications_subscriptions(row) 
-    membership.organizational_information = organizational_information(row) 
+    membership.organizational_positions = organizational_positions(row)
+    membership.study_level = study_level(row)
+    membership.sustaining_contribution = sustaining_contribution(row)
+    membership.publications_subscriptions = publications_subscriptions(row)
+    membership.organizational_information = organizational_information(row)
     membership.email = email(row)
     membership.phones = phones(row)
     membership
   end
+  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/MethodLength
 
   private
 
@@ -46,7 +52,7 @@ class PartialMembershipParser
   end
 
   def study_level(row)
-    study_level = row['Grau Budismo'].strip
+    row['Grau Budismo'].strip
   end
 
   def sustaining_contribution(row)
@@ -64,7 +70,7 @@ class PartialMembershipParser
   def organizational_information(row)
     organizational_information = []
     row['Organização'].strip.split(' / ').each do |organization|
-      /(?<level>Coor. Geral|Coor.|Sub.|RM\/RE|Regional|Área|Distrito|Comunidade|Bloco) (?<name>.*)/ =~ organization.strip
+      %r{(?<level>Coor. Geral|Coor.|Sub.|RM/RE|Regional|Área|Distrito|Comunidade|Bloco) (?<name>.*)} =~ organization.strip
       organizational_information << { level: level, name: name } if level.present?
     end
     { organizations: organizational_information }

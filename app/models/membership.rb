@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Membership < ApplicationRecord
   include NameFormatter
 
@@ -14,12 +16,13 @@ class Membership < ApplicationRecord
     format_name(read_attribute(:name))
   end
 
-  def has_attended_to_last_meeting?
+  def attended_to_last_meeting?
     return false if discussion_meeting['last_attendance'].blank?
+
     Date.strptime(discussion_meeting['last_attendance']['date'], '%Y-%m-%d') + 1.month > Date.current
   end
 
-  def has_subscribed_to_publications?
+  def subscribed_to_publications?
     publications_subscriptions['bsp'] || publications_subscriptions['tc'] || publications_subscriptions['rdez']
   end
 

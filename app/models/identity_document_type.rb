@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IdentityDocumentType < ApplicationRecord
   TAX_PAYER = 'CPF'
   ID = 'RG'

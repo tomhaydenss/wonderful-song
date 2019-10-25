@@ -1,7 +1,8 @@
+# frozen_string_literal: true
+
 module EnsembleHelper
   def self.ensembles_as_grouped_options(ensembles)
-    hash = {}
-    ensembles.each do |ensemble|
+    ensembles.each_with_object({}) do |ensemble, hash|
       key = ensemble.ensemble_parent.fully_qualified_name
       value = [ensemble.name, ensemble.id]
       if hash[key].present?
@@ -9,7 +10,6 @@ module EnsembleHelper
       else
         hash[key] = [value]
       end
-    end
-    hash.to_a
+    end.to_a
   end
 end
