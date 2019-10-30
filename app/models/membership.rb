@@ -19,7 +19,8 @@ class Membership < ApplicationRecord
   def attended_to_last_meeting?
     return false if discussion_meeting['last_attendance'].blank?
 
-    Date.strptime(discussion_meeting['last_attendance']['date'], '%Y-%m-%d') + 1.month > Date.current
+    next_month = Date.strptime(discussion_meeting['last_attendance']['date'], '%Y-%m-%d') + 1.day
+    next_month.end_of_month >= Date.current
   end
 
   def subscribed_to_publications?

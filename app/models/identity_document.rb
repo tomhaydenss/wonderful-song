@@ -14,16 +14,20 @@ class IdentityDocument < ApplicationRecord
   validates :complement, presence: true, if: ->(doc) { doc.id_type? && !skip_validation }
 
   def tax_payer_type?
+    return false unless identity_document_type.present?
+
     identity_document_type.tax_payer?
   end
 
   def id_type?
+    return false unless identity_document_type.present?
+
     identity_document_type.id?
   end
 
   private
 
-  def validate_tax_payer_number(validator = CPFValidator)
+  def validate_tax_payer_number(validator = CPFValidator.new)
     errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(number))
   end
 
