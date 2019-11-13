@@ -2,8 +2,11 @@
 
 require 'factory_bot'
 require 'factory_bot_rails'
+require 'support/common_functions'
 
 RSpec.configure do |config|
+  include CommonFunctions
+
   config.expect_with :rspec do |expectations|
     expectations.include_chain_clauses_in_custom_matcher_descriptions = true
     config.include FactoryBot::Syntax::Methods

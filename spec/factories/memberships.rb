@@ -10,7 +10,7 @@ FactoryBot.define do
     sustaining_contribution { build(:boolean) }
     discussion_meeting { build(:discussion_meeting) }
     publications_subscriptions { { 'tc': build(:boolean), 'bsp': build(:boolean), 'rdez': build(:boolean) } }
-    members_sponsored { rand(0..10) }
+    members_sponsored { build(:members_sponsored) }
     organizational_information { build(:organizational_information) }
     organizational_positions { build(:organizational_positions) }
     email { Faker::Internet.email }
@@ -23,6 +23,12 @@ FactoryBot.define do
     trait :with_at_least_one_subscription do
       publications_subscriptions { { 'tc': true, 'bsp': false, 'rdez': false } }
     end
+  end
+
+  factory :members_sponsored, class: Integer do
+    quantity { rand(0..10) }
+
+    initialize_with { quantity }
   end
 
   factory :membership_id, class: Integer do
@@ -105,17 +111,6 @@ FactoryBot.define do
     organizations { build_list(:organization_level, 5, :valid) }
 
     initialize_with { attributes }
-  end
-
-  factory :organizational_information_full_version, class: String do
-    organizations do
-      list = build_list(:organization_level, 5, :valid).inject([]) do |array, item|
-        array << "#{item[:level]} #{item[:name].upcase} (#{rand(1..999)})"
-      end
-      list.join(';')
-    end
-
-    initialize_with { new(organizations) }
   end
 
   factory :organizational_position, class: Hash do

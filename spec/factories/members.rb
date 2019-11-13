@@ -21,6 +21,10 @@ FactoryBot.define do
       identity_documents { [build(:identity_document)] }
     end
 
-    factory :with_phone_address_and_document, traits: [:with_phone, :with_address, :with_identity_document]
+    trait :with_ensemble do
+      ensemble { build(:ensemble) }
+    end
+
+    factory :with_phone_address_and_document, traits: %i[with_phone with_address with_identity_document]
   end
 end
