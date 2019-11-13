@@ -1,24 +1,28 @@
+# frozen_string_literal: true
+
 require 'csv'
 
 module MembersToCsv
   extend ActiveSupport::Concern
 
   def to_csv(members)
-    result = nil
-    time = Benchmark.measure do
-      result = CSV.generate(headers: true) do |csv|
-        csv << attributes = %w(nucleo codigo_membro nome email data_nascimento data_ingresso_grupo cpf rg certidao_nascimento restricao_alimentar telefones informacoes_adicionais enderecos)
-        members.each do |member|
-          csv << attributes.map{ |attr| self.send(attr, member) }
-        end
+    CSV.generate(headers: true) do |csv|
+      csv << attributes
+      members.each do |member|
+        csv << attributes.map { |attr| send(attr, member) }
       end
     end
-    logger.info("Time spent to convert an ensemble with #{members.count} records to csv: #{time}")
-    result
   end
 
   private
-  
+
+  def attributes
+    %w[nucleo
+       codigo_membro nome email data_nascimento data_ingresso_grupo
+       cpf rg certidao_nascimento restricao_alimentar telefones
+       informacoes_adicionais enderecos].freeze
+  end
+
   def nucleo(member)
     member.ensemble&.name
   end
@@ -45,44 +49,52 @@ module MembersToCsv
 
   def cpf(member)
     docs = member.identity_documents.select { |doc| doc.identity_document_type.tax_payer? }.inject([]) do |array, doc|
-      array << "#{doc.number}" + (doc.complement.present? ? ";#{doc.complement}" : '')
+      array << doc.number.to_s + (doc.complement.present? ? ";#{doc.complement}" : '')
     end
     docs.present? ? docs.join('|') : ''
   end
-  
+
   def rg(member)
     docs = member.identity_documents.select { |doc| doc.identity_document_type.id? }.inject([]) do |array, doc|
-      array << "#{doc.number}" + (doc.complement.present? ? ";#{doc.complement}" : '')
+      array << doc.number.to_s + (doc.complement.present? ? ";#{doc.complement}" : '')
     end
     docs.present? ? docs.join('|') : ''
   end
-            
+
   def certidao_nascimento(member)
     docs = member.identity_documents.select { |doc| doc.identity_document_type.birth_certificate? }.inject([]) do |array, doc|
-      array << "#{doc.number}" + (doc.complement.present? ? ";#{doc.complement}" : '')
+      array << doc.number.to_s + (doc.complement.present? ? ";#{doc.complement}" : '')
     end
     docs.present? ? docs.join('|') : ''
   end
-  
+
   def restricao_alimentar(member)
     member.food_restrictions
   end
 
   def telefones(member)
     phones = member.phones.inject([]) do |array, phone|
-      array << "#{phone.phone_number};#{phone.phone_type.description}" + (phone.additional_information.present? ? ";#{phone.additional_information}" : '')
+      array << "#{phone.phone_number};#{phone.phone_type.description}" + phone_additional_information(phone)
     end
     phones.present? ? phones.join('|') : ''
   end
-  
+
+  def phone_additional_information(phone)
+    phone.additional_information.present? ? ";#{phone.additional_information}" : ''
+  end
+
   def informacoes_adicionais(member)
     member.additional_information
   end
-  
+
   def enderecos(member)
-    addressess = member.addresses.inject([]) do |array, addr|
-      array << "#{addr.postal_code};#{addr.street};#{addr.number};#{addr.additional_information};#{addr.neighborhood};#{addr.city};#{addr.state}"
+    addressess = member.addresses.inject([]) do |array, address|
+      array << address_attributes.map { |attr| address.send(attr) }.join(';')
     end
     addressess.present? ? addressess.join('|') : ''
+  end
+
+  def address_attributes
+    %w[postal_code street number additional_information neighborhood city state].freeze
   end
 end

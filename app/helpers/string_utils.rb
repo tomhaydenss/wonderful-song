@@ -1,5 +1,6 @@
-module StringUtils
+# frozen_string_literal: true
 
+module StringUtils
   protected
 
   def digits_only(number)

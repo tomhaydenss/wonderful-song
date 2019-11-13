@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class PhoneTypesController < ApplicationController
-  before_action :set_phone_type, only: [:show, :edit, :update, :destroy]
+  before_action :set_phone_type, only: %i[show edit update destroy]
 
   # GET /phone_types
   # GET /phone_types.json
@@ -9,8 +11,7 @@ class PhoneTypesController < ApplicationController
 
   # GET /phone_types/1
   # GET /phone_types/1.json
-  def show
-  end
+  def show; end
 
   # GET /phone_types/new
   def new
@@ -18,8 +19,7 @@ class PhoneTypesController < ApplicationController
   end
 
   # GET /phone_types/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /phone_types
   # POST /phone_types.json
@@ -62,13 +62,14 @@ class PhoneTypesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_phone_type
-      @phone_type = PhoneType.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def phone_type_params
-      params.require(:phone_type).permit(:description)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_phone_type
+    @phone_type = PhoneType.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def phone_type_params
+    params.require(:phone_type).permit(:description)
+  end
 end

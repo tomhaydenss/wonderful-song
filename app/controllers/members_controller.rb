@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
 class MembersController < ApplicationController
   include MembersToCsv
   include StringUtils
 
-  before_action :fetch_permitted_ensembles_only, only: [:index, :new]
-  before_action :set_member, only: [:show, :edit, :update, :destroy, :new_transfer]
-  before_action :new_member, only: [:new, :new_upload]
+  before_action :fetch_permitted_ensembles_only, only: %i[index new]
+  before_action :set_member, only: %i[show edit update destroy new_transfer]
+  before_action :new_member, only: %i[new new_upload]
+  before_action :build_member, only: %i[create upload]
   before_action :apply_filter, only: [:index]
   before_action :valid_file, only: [:upload]
 
@@ -26,30 +29,26 @@ class MembersController < ApplicationController
 
   def apply_filter
     @members = Member.filter(filters).order(:name)
-    if %w(json csv).include? params['format']
-      @members = @members.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
-    else
-      @members = @members.includes(:ensemble).paginate(page: params[:page], per_page: 15)
-    end
+    @members = if %w[json csv].include? params['format']
+                 @members.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
+               else
+                 @members.includes(:ensemble).paginate(page: params[:page], per_page: 15)
+               end
   end
 
   # GET /members/1
   # GET /members/1.json
-  def show
-  end
+  def show; end
 
   # GET /members/new
   def new; end
 
   # GET /members/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /members
   # POST /members.json
   def create
-    @member = Member.new(member_params)
-
     respond_to do |format|
       if @member.save
         format.html { redirect_to @member, notice: 'Member was successfully created.' }
@@ -67,9 +66,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update_attributes(member_params)
-        format.html do
-          redirect_to ((request.params['commit'] == 'Salvar') ? @member : members_path), notice: 'Member was successfully updated.' 
-        end
+        format.html { redirect_to updated_path, notice: 'Member was successfully updated.' }
         format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
@@ -95,7 +92,6 @@ class MembersController < ApplicationController
   def new_upload; end
 
   def upload
-    @member = Member.new(member_params)
     MemberImportJob.perform_now(@member)
     redirect_to members_path, flash: { success: 'Member file was successfully uploaded.' }
   end
@@ -103,34 +99,43 @@ class MembersController < ApplicationController
   def new_transfer; end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_member
-      @member = Member.find(params[:id] || params[:member_id])
-    end
 
-    def new_member
-      @member = Member.new
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_member
+    @member = Member.find(params[:id] || params[:member_id])
+  end
 
-    def valid_file
-      redirect_to members_upload_new_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:member].present?
-    end
+  def new_member
+    @member = Member.new
+  end
 
-    def filters
-      params.merge(self.permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
-    end
+  def build_member
+    @member = Member.new(member_params)
+  end
 
-    def searching_by_membership_id?
-      digits_only(params[:term]).to_i > 0
-    end
-  
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def member_params
-      params.require(:member).permit(
-        :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id, :csv_file,
-        phones_attributes: [:id, :phone_number, :phone_type_id, :additional_information, :primary, :_destroy],
-        addresses_attributes: [:id, :postal_code, :street, :number, :additional_information, :neighborhood, :city, :state, :primary, :_destroy],
-        identity_documents_attributes: [:id, :number, :complement, :identity_document_type_id, :_destroy]
-      )
-    end
+  def valid_file
+    redirect_to members_upload_new_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:member].present?
+  end
+
+  def filters
+    params.merge(permitted_ensembles_only(true)).slice(:permitted_ensembles_only, :ensemble_id, :search)
+  end
+
+  def searching_by_membership_id?
+    digits_only(params[:term]).to_i.positive?
+  end
+
+  def updated_path
+    request.params['commit'] == 'Salvar' ? @member : members_path
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def member_params
+    params.require(:member).permit(
+      :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id, :csv_file,
+      phones_attributes: %i[id phone_number phone_type_id additional_information primary _destroy],
+      addresses_attributes: %i[id postal_code street number additional_information neighborhood city state primary _destroy],
+      identity_documents_attributes: %i[id number complement identity_document_type_id _destroy]
+    )
+  end
 end

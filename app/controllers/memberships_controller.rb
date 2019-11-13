@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MembershipsController < ApplicationController
   include StringUtils
 
@@ -6,7 +8,7 @@ class MembershipsController < ApplicationController
   def autocomplete_membership_name
     memberships = Membership.by_id(params[:term]) if searching_by_membership_id?
     memberships ||= Membership.autocomplete(params[:term])
-    render json: json_for_autocomplete(memberships, :autocomplete_label, [:name, :email, :birthdate])
+    render json: json_for_autocomplete(memberships, :autocomplete_label, %i[name email birthdate])
   end
 
   def index
@@ -27,9 +29,9 @@ class MembershipsController < ApplicationController
   end
 
   def searching_by_membership_id?
-    digits_only(params[:term]).to_i > 0
+    digits_only(params[:term]).to_i.positive?
   end
-  
+
   def membership_params
     params.require(:membership).permit(:csv_file)
   end

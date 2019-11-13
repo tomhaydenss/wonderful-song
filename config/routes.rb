@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   root to: 'home#index'
   get '/ongakutai', to: 'home#japan'
@@ -11,7 +13,7 @@ Rails.application.routes.draw do
   get 'members/upload/new', to: 'members#new_upload'
   post 'members/upload', to: 'members#upload'
 
-  devise_for :users, controllers: { registrations: "registrations" }
+  devise_for :users, controllers: { registrations: 'registrations' }
   resources :members do
     resources :transfers, only: [:new], to: 'members#new_transfer'
   end
@@ -20,6 +22,5 @@ Rails.application.routes.draw do
   resources :phone_types
   resources :positions
   resources :identity_document_types
-  resources :memberships, only: [:index, :create]
-
+  resources :memberships, only: %i[index create]
 end

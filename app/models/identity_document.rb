@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class IdentityDocument < ApplicationRecord
   include StringUtils
   attr_accessor :skip_validation
@@ -12,20 +14,24 @@ class IdentityDocument < ApplicationRecord
   validates :complement, presence: true, if: ->(doc) { doc.id_type? && !skip_validation }
 
   def tax_payer_type?
+    return false unless identity_document_type.present?
+
     identity_document_type.tax_payer?
   end
 
   def id_type?
+    return false unless identity_document_type.present?
+
     identity_document_type.id?
   end
 
   private
 
-  def validate_tax_payer_number(validator = CPFValidator)
-    errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(self.number))
+  def validate_tax_payer_number(validator = CPFValidator.new)
+    errors.add(:number, :invalid) unless validator.cpf_valid?(digits_only(number))
   end
-  
+
   def validate_id_number
-    errors.add(:number, :invalid) unless digits_only(self.number).length >= 4
+    errors.add(:number, :invalid) unless digits_only(number).length >= 4
   end
 end

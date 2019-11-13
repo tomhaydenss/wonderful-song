@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Leader < ApplicationRecord
   belongs_to :ensemble
   belongs_to :member

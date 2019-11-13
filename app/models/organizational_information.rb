@@ -1,2 +1,0 @@
-class OrganizationalInformation < ApplicationRecord
-end

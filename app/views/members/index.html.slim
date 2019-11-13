@@ -30,5 +30,10 @@ table class=['table', 'table-striped']
         td =member.membership_id
         td =link_to member.name, member
         td =member.ensemble&.name
-
-= will_paginate @members, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'
+div align="center" 
+  div
+    | (
+    = @members.count
+    | &nbsp;membros)
+  div
+    = will_paginate @members, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

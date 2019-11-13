@@ -1,18 +1,22 @@
+# frozen_string_literal: true
+
 class EnsemblesController < ApplicationController
-  before_action -> { self.fetch_permitted_ensembles_only(true) }, only: [:index, :new]
-  before_action :set_ensemble, only: [:show, :edit, :update, :destroy]
+  before_action -> { fetch_permitted_ensembles_only(true) }, only: %i[index new]
+  before_action :set_ensemble, only: %i[show edit update destroy]
 
   # GET /ensembles
   # GET /ensembles.json
   def index
-    filters = params.merge(self.permitted_ensembles_only).slice(:permitted_ensembles_only)
-    @ensembles = Ensemble.filter(filters).order('id, foundation_date').includes(:ensemble_parent).paginate(page: params[:page], per_page: 15)
+    filters = params.merge(permitted_ensembles_only).slice(:permitted_ensembles_only)
+    @ensembles = Ensemble.filter(filters)
+                         .order('id, foundation_date')
+                         .includes(:ensemble_parent)
+                         .paginate(page: params[:page], per_page: 15)
   end
 
   # GET /ensembles/1
   # GET /ensembles/1.json
-  def show
-  end
+  def show; end
 
   # GET /ensembles/new
   def new
@@ -20,8 +24,7 @@ class EnsemblesController < ApplicationController
   end
 
   # GET /ensembles/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /ensembles
   # POST /ensembles.json
@@ -64,17 +67,18 @@ class EnsemblesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_ensemble
-      @ensemble = Ensemble.find(params[:id])
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def ensemble_params
-      params.require(:ensemble).permit(
-        :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id, :leadership_purpose,
-        leaders_attributes: [:id, :member_id, :appointment_date, :primary, :_destroy, 
-          leader_roles_attributes: [:id, :position_id, :additional_information, :primary, :_destroy]]
-        )
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_ensemble
+    @ensemble = Ensemble.find(params[:id])
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def ensemble_params
+    params.require(:ensemble).permit(
+      :name, :foundation_date, :history, :ensemble_level_id, :ensemble_parent_id, :leadership_purpose,
+      leaders_attributes: [:id, :member_id, :appointment_date, :primary, :_destroy,
+                           leader_roles_attributes: %i[id position_id additional_information primary _destroy]]
+    )
+  end
 end
