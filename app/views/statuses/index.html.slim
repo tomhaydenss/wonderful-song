@@ -1,0 +1,21 @@
+.page-header
+  h2 Situação
+  .btn-group
+    =link_to 'Incluir', new_status_path, class: 'btn btn-default'
+
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+      th Considerar nas estatísticas?
+      th Reversível?
+      th Bloqueia Acesso?
+  tbody
+    - @statuses.each do |status|
+      tr
+        td =link_to status.description, status
+        td =status.statistic_purpose? ? '✅' : '❌'
+        td =status.reversible? ? '✅' : '❌'
+        td =status.block_access? ? '✅' : '❌'
+
+=will_paginate @statuses, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

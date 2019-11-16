@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :ensembles
   resources :phone_types
   resources :positions
+  resources :statuses
   resources :identity_document_types
   resources :memberships, only: %i[index create]
 end
