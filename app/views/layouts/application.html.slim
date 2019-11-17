@@ -33,18 +33,22 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
                 li
                   =link_to "Núcleos", ensembles_path
               - if current_user.any_roles? [:admin]
-                li
-                  =link_to "Níveis de Núcleo", ensemble_levels_path
-                li
-                  =link_to "Funções", positions_path
-                li
-                  =link_to "Situações", statuses_path
-                li
-                  =link_to "Tipos Telefone", phone_types_path
-                li
-                  =link_to "Tipos Documentos", identity_document_types_path
-                li
-                  =link_to "Membros Associados", memberships_path
+                li.dropdown
+                  =link_to 'Configurações', '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', 'role': 'button', 'aria-haspopup': true, 'aria-expanded': false
+                  ul.dropdown-menu
+                    li
+                      =link_to "Níveis de Núcleo", ensemble_levels_path
+                    li
+                      =link_to "Funções", positions_path
+                    li
+                      =link_to "Situações", statuses_path
+                    li
+                      =link_to "Tipos Telefone", phone_types_path
+                    li
+                      =link_to "Tipos Documentos", identity_document_types_path
+                    li.divider role: 'separator'
+                    li
+                      =link_to "Membros Associados", memberships_path
               li
                 = link_to 'Sair', destroy_user_session_path, method: :delete
             - else
