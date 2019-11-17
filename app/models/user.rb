@@ -25,6 +25,32 @@ class User < ApplicationRecord
     (@roles & roles).present?
   end
 
+  def active_for_authentication?
+    admin? || (member.status.present? && !member.status.block_access?)
+  end
+
+  def member?
+    member.leader_roles.empty?
+  end
+
+  def leader?
+    ensemble = member.highest_ensemble_level_through_leadership
+    return false if ensemble.blank?
+
+    ensemble.ensemble_level.precedence_order.positive?
+  end
+
+  def main_leader?
+    ensemble = member.highest_ensemble_level_through_leadership
+    return false if ensemble.blank?
+
+    ensemble.ensemble_level.precedence_order.zero?
+  end
+
+  def admin?
+    email == 'admin'
+  end
+
   private
 
   def valid_member
@@ -49,27 +75,5 @@ class User < ApplicationRecord
     elsif member?
       @roles = [:member]
     end
-  end
-
-  def member?
-    member.leader_roles.empty?
-  end
-
-  def leader?
-    ensemble = member.highest_ensemble_level_through_leadership
-    return false if ensemble.blank?
-
-    ensemble.ensemble_level.precedence_order.positive?
-  end
-
-  def main_leader?
-    ensemble = member.highest_ensemble_level_through_leadership
-    return false if ensemble.blank?
-
-    ensemble.ensemble_level.precedence_order.zero?
-  end
-
-  def admin?
-    email == 'admin'
   end
 end

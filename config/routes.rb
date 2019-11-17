@@ -5,11 +5,11 @@ Rails.application.routes.draw do
   get '/ongakutai', to: 'home#japan'
   get '/taiyo_ongakutai', to: 'home#brasil'
   get '/precepts', to: 'home#precepts'
+  get 'my_info', to: 'home#my_info'
 
   get 'members/autocomplete_member_name', to: 'members#autocomplete_member_name'
   get 'memberships/autocomplete_membership_name', to: 'memberships#autocomplete_membership_name'
 
-  get 'my_info', to: 'members#my_info'
   get 'members/upload/new', to: 'members#new_upload'
   post 'members/upload', to: 'members#upload'
 
@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :ensembles
   resources :phone_types
   resources :positions
+  resources :statuses
   resources :identity_document_types
   resources :memberships, only: %i[index create]
 end

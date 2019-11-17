@@ -8,4 +8,8 @@ class HomeController < ApplicationController
   def japan; end
 
   def precepts; end
+
+  def my_info
+    redirect_to current_user.member
+  end
 end

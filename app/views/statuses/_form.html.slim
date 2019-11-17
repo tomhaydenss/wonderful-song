@@ -1,0 +1,9 @@
+= simple_form_for @status do |f|
+  = f.input :description, label: 'Descrição', input_html: { maxlength: 100 }
+  = f.input :statistic_purpose, label: 'Considerar nas estatísticas?', as: :boolean, wrapper: :checkbox
+  = f.input :reversible, label: 'Reversível?', as: :boolean, wrapper: :checkbox
+  = f.input :block_access, label: 'Bloqueia acesso?', as: :boolean, wrapper: :checkbox
+
+  .actions
+    = f.button :submit, 'Salvar', disable_with: 'Por favor aguarde ...'
+    = link_to 'Voltar', back_button_action, class: 'btn btn-default'

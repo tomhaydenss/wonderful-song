@@ -10,6 +10,7 @@ class Member < ApplicationRecord
 
   belongs_to :membership, optional: true
   belongs_to :ensemble, optional: true
+  belongs_to :status, optional: true
   has_one :user
   has_many :phones, dependent: :delete_all
   has_many :addresses, dependent: :delete_all

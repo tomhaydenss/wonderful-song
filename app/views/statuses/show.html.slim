@@ -1,0 +1,22 @@
+.page-header
+  h2 Visualizar Situação
+  .btn-group
+    =link_to 'Alterar', edit_status_path(@status), class: 'btn btn-default'
+    =link_to 'Excluir', @status, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Voltar', statuses_path, class: 'btn btn-default'
+
+h6
+  b Descrição
+p =@status.description
+
+h6
+  b Considerar nas estatísticas?
+p =@status.statistic_purpose? ? '✅' : '❌'
+
+h6
+  b Reversível
+p =@status.reversible? ? '✅' : '❌'
+
+h6
+  b Bloqueia Acesso
+p =@status.block_access? ? '✅' : '❌'
