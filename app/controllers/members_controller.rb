@@ -85,10 +85,6 @@ class MembersController < ApplicationController
     end
   end
 
-  def my_info
-    redirect_to current_user.member
-  end
-
   def new_upload; end
 
   def upload
@@ -132,7 +128,9 @@ class MembersController < ApplicationController
   # Never trust parameters from the scary internet, only allow the white list through.
   def member_params
     params.require(:member).permit(
-      :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information, :membership_id, :csv_file,
+      :name, :email, :ensemble_id, :joining_date, :birthdate, :food_restrictions, :additional_information,
+      :membership_id, :status_id,
+      :csv_file,
       phones_attributes: %i[id phone_number phone_type_id additional_information primary _destroy],
       addresses_attributes: %i[id postal_code street number additional_information neighborhood city state primary _destroy],
       identity_documents_attributes: %i[id number complement identity_document_type_id _destroy]

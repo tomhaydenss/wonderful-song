@@ -3,6 +3,16 @@
 module AccessAuthorizer
   extend ActiveSupport::Concern
 
+  def self.can_change_member_status?(member, current_user)
+    return true if current_user.admin?
+
+    current_user.any_roles?(%i[leader main_leader]) && another_member?(member, current_user)
+  end
+
+  def self.another_member?(member, current_user)
+    member.id != current_user.member.id
+  end
+
   protected
 
   def authorization_required_for_resource?
@@ -32,7 +42,7 @@ module AccessAuthorizer
     return if current_user&.any_roles?([:admin])
 
     case params[:controller]
-    when 'ensemble_levels', 'identity_document_types', 'phone_types', 'positions'
+    when 'ensemble_levels', 'identity_document_types', 'phone_types', 'positions', 'statuses'
       reject_access
     when 'ensembles'
       reject_access unless current_user.any_roles?(%i[leader main_leader])

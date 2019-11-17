@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_17_230108) do
+ActiveRecord::Schema.define(version: 2019_11_16_162235) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_230108) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "member_id", null: false
-    t.string "street", limit: 255, null: false
+    t.string "street", null: false
     t.string "number", limit: 10, null: false
     t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_addresses_on_member_id"
@@ -128,10 +128,12 @@ ActiveRecord::Schema.define(version: 2019_10_17_230108) do
     t.text "additional_information"
     t.bigint "membership_id"
     t.string "email", limit: 100
+    t.bigint "status_id"
     t.index "immutable_unaccent(name) gist_trgm_ops", name: "index_members_on_unaccent_name", using: :gist
     t.index ["ensemble_id"], name: "index_members_on_ensemble_id"
     t.index ["membership_id"], name: "index_members_on_membership_id"
     t.index ["name"], name: "index_members_on_name"
+    t.index ["status_id"], name: "index_members_on_status_id"
   end
 
   create_table "memberships", id: :integer, default: nil, force: :cascade do |t|
@@ -179,6 +181,15 @@ ActiveRecord::Schema.define(version: 2019_10_17_230108) do
     t.integer "precedence_order"
   end
 
+  create_table "statuses", force: :cascade do |t|
+    t.string "description"
+    t.boolean "statistic_purpose"
+    t.boolean "reversible"
+    t.boolean "block_access"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -206,6 +217,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_230108) do
   add_foreign_key "leaders", "members"
   add_foreign_key "members", "ensembles"
   add_foreign_key "members", "memberships"
+  add_foreign_key "members", "statuses"
   add_foreign_key "phones", "members"
   add_foreign_key "phones", "phone_types"
   add_foreign_key "users", "members"
