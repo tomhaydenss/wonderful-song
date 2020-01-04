@@ -94,7 +94,7 @@ div class=['panel', 'panel-default']
           td =phone.phone_type.description
           td =phone.additional_information
 
-div class=['panel', 'panel-default']
+/div class=['panel', 'panel-default']
   .panel-heading
     b Endereços
   - unless @member.addresses.empty?
@@ -122,7 +122,7 @@ div class=['panel', 'panel-default']
             td =address.state
             td =address.postal_code
 
-div class=['panel', 'panel-default']
+/div class=['panel', 'panel-default']
   .panel-heading
     b Documentos
   - unless @member.identity_documents.empty?

@@ -22,9 +22,9 @@
   ul.nav.nav-tabs role='tablist'
     li.active
       = link_to 'Telefones', '#phones', id: 'tab_phone', data: { toggle: 'tab' }
-    li
+    /li
       = link_to 'Endereços', '#addresses', id: 'tab_address', data: { toggle: 'tab' }
-    li
+    /li
       = link_to 'Documentos', '#documents', id: 'tab_document', data: { toggle: 'tab' }
 
   .tab-content
@@ -36,7 +36,7 @@
           .glyphicon.glyphicon-plus =
           | Incluir novo Telefone
 
-    #addresses.tab-pane role='tabpanel'
+    /#addresses.tab-pane role='tabpanel'
       = f.simple_fields_for :addresses do |address|
         = render 'address_fields', f: address
       .links
@@ -44,7 +44,7 @@
           .glyphicon.glyphicon-plus
           | Incluir novo Endereço
 
-    #documents.tab-pane role='tabpanel'
+    /#documents.tab-pane role='tabpanel'
       = f.simple_fields_for :identity_documents do |identity_document|
         = render 'identity_document_fields', f: identity_document
       .links
@@ -59,9 +59,9 @@
 - if @member.errors.keys.select { |k| k.to_s.include? 'phone' }.any?
   javascript:
     showTab('phone');
-- if @member.errors.keys.select { |k| k.to_s.include? 'address' }.any?
+/- if @member.errors.keys.select { |k| k.to_s.include? 'address' }.any?
   javascript:
     showTab('address');
-- if @member.errors.keys.select { |k| k.to_s.include? 'document' }.any?
+/- if @member.errors.keys.select { |k| k.to_s.include? 'document' }.any?
   javascript:
     showTab('document');
