@@ -19,8 +19,7 @@ module MembersToCsv
   def attributes
     %w[nucleo
        codigo_membro nome email data_nascimento data_ingresso_grupo
-       cpf rg certidao_nascimento restricao_alimentar telefones
-       informacoes_adicionais enderecos].freeze
+       restricao_alimentar telefones informacoes_adicionais].freeze
   end
 
   def nucleo(member)

@@ -19,13 +19,9 @@ RSpec.describe MembersToCsv do
   def headers
     %w[nucleo
        codigo_membro nome email data_nascimento data_ingresso_grupo
-       cpf
-       rg
-       certidao_nascimento
        restricao_alimentar
        telefones
-       informacoes_adicionais
-       enderecos].freeze
+       informacoes_adicionais].freeze
   end
 
   def members_as_csv(members)
@@ -47,13 +43,9 @@ RSpec.describe MembersToCsv do
     info << member.email
     info << member.birthdate
     info << member.joining_date
-    info << '""'
-    info << '""'
-    info << '""'
     info << member.food_restrictions
     info << '""'
     info << ''
-    info << '""'
     info.join(',')
   end
 end
