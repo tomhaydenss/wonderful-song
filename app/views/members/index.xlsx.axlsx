@@ -1,0 +1,32 @@
+wb = xlsx_package.workbook
+
+wb.styles do |style|
+  project_heading = style.add_style(b: true, sz: 16)
+  report_heading = style.add_style(sz: 14)
+  heading = style.add_style(b: true, bg_color: '00', fg_color: 'FF')
+  date = style.add_style(format_code: 'dd/mm/yyyy', border: Axlsx::STYLE_THIN_BORDER)
+  default = style.add_style(:border => Axlsx::STYLE_THIN_BORDER)
+
+  wb.add_worksheet(name: "Membros") do |sheet|
+    sheet.add_row ["Taiyo Ongakutai"], style: project_heading
+    sheet.add_row ["Listagem de Membros"], style: report_heading
+    sheet.add_row ["Total: #{@members.count}"], style: report_heading
+    sheet.add_row []
+    sheet.add_row ["Núcleo", "Código de Membro", "Nome", "Email", "Data de Nascimento", "Data de Ingresso no Grupo", "Restrição Alimentar", "Informações Adicionais", "Telefones"], style: heading
+    @members.each do |member|
+      sheet.add_row [
+        member.ensemble&.name,
+        member.membership_id,
+        member.name,
+        member.email,
+        member.birthdate,
+        member.joining_date,
+        member.food_restrictions,
+        member.additional_information,
+        member.phones_inline
+      ],
+      style: [default, default, default, default, date, date, default]
+    end
+    sheet.auto_filter = "A5:G5"
+  end
+end

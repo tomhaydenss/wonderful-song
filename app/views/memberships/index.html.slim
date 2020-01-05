@@ -1,6 +1,7 @@
 .page-header
   h2 Membros Associados
 
+p Selecione um arquivo .csv para realizar a importação.
 = simple_form_for @membership do |f|
   = f.file_field :csv_file, label: 'Arquivo .csv'
   = f.button :submit, 'Importar', disable_with: 'Por favor aguarde ...'
