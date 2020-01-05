@@ -1,0 +1,7 @@
+.nested-fields.well.well-compact
+  .form-inline
+    = f.association :musical_instrument, collection: MusicalInstrument.order(:description), label_method: :description, value_method: :id, include_blank: false, label: false
+    = f.input :primary, label: 'Tornar este o principal instrumento', as: :boolean, wrapper: :checkbox_inline
+    = link_to_remove_association f, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger btn-xs' do
+      .glyphicon.glyphicon-remove
+      | Excluir este Instrumento

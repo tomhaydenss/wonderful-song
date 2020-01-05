@@ -17,6 +17,8 @@ class Member < ApplicationRecord
   has_many :identity_documents, dependent: :delete_all
   has_many :leaders
   has_many :leader_roles, through: :leaders
+  has_many :member_musical_instruments, inverse_of: :member
+  has_many :musical_instruments, through: :member_musical_instruments
   has_one_attached :csv_file
 
   scope :ensemble_id, ->(ensemble_id) { where('ensemble_id = ?', ensemble_id) }
@@ -29,7 +31,7 @@ class Member < ApplicationRecord
   scope :by_membership_id, ->(membership_id) { where(membership_id: membership_id).includes(:ensemble) }
 
   accepts_nested_attributes_for :identity_documents, :phones, reject_if: :all_blank, allow_destroy: true
-  accepts_nested_attributes_for :addresses, allow_destroy: true
+  accepts_nested_attributes_for :addresses, :member_musical_instruments, allow_destroy: true
 
   def name=(val)
     write_attribute(:name, format_name(val))

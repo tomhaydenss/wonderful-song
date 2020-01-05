@@ -1,0 +1,10 @@
+.page-header
+  h2 Visualizar Instrumento Musical
+  .btn-group
+    =link_to 'Alterar', edit_musical_instrument_path(@musical_instrument), class: 'btn btn-default'
+    =link_to 'Excluir', @musical_instrument, method: :delete, data: { confirm: 'Confirma exclusão?' }, class: 'btn btn-danger'
+    =link_to 'Voltar', musical_instruments_path, class: 'btn btn-default'
+
+h6
+  b Descrição
+p =@musical_instrument.description
