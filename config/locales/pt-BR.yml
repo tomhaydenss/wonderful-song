@@ -17,6 +17,8 @@ pt-BR:
         send_instructions: "Dentro de alguns minutos, você receberá um e-mail com instruções para a troca da sua senha."
     registrations:
       signed_up: "Seja bem-vindo! Seu registro foi realizado com sucesso. Que tal atualizar os seus dados?"
+      user:
+        signed_up_but_inactive: "Seu registro foi realizado com sucesso. No entanto, você não pode entrar no sistema ainda pois sua conta está inativa."
     failure:
       already_authenticated: "Você já está logado."
       user:

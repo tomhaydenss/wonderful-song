@@ -42,8 +42,10 @@ module AccessAuthorizer
     return if current_user&.any_roles?([:admin])
 
     case params[:controller]
-    when 'ensemble_levels', 'identity_document_types', 'phone_types', 'positions', 'statuses'
+    when 'identity_document_types', 'phone_types'
       reject_access
+    when 'ensemble_levels', 'positions', 'statuses'
+      reject_access unless current_user.any_roles?(%i[main_leader])
     when 'ensembles'
       reject_access unless current_user.any_roles?(%i[leader main_leader])
       case params[:action]
