@@ -1,6 +1,10 @@
 .page-header
   h2 Importar Membros
 
+p
+  | Selecione um arquivo .csv para realizar a importação.
+  br
+  | Ele deverá estar no mesmo padrão de formatação do arquivo exportado em .csv
 = simple_form_for @member, url: members_upload_path, method: :post do |f|
   = f.file_field :csv_file, label: 'Arquivo .csv'
 

@@ -46,6 +46,10 @@ class Member < ApplicationRecord
     leaders.each_with_object([]) { |leader, array| array << "#{leader.positions} (#{leader.ensemble.name})"; }.join(' / ')
   end
 
+  def phones_inline
+    phones.map { |phone| phone.inline_description }.join(' / ')
+  end
+
   private
 
   def member_cannot_be_associated_with_another_ensemble

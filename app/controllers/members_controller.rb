@@ -24,12 +24,17 @@ class MembersController < ApplicationController
       format.html { render :index }
       format.json { render json: @members, status: :ok, location: @member }
       format.csv { send_data to_csv(@members), filename: "members-#{DateTime.now.strftime('%Y%m%d%H%M%S')}.csv" }
+      format.xlsx do
+        response.headers[
+          'Content-Disposition'
+        ] = "attachment; filename=members-#{DateTime.now.strftime('%Y%m%d%H%M%S')}.xlsx"
+      end
     end
   end
 
   def apply_filter
     @members = Member.filter(filters).order(:name)
-    @members = if %w[json csv].include? params['format']
+    @members = if %w[json csv xlsx].include? params['format']
                  @members.includes(:ensemble, :addresses, phones: [:phone_type], identity_documents: [:identity_document_type])
                else
                  @members.includes(:ensemble).paginate(page: params[:page], per_page: 15)
