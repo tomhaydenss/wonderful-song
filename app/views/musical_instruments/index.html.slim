@@ -1,0 +1,15 @@
+.page-header
+  h2 Instrumento Musical
+  .btn-group
+    =link_to 'Incluir', new_musical_instrument_path, class: 'btn btn-default'
+
+table class=['table', 'table-striped']
+  thead
+    tr
+      th Descrição
+  tbody
+    - @musical_instruments.each do |musical_instrument|
+      tr
+        td =link_to musical_instrument.description, musical_instrument
+
+=will_paginate @musical_instruments, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

@@ -44,7 +44,7 @@ module AccessAuthorizer
     case params[:controller]
     when 'identity_document_types', 'phone_types'
       reject_access
-    when 'ensemble_levels', 'positions', 'statuses'
+    when 'ensemble_levels', 'positions', 'statuses', 'musical_instruments'
       reject_access unless current_user.any_roles?(%i[main_leader])
     when 'ensembles'
       reject_access unless current_user.any_roles?(%i[leader main_leader])

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_16_162235) do
+ActiveRecord::Schema.define(version: 2020_01_04_223301) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -48,7 +48,7 @@ ActiveRecord::Schema.define(version: 2019_11_16_162235) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "member_id", null: false
-    t.string "street", null: false
+    t.string "street", limit: 255, null: false
     t.string "number", limit: 10, null: false
     t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_addresses_on_member_id"
@@ -117,6 +117,16 @@ ActiveRecord::Schema.define(version: 2019_11_16_162235) do
     t.index ["member_id"], name: "index_leaders_on_member_id"
   end
 
+  create_table "member_musical_instruments", force: :cascade do |t|
+    t.bigint "member_id"
+    t.bigint "musical_instrument_id"
+    t.boolean "primary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["member_id"], name: "index_member_musical_instruments_on_member_id"
+    t.index ["musical_instrument_id"], name: "index_member_musical_instruments_on_musical_instrument_id"
+  end
+
   create_table "members", force: :cascade do |t|
     t.string "name", limit: 100, null: false
     t.date "joining_date"
@@ -154,6 +164,12 @@ ActiveRecord::Schema.define(version: 2019_11_16_162235) do
     t.index "immutable_unaccent(name) gist_trgm_ops", name: "index_memberships_on_unaccent_name", using: :gist
   end
 
+  create_table "musical_instruments", force: :cascade do |t|
+    t.string "description", limit: 100, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "phone_types", force: :cascade do |t|
     t.string "description", limit: 100, null: false
     t.datetime "created_at", null: false
@@ -182,7 +198,7 @@ ActiveRecord::Schema.define(version: 2019_11_16_162235) do
   end
 
   create_table "statuses", force: :cascade do |t|
-    t.string "description"
+    t.string "description", limit: 100
     t.boolean "statistic_purpose"
     t.boolean "reversible"
     t.boolean "block_access"
@@ -215,6 +231,8 @@ ActiveRecord::Schema.define(version: 2019_11_16_162235) do
   add_foreign_key "leader_roles", "positions"
   add_foreign_key "leaders", "ensembles"
   add_foreign_key "leaders", "members"
+  add_foreign_key "member_musical_instruments", "members"
+  add_foreign_key "member_musical_instruments", "musical_instruments"
   add_foreign_key "members", "ensembles"
   add_foreign_key "members", "memberships"
   add_foreign_key "members", "statuses"

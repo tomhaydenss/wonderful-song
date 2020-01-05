@@ -94,6 +94,16 @@ div class=['panel', 'panel-default']
           td =phone.phone_type.description
           td =phone.additional_information
 
+div class=['panel', 'panel-default']
+  .panel-heading
+    b Instrumentos Musicais
+  - unless @member.musical_instruments.empty?
+    table class=['table', 'table-striped']
+      -@member.member_musical_instruments.each do |member_musical_instrument|
+        tr
+          td =member_musical_instrument.musical_instrument.description
+          td =member_musical_instrument.primary ? '✅ Principal instrumento' : ''
+
 /div class=['panel', 'panel-default']
   .panel-heading
     b Endereços

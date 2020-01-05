@@ -42,6 +42,8 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
                       =link_to "Funções", positions_path
                     li
                       =link_to "Situações", statuses_path
+                    li
+                      =link_to "Instrumentos Musicais", musical_instruments_path
                   - if current_user.any_roles? [:admin]
                     li
                       =link_to "Tipos Telefone", phone_types_path

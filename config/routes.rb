@@ -22,6 +22,7 @@ Rails.application.routes.draw do
   resources :phone_types
   resources :positions
   resources :statuses
+  resources :musical_instruments
   resources :identity_document_types
   resources :memberships, only: %i[index create]
 end

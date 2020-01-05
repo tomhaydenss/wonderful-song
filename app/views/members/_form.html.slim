@@ -22,6 +22,8 @@
   ul.nav.nav-tabs role='tablist'
     li.active
       = link_to 'Telefones', '#phones', id: 'tab_phone', data: { toggle: 'tab' }
+    li
+      = link_to 'Instrumentos Musicais', '#musical_instruments', id: 'tab_musical_instruments', data: { toggle: 'tab' }
     /li
       = link_to 'Endereços', '#addresses', id: 'tab_address', data: { toggle: 'tab' }
     /li
@@ -35,6 +37,14 @@
         = link_to_add_association f, :phones, class: 'btn btn-default btn-xs' do
           .glyphicon.glyphicon-plus =
           | Incluir novo Telefone
+
+    #musical_instruments.tab-pane role='tabpanel'
+      = f.simple_fields_for :member_musical_instruments do |member_musical_instrument|
+        = render 'member_musical_instrument_fields', f: member_musical_instrument
+      .links
+        = link_to_add_association f, :member_musical_instruments, class: 'btn btn-default btn-xs' do
+          .glyphicon.glyphicon-plus =
+          | Incluir novo Instrumento
 
     /#addresses.tab-pane role='tabpanel'
       = f.simple_fields_for :addresses do |address|

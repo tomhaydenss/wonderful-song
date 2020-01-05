@@ -133,7 +133,8 @@ class MembersController < ApplicationController
       :csv_file,
       phones_attributes: %i[id phone_number phone_type_id additional_information primary _destroy],
       addresses_attributes: %i[id postal_code street number additional_information neighborhood city state primary _destroy],
-      identity_documents_attributes: %i[id number complement identity_document_type_id _destroy]
+      identity_documents_attributes: %i[id number complement identity_document_type_id _destroy],
+      member_musical_instruments_attributes: %i[id musical_instrument_id primary _destroy]
     )
   end
 end
