@@ -3,6 +3,14 @@
   .btn-group
     =link_to 'Incluir', new_ensemble_path, class: 'btn btn-default' if current_user.any_roles?([:main_leader, :admin])
 
+=form_tag(members_path, method: :get, id: 'search-form', class: 'input-group')
+  =text_field_tag :search, params[:search], placeholder: 'Pesquisar por nome', type: 'search', class: 'form-control', data: { autocomplete: ensembles_autocomplete_ensemble_name_path }
+  span.input-group-btn
+    =button_tag 'Pesquisar', class: 'btn btn-default'
+      i class=['glyphicon', 'glyphicon-search']
+javascript:
+  $('#search').bind('railsAutocomplete.select', function(event, data) { window.location.href = `/ensembles/${data.item.id}` });
+
 table class=['table', 'table-striped']
   thead
     tr

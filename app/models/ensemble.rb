@@ -19,6 +19,8 @@ class Ensemble < ApplicationRecord
   scope :permitted_ensembles_only, ->(ensembles) { where(id: ensembles).includes(:ensemble_parent) }
   scope :top_level, -> { joins(:ensemble_level).where('ensemble_levels.precedence_order = ?', 0).first }
   scope :by_name, ->(name) { where(name: name) }
+  scope :search, ->(search) { where('immutable_unaccent(name) ILIKE ?', "%#{search.split.join('%')}%") }
+  scope :autocomplete, ->(term, limit = 10) { search(term).limit(limit) }
 
   def fully_qualified_name
     return ensemble_parent.fully_qualified_name + ' » ' + name if ensemble_parent.present?

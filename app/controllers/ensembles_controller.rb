@@ -4,6 +4,11 @@ class EnsemblesController < ApplicationController
   before_action -> { fetch_permitted_ensembles_only(true) }, only: %i[index new]
   before_action :set_ensemble, only: %i[show edit update destroy]
 
+  def autocomplete_ensemble_name
+    ensembles ||= Ensemble.autocomplete(params[:term])
+    render json: json_for_autocomplete(ensembles, :name)
+  end
+
   # GET /ensembles
   # GET /ensembles.json
   def index

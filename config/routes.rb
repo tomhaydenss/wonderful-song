@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'my_info', to: 'home#my_info'
 
   get 'members/autocomplete_member_name', to: 'members#autocomplete_member_name'
+  get 'ensembles/autocomplete_ensemble_name', to: 'ensembles#autocomplete_ensemble_name'
   get 'memberships/autocomplete_membership_name', to: 'memberships#autocomplete_membership_name'
 
   get 'members/upload/new', to: 'members#new_upload'
