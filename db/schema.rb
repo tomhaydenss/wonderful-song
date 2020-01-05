@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_01_04_223301) do
+ActiveRecord::Schema.define(version: 2020_01_05_032934) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "fuzzystrmatch"
@@ -52,6 +52,15 @@ ActiveRecord::Schema.define(version: 2020_01_04_223301) do
     t.string "number", limit: 10, null: false
     t.string "additional_information", limit: 100
     t.index ["member_id"], name: "index_addresses_on_member_id"
+  end
+
+  create_table "custom_links", force: :cascade do |t|
+    t.string "alias", limit: 50, null: false
+    t.string "title", limit: 100, null: false
+    t.string "url", limit: 255, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["alias"], name: "index_custom_links_on_alias", unique: true
   end
 
   create_table "ensemble_levels", force: :cascade do |t|

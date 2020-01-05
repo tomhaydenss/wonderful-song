@@ -1,5 +1,8 @@
 article
-  h1 Ao Ongakutai
+  h1
+    | Ao Ongakutai 
+    - custom_link = CustomLink.find_by(alias: 'precepts')
+    =link_to '<i class="glyphicon glyphicon-save-file"></i> PDF'.html_safe, custom_link.url, target: '_blank', class: 'btn btn-danger btn-xs' if custom_link.present?
   p
     b Presidente da Soka Gakkai Internacional
   p

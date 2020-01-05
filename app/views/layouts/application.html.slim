@@ -32,6 +32,10 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
                   =link_to "Membros", members_path
                 li
                   =link_to "Núcleos", ensembles_path
+              - custom_link = CustomLink.find_by(alias: 'leaders_resources')
+              - if custom_link.present?
+                li
+                  =link_to custom_link.title, custom_link.url, target: '_blank'
               - if current_user.any_roles? [:admin, :main_leader]
                 li.dropdown
                   =link_to 'Configurações', '#', class: 'dropdown-toggle', 'data-toggle': 'dropdown', 'role': 'button', 'aria-haspopup': true, 'aria-expanded': false
