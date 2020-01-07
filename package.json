@@ -9,5 +9,8 @@
   },
   "devDependencies": {
     "webpack-dev-server": "^3.2.1"
+  },
+  "engines": {
+    "node": "12.13.1"
   }
 }
