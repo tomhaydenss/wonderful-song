@@ -29,6 +29,7 @@ class Member < ApplicationRecord
   }
   scope :permitted_ensembles_only, ->(ensembles) { where(ensemble_id: ensembles).includes(:ensemble) }
   scope :by_membership_id, ->(membership_id) { where(membership_id: membership_id).includes(:ensemble) }
+  scope :for_statistic, -> { joins(:status).where(status: Status.statistic_purpose_only).includes(:status) }
 
   accepts_nested_attributes_for :identity_documents, :phones, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :addresses, :member_musical_instruments, allow_destroy: true
@@ -47,7 +48,7 @@ class Member < ApplicationRecord
   end
 
   def phones_inline
-    phones.map { |phone| phone.inline_description }.join(' / ')
+    phones.map(&:inline_description).join(' / ')
   end
 
   private

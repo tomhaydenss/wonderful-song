@@ -1,0 +1,29 @@
+- base_leader = !current_user.member.highest_ensemble_level_through_leadership.leadership_purpose
+- second_level_leader = current_user.member.highest_ensemble_level_through_leadership.ensemble_level_id == 2
+
+.page-header
+  h2 Visão Geral
+h3
+  = current_user.member.highest_ensemble_level_through_leadership.name
+
+- if base_leader
+  = render 'general_statistics', base_leader: base_leader
+- else
+  ul.nav.nav-tabs role='tablist'
+    li.active
+      = link_to 'Geral', '#general', id: 'tab_general', data: { toggle: 'tab' }
+    li
+      = link_to 'Por Núcleo', '#ensemble', id: 'tab_ensemble', data: { toggle: 'tab' }
+
+  .tab-content
+    #general.tab-pane.active role='tabpanel'
+      = render 'general_statistics', base_leader: base_leader, second_level_leader: second_level_leader
+    #ensemble.tab-pane role='tabpanel'
+      = render 'ensemble_statistics'
+
+- if @ensemble_statistics
+  javascript:
+    showTab('ensemble');
+- else
+  javascript:
+    showTab('general');

@@ -4,6 +4,7 @@ html
     title= "Taiyo Ongakutai"
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
+    = javascript_include_tag 'https://www.gstatic.com/charts/loader.js'
     = csrf_meta_tag
 
     meta name="viewport" content="width=device-width, initial-scale=1"
@@ -28,6 +29,8 @@ body class=("#{controller_name} #{action_name}") style='padding-top:40px;'
                 li
                   =link_to "Meus Dados", my_info_path
               - if current_user.any_roles? [:leader, :main_leader, :admin]
+                li
+                  =link_to "Visão Geral", statistics_path
                 li
                   =link_to "Membros", members_path
                 li

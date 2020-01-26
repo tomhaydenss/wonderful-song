@@ -26,7 +26,9 @@ gem 'rubyzip', '>= 1.2.1'
 
 ## frontend
 gem 'bootstrap-sass', '~> 3.4.1'
+gem 'chartkick'
 gem 'cocoon'
+gem 'highcharts-rails'
 gem 'jbuilder', '~> 2.5' # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jquery-rails'
 gem 'jquery-ui-rails'

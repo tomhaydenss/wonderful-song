@@ -17,4 +17,6 @@
 //= require activestorage
 //= require bootstrap
 //= require cocoon
+//= require chartkick
+//= require highcharts
 //= require_tree .
