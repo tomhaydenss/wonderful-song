@@ -1,0 +1,23 @@
+- selected_id = @ensemble_parent.present? ? @ensemble_parent.id : ''
+=form_tag(statistics_path, method: :post, id: 'ensemble-statistics-form', class: 'input-group')
+  =select_tag :ensemble_parent, options_from_collection_for_select(@permitted_ensembles_only.map(&:ensemble_parent).uniq, 'id', 'name', selected_id), prompt: "Selecione uma opção", include_blank: false, class: 'form-control', onchange: "selectEnsembleParent(this);"
+
+- if selected_id.present?
+  .container-fluid
+  .row
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Total por Núcleo'
+          = pie_chart StatisticHelper.members_total_by_ensemble(@ensemble_parent), width: "576px"
+  .row
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Total por Situação por Núcleo'
+          = bar_chart StatisticHelper.members_total_by_status_by_ensemble(@ensemble_parent), stacked: 'percent', width: "576px"
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Assinantes de Impressos por Núcleo'
+          = bar_chart StatisticHelper.subscribers_by_ensemble(@ensemble_parent), stacked: 'percent', width: "576px"

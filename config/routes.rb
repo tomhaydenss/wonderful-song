@@ -5,7 +5,9 @@ Rails.application.routes.draw do
   get '/ongakutai', to: 'home#japan'
   get '/taiyo_ongakutai', to: 'home#brasil'
   get '/precepts', to: 'home#precepts'
-  get 'my_info', to: 'home#my_info'
+  get '/my_info', to: 'home#my_info'
+  get '/statistics', to: 'statistics#index'
+  post '/statistics', to: 'statistics#ensemble'
 
   get 'members/autocomplete_member_name', to: 'members#autocomplete_member_name'
   get 'ensembles/autocomplete_ensemble_name', to: 'ensembles#autocomplete_ensemble_name'

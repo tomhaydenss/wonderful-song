@@ -38,4 +38,11 @@ class Ensemble < ApplicationRecord
     end
     array.flatten
   end
+
+  def ensemble_parent_at_level(level_id)
+    return nil if ensemble_level.id <= level_id || level_id <= 0
+    return ensemble_parent if ensemble_parent.ensemble_level.id == level_id
+
+    ensemble_parent.ensemble_parent_at_level(level_id)
+  end
 end

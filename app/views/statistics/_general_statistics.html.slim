@@ -1,0 +1,44 @@
+.container-fluid
+.row
+  .col-lg-6
+    div align="center"
+      h4.text-primary
+        = 'Total de Membros'
+      span.align-bottom
+        p.members-count
+          = StatisticHelper.members_total(@permitted_ensembles_only)
+.row
+  .col-lg-6
+    div align="center"
+      h4.text-primary
+        = 'Total por Situação'
+        = pie_chart StatisticHelper.members_total_by_status(@permitted_ensembles_only), width: "576px"
+  .col-lg-6
+    div align="center"
+      h4.text-primary
+        = 'Assinantes de Impressos'
+        = pie_chart StatisticHelper.subscribers_total(@permitted_ensembles_only), width: "576px"
+- if current_user.any_roles? [:main_leader, :admin]
+  .row
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Total por Coordenadoria Geral'
+          = pie_chart StatisticHelper.members_total_by_ensemble_level(:second_level, @permitted_ensembles_only), width: "576px"
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Assinantes de Impressos por Coordenadoria Geral'
+          = bar_chart StatisticHelper.subscribers_by_ensemble_level(:second_level, @permitted_ensembles_only), stacked: 'percent', width: "576px"
+- if (current_user.any_roles? [:main_leader, :admin]) || second_level_leader
+  .row
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Total por Coordenadoria'
+          = pie_chart StatisticHelper.members_total_by_ensemble_level(:third_level, @permitted_ensembles_only), width: "576px"
+    .col-lg-6
+      div align="center"
+        h4.text-primary
+          = 'Assinantes de Impressos por Coordenadoria'
+          = bar_chart StatisticHelper.subscribers_by_ensemble_level(:third_level, @permitted_ensembles_only), stacked: 'percent', width: "576px"
