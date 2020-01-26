@@ -46,7 +46,7 @@ module AccessAuthorizer
       reject_access
     when 'ensemble_levels', 'positions', 'statuses', 'musical_instruments'
       reject_access unless current_user.any_roles?(%i[main_leader])
-    when 'ensembles'
+    when 'ensembles', 'statistics'
       reject_access unless current_user.any_roles?(%i[leader main_leader])
       case params[:action]
       when 'new', 'create', 'destroy'

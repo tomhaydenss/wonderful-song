@@ -1,13 +1,15 @@
-- base_leader = !current_user.member.highest_ensemble_level_through_leadership.leadership_purpose
-- second_level_leader = current_user.member.highest_ensemble_level_through_leadership.ensemble_level_id == 2
+- admin = current_user.any_roles? [:admin]
+- ensemble = admin ? Ensemble.top_level : current_user.member.highest_ensemble_level_through_leadership
+- base_leader = !admin && !ensemble.leadership_purpose
+- second_level_leader = !admin && ensemble.ensemble_level_id == 2
 
 .page-header
   h2 Visão Geral
 h3
-  = current_user.member.highest_ensemble_level_through_leadership.name
+  = ensemble.name
 
 - if base_leader
-  = render 'general_statistics', base_leader: base_leader
+  = render 'general_statistics', base_leader: base_leader, second_level_leader: second_level_leader
 - else
   ul.nav.nav-tabs role='tablist'
     li.active
