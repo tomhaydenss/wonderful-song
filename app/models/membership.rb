@@ -31,6 +31,11 @@ class Membership < ApplicationRecord
     organizational_information['organizations'].map { |item| "#{item['level']} #{item['name']}" }.reject(&:blank?).join(' » ')
   end
 
+  def organization(level)
+    organization = organizational_information['organizations'].select { |item| level == item['level'] }.first
+    organization['name']
+  end
+
   def organizational_position
     organizational_positions.fetch('positions', {}).map { |item| item['position'] }.reject(&:blank?).join(' / ')
   end
