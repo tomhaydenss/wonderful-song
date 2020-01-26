@@ -12,7 +12,7 @@ class EnsemblesController < ApplicationController
   # GET /ensembles
   # GET /ensembles.json
   def index
-    filters = params.merge(permitted_ensembles_only).slice(:permitted_ensembles_only)
+    filters = params.merge(permitted_ensembles_only).slice(:permitted_ensembles_only, :search)
     @ensembles = Ensemble.filter(filters)
                          .order('id, foundation_date')
                          .includes(:ensemble_parent)

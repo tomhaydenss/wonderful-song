@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
 class MembersController < ApplicationController
   include MembersToCsv
   include StringUtils
@@ -19,6 +20,7 @@ class MembersController < ApplicationController
 
   # GET /members
   # GET /members.json
+  # rubocop:disable Metrics/AbcSize
   def index
     respond_to do |format|
       format.html { render :index }
@@ -27,10 +29,11 @@ class MembersController < ApplicationController
       format.xlsx do
         response.headers[
           'Content-Disposition'
-        ] = "attachment; filename=members-#{DateTime.now.strftime('%Y%m%d%H%M%S')}.xlsx"
+          ] = "attachment; filename=members-#{DateTime.now.strftime('%Y%m%d%H%M%S')}.xlsx"
       end
     end
   end
+  # rubocop:enable Metrics/AbcSize
 
   def apply_filter
     @members = Member.filter(filters).order(:name)
@@ -143,3 +146,4 @@ class MembersController < ApplicationController
     )
   end
 end
+# rubocop:enable Metrics/ClassLength
