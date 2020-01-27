@@ -59,7 +59,7 @@ class MembersController < ApplicationController
   def create
     respond_to do |format|
       if @member.save
-        format.html { redirect_to @member, notice: 'Member was successfully created.' }
+        format.html { redirect_to @member, notice: 'Membro criado com sucesso.' }
         format.json { render :show, status: :created, location: @member }
       else
         fetch_permitted_ensembles_only
@@ -74,7 +74,7 @@ class MembersController < ApplicationController
   def update
     respond_to do |format|
       if @member.update_attributes(member_params)
-        format.html { redirect_to updated_path, notice: 'Member was successfully updated.' }
+        format.html { redirect_to updated_path, notice: 'Membro atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @member }
       else
         format.html { render :edit }
@@ -88,7 +88,7 @@ class MembersController < ApplicationController
   def destroy
     @member.destroy
     respond_to do |format|
-      format.html { redirect_to members_url, notice: 'Member was successfully destroyed.' }
+      format.html { redirect_to members_url, notice: 'Membro excluído com sucesso.' }
       format.json { head :no_content }
     end
   end
@@ -97,7 +97,7 @@ class MembersController < ApplicationController
 
   def upload
     MemberImportJob.perform_now(@member)
-    redirect_to members_path, flash: { success: 'Member file was successfully uploaded.' }
+    redirect_to members_path, flash: { success: 'Arquivo de Membros enviado com sucesso.' }
   end
 
   def new_transfer; end
@@ -118,7 +118,7 @@ class MembersController < ApplicationController
   end
 
   def valid_file
-    redirect_to members_upload_new_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:member].present?
+    redirect_to members_upload_new_path, flash: { alert: 'Selecione um arquivo .csv antes de importar.' } unless params[:member].present?
   end
 
   def filters

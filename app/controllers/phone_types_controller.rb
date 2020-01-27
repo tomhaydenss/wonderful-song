@@ -28,7 +28,7 @@ class PhoneTypesController < ApplicationController
 
     respond_to do |format|
       if @phone_type.save
-        format.html { redirect_to @phone_type, notice: 'Phone Type was successfully created.' }
+        format.html { redirect_to @phone_type, notice: 'Tipo Telefone criado com sucesso.' }
         format.json { render :show, status: :created, location: @phone_type }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class PhoneTypesController < ApplicationController
   def update
     respond_to do |format|
       if @phone_type.update_attributes(phone_type_params)
-        format.html { redirect_to @phone_type, notice: 'Phone Type was successfully updated.' }
+        format.html { redirect_to @phone_type, notice: 'Tipo Telefone atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @phone_type }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class PhoneTypesController < ApplicationController
   def destroy
     @phone_type.destroy
     respond_to do |format|
-      format.html { redirect_to phone_types_url, notice: 'Phone Type was successfully destroyed.' }
+      format.html { redirect_to phone_types_url, notice: 'Tipo Telefone excluído com sucesso.' }
       format.json { head :no_content }
     end
   end

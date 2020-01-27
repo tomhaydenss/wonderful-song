@@ -19,13 +19,13 @@ class MembershipsController < ApplicationController
   def create
     @membership = Membership.new(membership_params)
     MembershipImportJob.perform_now(@membership)
-    redirect_to memberships_path, flash: { success: 'Membership file was successfully uploaded.' }
+    redirect_to memberships_path, flash: { success: 'Arquivo de Membros Associados enviado com sucesso.' }
   end
 
   private
 
   def valid_file
-    redirect_to memberships_path, flash: { alert: 'Attach a .csv file before upload' } unless params[:membership].present?
+    redirect_to memberships_path, flash: { alert: 'Selecione um arquivo .csv antes de importar.' } unless params[:membership].present?
   end
 
   def searching_by_membership_id?
