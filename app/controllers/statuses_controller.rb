@@ -28,7 +28,7 @@ class StatusesController < ApplicationController
 
     respond_to do |format|
       if @status.save
-        format.html { redirect_to @status, notice: 'Status was successfully created.' }
+        format.html { redirect_to @status, notice: 'Situação criada com sucesso.' }
         format.json { render :show, status: :created, location: @status }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class StatusesController < ApplicationController
   def update
     respond_to do |format|
       if @status.update_attributes(status_params)
-        format.html { redirect_to @status, notice: 'Status was successfully updated.' }
+        format.html { redirect_to @status, notice: 'Situação atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @status }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class StatusesController < ApplicationController
   def destroy
     @status.destroy
     respond_to do |format|
-      format.html { redirect_to statuses_url, notice: 'Status was successfully destroyed.' }
+      format.html { redirect_to statuses_url, notice: 'Situação excluída com sucesso.' }
       format.json { head :no_content }
     end
   end

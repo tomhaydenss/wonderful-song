@@ -28,7 +28,7 @@ class EnsembleLevelsController < ApplicationController
 
     respond_to do |format|
       if @ensemble_level.save
-        format.html { redirect_to @ensemble_level, notice: 'Ensemble Level was successfully created.' }
+        format.html { redirect_to @ensemble_level, notice: 'Nível de Núcleo criado com sucesso.' }
         format.json { render :show, status: :created, location: @ensemble_level }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class EnsembleLevelsController < ApplicationController
   def update
     respond_to do |format|
       if @ensemble_level.update_attributes(ensemble_level_params)
-        format.html { redirect_to @ensemble_level, notice: 'Ensemble Level was successfully updated.' }
+        format.html { redirect_to @ensemble_level, notice: 'Nível de Núcleo atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @ensemble_level }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class EnsembleLevelsController < ApplicationController
   def destroy
     @ensemble_level.destroy
     respond_to do |format|
-      format.html { redirect_to ensemble_levels_url, notice: 'Ensemble Level was successfully destroyed.' }
+      format.html { redirect_to ensemble_levels_url, notice: 'Nível de Núcleo excluído com sucesso.' }
       format.json { head :no_content }
     end
   end

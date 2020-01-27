@@ -38,7 +38,7 @@ class EnsemblesController < ApplicationController
 
     respond_to do |format|
       if @ensemble.save
-        format.html { redirect_to @ensemble, notice: 'Ensemble was successfully created.' }
+        format.html { redirect_to @ensemble, notice: 'Núcleo criado com sucesso.' }
         format.json { render :show, status: :created, location: @ensemble }
       else
         format.html { render :new }
@@ -52,7 +52,7 @@ class EnsemblesController < ApplicationController
   def update
     respond_to do |format|
       if @ensemble.update_attributes(ensemble_params)
-        format.html { redirect_to @ensemble, notice: 'Ensemble was successfully updated.' }
+        format.html { redirect_to @ensemble, notice: 'Núcleo atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @ensemble }
       else
         format.html { render :edit }
@@ -66,7 +66,7 @@ class EnsemblesController < ApplicationController
   def destroy
     @ensemble.destroy
     respond_to do |format|
-      format.html { redirect_to ensembles_url, notice: 'Ensemble was successfully destroyed.' }
+      format.html { redirect_to ensembles_url, notice: 'Núcleo excluído com sucesso' }
       format.json { head :no_content }
     end
   end

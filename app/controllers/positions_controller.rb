@@ -28,7 +28,7 @@ class PositionsController < ApplicationController
 
     respond_to do |format|
       if @position.save
-        format.html { redirect_to @position, notice: 'Position was successfully created.' }
+        format.html { redirect_to @position, notice: 'Função criada com sucesso.' }
         format.json { render :show, status: :created, location: @position }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class PositionsController < ApplicationController
   def update
     respond_to do |format|
       if @position.update_attributes(position_params)
-        format.html { redirect_to @position, notice: 'Position was successfully updated.' }
+        format.html { redirect_to @position, notice: 'Função atualizada com sucesso.' }
         format.json { render :show, status: :ok, location: @position }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class PositionsController < ApplicationController
   def destroy
     @position.destroy
     respond_to do |format|
-      format.html { redirect_to positions_url, notice: 'Position was successfully destroyed.' }
+      format.html { redirect_to positions_url, notice: 'Função excluída com sucesso.' }
       format.json { head :no_content }
     end
   end

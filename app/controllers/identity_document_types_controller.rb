@@ -28,7 +28,7 @@ class IdentityDocumentTypesController < ApplicationController
 
     respond_to do |format|
       if @identity_document_type.save
-        format.html { redirect_to @identity_document_type, notice: 'Identity Document Type was successfully created.' }
+        format.html { redirect_to @identity_document_type, notice: 'Tipo Documento criado com sucesso.' }
         format.json { render :show, status: :created, location: @identity_document_type }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class IdentityDocumentTypesController < ApplicationController
   def update
     respond_to do |format|
       if @identity_document_type.update_attributes(identity_document_type_params)
-        format.html { redirect_to @identity_document_type, notice: 'Identity Document Type was successfully updated.' }
+        format.html { redirect_to @identity_document_type, notice: 'Tipo Documento atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @identity_document_type }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class IdentityDocumentTypesController < ApplicationController
   def destroy
     @identity_document_type.destroy
     respond_to do |format|
-      format.html { redirect_to identity_document_types_url, notice: 'Identity Document Type was successfully destroyed.' }
+      format.html { redirect_to identity_document_types_url, notice: 'Tipo Documento excluído com sucesso.' }
       format.json { head :no_content }
     end
   end

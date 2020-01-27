@@ -24,4 +24,10 @@ table class=['table', 'table-striped']
         td =ensemble.ensemble_level.description
         td =ensemble.ensemble_parent&.name
 
-=will_paginate @ensembles, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'
+div align="center" 
+  div
+    | (
+    = @ensembles.membership_purpose_only.count
+    | &nbsp;núcleos)
+  div
+    =will_paginate @ensembles, renderer: BootstrapPagination::Rails, previous_label: '&laquo;', next_label: '&raquo;'

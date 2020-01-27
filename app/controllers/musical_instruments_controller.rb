@@ -28,7 +28,7 @@ class MusicalInstrumentsController < ApplicationController
 
     respond_to do |format|
       if @musical_instrument.save
-        format.html { redirect_to @musical_instrument, notice: 'Musical Instrument was successfully created.' }
+        format.html { redirect_to @musical_instrument, notice: 'Instrumento Musical criado com sucesso.' }
         format.json { render :show, status: :created, location: @musical_instrument }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class MusicalInstrumentsController < ApplicationController
   def update
     respond_to do |format|
       if @musical_instrument.update_attributes(musical_instrument_params)
-        format.html { redirect_to @musical_instrument, notice: 'Musical Instrument was successfully updated.' }
+        format.html { redirect_to @musical_instrument, notice: 'Instrumento Musical atualizado com sucesso.' }
         format.json { render :show, status: :ok, location: @musical_instrument }
       else
         format.html { render :edit }
@@ -56,7 +56,7 @@ class MusicalInstrumentsController < ApplicationController
   def destroy
     @musical_instrument.destroy
     respond_to do |format|
-      format.html { redirect_to musical_instruments_url, notice: 'Musical Instrument was successfully destroyed.' }
+      format.html { redirect_to musical_instruments_url, notice: 'Instrumento Musical excluído com sucesso.' }
       format.json { head :no_content }
     end
   end
