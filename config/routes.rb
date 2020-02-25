@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   get 'members/upload/new', to: 'members#new_upload'
   post 'members/upload', to: 'members#upload'
 
-  devise_for :users, controllers: { registrations: 'registrations' }
+  devise_for :users, controllers: { registrations: 'registrations', passwords: 'passwords' }
   resources :members do
     resources :transfers, only: [:new], to: 'members#new_transfer'
   end
