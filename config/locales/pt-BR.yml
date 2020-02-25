@@ -15,6 +15,7 @@ pt-BR:
     passwords:
       user:
         send_instructions: "Dentro de alguns minutos, você receberá um e-mail com instruções para a troca da sua senha."
+        no_token: "Você não pode acessar essa página sem que um email de instruções de troca de senha tenha sido enviado para você. Se você recebeu o email, certifique-se que está usando o link de troca de senha corretamente." 
     registrations:
       signed_up: "Seja bem-vindo! Seu registro foi realizado com sucesso. Que tal atualizar os seus dados?"
       user:
@@ -27,3 +28,6 @@ pt-BR:
         invalid: "Senha inválida"
         unauthenticated: "Para continuar, efetue o login ou registre-se."
         inactive: "Sua conta está inativa."
+    mailer:
+      reset_password_instructions:
+        subject: "Instruções para troca de senha"
